@@ -1,0 +1,18 @@
+# Configuration file for payment provider integration
+
+# Provider API Documentation
+PROVIDER_API_DOCUMENTATION_URL=https://docs.provider.com/api/v1
+
+# Webhook Testing URLs (from webhook.site or similar)
+TEST_POST_WEBHOOK_URL=https://webhook.site/unique-uuid-{orderId}
+TEST_GET_WEBHOOK_URL=https://webhook.site/token/unique-uuid/requests
+
+# Provider API Credentials (from provider's dashboard)
+CLIENT_ID=your_client_id_here
+CLIENT_SECRET=your_client_secret_here
+
+# API Endpoint (Sandbox or Production)
+API_ENDPOINT=https://sandbox-api.provider.com
+
+# Optional: Additional provider-specific parameters
+# Add any extra config values below this line

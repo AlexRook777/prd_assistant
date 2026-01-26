@@ -1,0 +1,25 @@
+# Master PRD Structure Schema
+
+prd_structure:
+  version: "1.0"
+  sections:
+    - id: overview
+      title: "Project Overview"
+      required: true
+    - id: technical_specs
+      title: "Technical Specifications"
+      required: true
+      subsections:
+        - id: endpoints
+          title: "API Endpoints"
+        - id: authentication
+          title: "Authentication Mechanism"
+    - id: flow_diagrams
+      title: "User and Data Flows"
+      required: true
+    - id: mapping
+      title: "Field Mapping Table"
+      required: true
+    - id: testing_requirements
+      title: "Testing and Validation"
+      required: false

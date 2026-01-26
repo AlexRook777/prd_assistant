@@ -1,0 +1,23 @@
+[
+  {
+    "_id": "694b97fc8faa2c4927f343f3",
+    "callbackRawData": {
+      "headers": {
+        "content-type": "application/json",
+        "x-signature": "abc123def456"
+      },
+      "query": {
+        "orderId": "TEST_ORDER_12345"
+      },
+      "body": {
+        "status": "success",
+        "transactionId": "TXN_67890",
+        "amount": 1000,
+        "currency": "USD"
+      }
+    },
+    "timestamp": "2025-12-24T07:36:28.893Z",
+    "timestampEpoch": 1766561788893,
+    "callbackId": "TEST_ORDER_12345"
+  }
+]

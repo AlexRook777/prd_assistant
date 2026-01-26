@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartFastPay Test Page - Ecuador Bank Transfer</title>
+    <style>
+        :root {
+            --primary: #007bff;
+            --secondary: #6c757d;
+            --success: #28a745;
+            --danger: #dc3545;
+            --dark: #343a40;
+            --light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            background: #f4f7f6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            color: var(--dark);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .card {
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #e1e1e1;
+            border-radius: 6px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 0.9rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: #fff;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .log-container {
+            background: #2b2b2b;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            height: 500px;
+            overflow-y: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.85rem;
+        }
+
+        .log-entry {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #444;
+            position: relative;
+        }
+
+        .log-entry pre {
+            margin: 5px 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .log-entry .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            margin-right: 5px;
+        }
+
+        .badge-req {
+            background: #ae81ff;
+            color: #fff;
+        }
+
+        .badge-res {
+            background: #a6e22e;
+            color: #fff;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #444;
+            color: #fff;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+        }
+
+        .webhook-card {
+            margin-top: 20px;
+        }
+
+        .webhook-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .webhook-item {
+            padding: 10px;
+            border-left: 4px solid var(--primary);
+            background: #f9f9f9;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+
+        .status-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-paid {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-failed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>SmartFastPay Ecuador HPP Test</h1>
+
+        <p style="background: #e7f3ff; padding: 10px; border-left: 5px solid #007bff; font-size: 0.9rem;">
+            <b>Note:</b> Sandbox CORS might block localhost. Use a <a href="https://cors-anywhere.herokuapp.com/"
+                target="_blank">CORS Proxy</a> or run browser with <code>--disable-web-security</code> for full
+            automation.
+        </p>
+
+        <div class="grid">
+            <!-- Settings Card -->
+            <div class="card">
+                <h2>1. Authentication</h2>
+                <div class="form-group">
+                    <label>Sandbox Client ID</label>
+                    <input type="text" id="clientId" value="fd8111f7-6ace-4789-b05a-40a6a36cb0be">
+                </div>
+                <div class="form-group">
+                    <label>Sandbox Client Secret</label>
+                    <input type="password" id="clientSecret" value="nST8TYE78oANwe6dvhMiCQQZfthIoWlG">
+                </div>
+                <div class="btn-group">
+                    <button class="btn-primary" onclick="getToken()">Get Bearer Token</button>
+                </div>
+                <div class="form-group" style="margin-top:15px">
+                    <label>Current Access Token</label>
+                    <input type="text" id="accessToken" readonly placeholder="Click 'Get Token' first...">
+                </div>
+                <hr>
+                <h2>Webhook Search (Basic Auth)</h2>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="webhookUser" placeholder="Optional">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="webhookPass" placeholder="Optional">
+                </div>
+            </div>
+
+            <!-- Transaction Card -->
+            <div class="card">
+                <h2>2. Create & Verify</h2>
+                <div class="form-group">
+                    <label>Amount (USD)</label>
+                    <input type="number" id="amount" value="10.00" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" id="custName" value="Juan Perez">
+                </div>
+                <div class="form-group">
+                    <label>Doc Type</label>
+                    <select id="docType">
+                        <option value="CC">CC (Cédula de Ciudadanía)</option>
+                        <option value="RUC">RUC</option>
+                        <option value="PAS">Passport</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Doc Number</label>
+                    <input type="text" id="docNumber" value="1710034065">
+                </div>
+                <div class="btn-group">
+                    <button class="btn-success" onclick="createTransaction()">Create Transaction</button>
+                    <button class="btn-secondary" id="openBtn" disabled>Open Checkout</button>
+                    <button class="btn-primary" id="statusBtn" disabled onclick="checkStatus()">Check Payment
+                        Status</button>
+                </div>
+                <div id="statusResult" class="status-display" style="display:none"></div>
+            </div>
+        </div>
+
+        <div class="card webhook-card">
+            <div style="display:flex; justify-content:space-between; align-items:center">
+                <h2>Webhooks (n8n)</h2>
+                <div class="btn-group">
+                    <button class="btn-secondary" onclick="fetchWebhooks()">Manual Refresh</button>
+                    <button class="btn-secondary" onclick="copyWebhooks()">Copy Webhooks</button>
+                </div>
+            </div>
+            <div id="webhookList" class="webhook-list">
+                <div style="color:#888; text-align:center; padding:20px">Webhooks will appear here every 5s after
+                    creation.</div>
+            </div>
+        </div>
+
+        <div class="log-header">
+            <h2>Request Log</h2>
+            <button class="btn-secondary" onclick="copyEntireLog()">Copy Entire Log</button>
+        </div>
+        <div id="logs" class="log-container"></div>
+    </div>
+
+    <script>
+        const CONFIG = {
+            tokenUrl: "https://sandbox.smartfastpay.com/oauth2/token",
+            checkoutUrl: "https://sandbox.smartfastpay.com/v2/transaction/checkout",
+            statusBaseUrl: "https://sandbox.smartfastpay.com/payment/",
+            postWebhook: "https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/:orderId",
+            getWebhook: "https://n8n.4bill.io/webhook/ea6540ee-da8f-499e-a2bb-92111e8fb689/:orderId"
+        };
+
+        let state = { orderId: "", paymentId: "", checkoutUrl: "", pollInterval: null };
+
+        const PERSISTENT_FIELDS = ['clientId', 'clientSecret', 'webhookUser', 'webhookPass'];
+        window.onload = () => {
+            PERSISTENT_FIELDS.forEach(id => {
+                const val = sessionStorage.getItem(id);
+                if (val) document.getElementById(id).value = val;
+            });
+        };
+
+        function saveInputs() {
+            PERSISTENT_FIELDS.forEach(id => sessionStorage.setItem(id, document.getElementById(id).value));
+        }
+
+        function log(type, url, method, headers, body, response) {
+            const container = document.getElementById('logs');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            const timestamp = new Date().toISOString().split('T')[1].split('.')[0];
+            
+            entry.innerHTML = `
+                <small style="color:#888">[${timestamp}] ${type}</small>
+                <div><span class="badge badge-req">REQ</span> <b>${method}</b> ${url}</div>
+                <details><summary>Headers & Body</summary>
+                    <pre>Headers: ${JSON.stringify(headers, null, 2)}</pre>
+                    <pre>Body: ${body ? JSON.stringify(body, null, 2) : 'None'}</pre>
+                </details>
+                <div><span class="badge badge-res">RES</span></div>
+                <pre>${JSON.stringify(response, null, 2)}</pre>
+                <button class="copy-btn" onclick="copyEntry(this)">Copy</button>
+            `;
+            container.insertBefore(entry, container.firstChild);
+        }
+
+        async function copyEntry(btn) {
+            await navigator.clipboard.writeText(btn.parentElement.innerText);
+            btn.innerText = "Copied!";
+            setTimeout(() => btn.innerText = "Copy", 1000);
+        }
+
+        function copyEntireLog() {
+            navigator.clipboard.writeText(document.getElementById('logs').innerText);
+            alert("Entire log copied to clipboard.");
+        }
+
+        async function getToken() {
+            saveInputs();
+            const id = document.getElementById('clientId').value;
+            const secret = document.getElementById('clientSecret').value;
+            const auth = btoa(`${id}:${secret}`);
+            const headers = { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/json' };
+            
+            try {
+                const res = await fetch(CONFIG.tokenUrl, { method: 'POST', headers, body: JSON.stringify({}) });
+                const data = await res.json();
+                log('TOKEN_REQUEST', CONFIG.tokenUrl, 'POST', headers, {}, data);
+                if (data.data?.access_token) document.getElementById('accessToken').value = data.data.access_token;
+            } catch (e) { log('TOKEN_ERROR', CONFIG.tokenUrl, 'POST', headers, {}, { error: e.message }); }
+        }
+
+        async function createTransaction() {
+            saveInputs();
+            const token = document.getElementById('accessToken').value;
+            if (!token) return alert("Get Token first!");
+
+            state.orderId = 'ORD_' + Math.random().toString(36).substr(2, 9);
+            const webhookUrl = CONFIG.postWebhook.replace(':orderId', state.orderId);
+
+            const payload = {
+                country: "ECU",
+                payment_method: ["bank_transfer"],
+                notification_url: webhookUrl,
+                redirect_url: "https://example.com/success",
+                transaction: {
+                    id: state.orderId,
+                    amount: parseFloat(document.getElementById('amount').value),
+                    currency: "USD",
+                    description: "Order " + state.orderId
+                },
+                customer: {
+                    id: "CUST_" + Math.random().toString(36).substr(2, 9),
+                    name: document.getElementById('custName').value,
+                    email: "test@example.com",
+                    document: { type: document.getElementById('docType').value, number: document.getElementById('docNumber').value }
+                }
+            };
+
+            const headers = { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' };
+            
+            try {
+                const res = await fetch(CONFIG.checkoutUrl, { method: 'POST', headers, body: JSON.stringify(payload) });
+                const data = await res.json();
+                log('CHECKOUT_REQUEST', CONFIG.checkoutUrl, 'POST', headers, payload, data);
+
+                if (data.data?.url) {
+                    state.checkoutUrl = data.data.url;
+                    state.paymentId = data.data.transaction_id || data.data.id;
+                    document.getElementById('openBtn').disabled = false;
+                    document.getElementById('openBtn').onclick = () => window.open(state.checkoutUrl, '_blank');
+                    document.getElementById('statusBtn').disabled = false;
+                    startWebhookPolling();
+                }
+            } catch (e) { log('CHECKOUT_ERROR', CONFIG.checkoutUrl, 'POST', headers, payload, { error: e.message }); }
+        }
+
+        async function checkStatus() {
+            const token = document.getElementById('accessToken').value;
+            const url = CONFIG.statusBaseUrl + state.paymentId;
+            const headers = { 'Authorization': `Bearer ${token}` };
+
+            try {
+                const res = await fetch(url, { method: 'GET', headers });
+                const data = await res.json();
+                log('STATUS_REQUEST', url, 'GET', headers, null, data);
+
+                if (data.data?.status) {
+                    const el = document.getElementById('statusResult');
+                    el.style.display = 'inline-block';
+                    el.innerText = "Status: " + data.data.status.toUpperCase();
+                    el.className = 'status-display status-' + data.data.status.toLowerCase();
+                }
+            } catch (e) { log('STATUS_ERROR', url, 'GET', headers, null, { error: e.message }); }
+        }
+
+        function startWebhookPolling() {
+            if (state.pollInterval) clearInterval(state.pollInterval);
+            state.pollInterval = setInterval(fetchWebhooks, 5000);
+            fetchWebhooks();
+        }
+
+        async function fetchWebhooks() {
+            if (!state.orderId) return;
+            const url = CONFIG.getWebhook.replace(':orderId', state.orderId);
+            const user = document.getElementById('webhookUser').value;
+            const pass = document.getElementById('webhookPass').value;
+            const headers = (user && pass) ? { 'Authorization': 'Basic ' + btoa(user + ':' + pass) } : {};
+
+            try {
+                const res = await fetch(url, { headers });
+                if (res.ok) renderWebhooks(await res.json());
+            } catch (e) { console.error("Webhook fetch failed", e); }
+        }
+
+        function renderWebhooks(items) {
+            const list = document.getElementById('webhookList');
+            if (!items.length) return;
+            list.innerHTML = '';
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'webhook-item';
+                div.innerHTML = `<div><b>ID:</b> ${item._id} | <b>Time:</b> ${item.timestamp}</div><pre>${JSON.stringify(item.callbackRawData.body, null, 2)}</pre>`;
+                list.appendChild(div);
+            });
+        }
+
+        function copyWebhooks() {
+            navigator.clipboard.writeText(document.getElementById('webhookList').innerText);
+            alert("Webhooks copied.");
+        }
+    </script>
+</body>
+
+</html>
