@@ -14,7 +14,16 @@ Verify API credentials work and compare required fields between the system and p
 
 ## Task
 
-1. **Verify API Access**:
+1. **Pre-computation Check (CRITICAL)**:
+   - Check if `4.access_and_fields.md` already exists.
+   - **IF IT EXISTS**:
+     - Read the file content.
+     - Extract **Access Status** (Checkmarks for credentials/portal).
+     - Extract **Gap Analysis** and **Issues & Resolutions**.
+     - **Preserve** these manual findings in the new report.
+   - **IF IT DOES NOT EXIST**: Proceed normally.
+
+2. **Verify API Access**:
    - Test credentials from `config` file
    - Confirm successful authentication
    - Document portal access (if applicable)

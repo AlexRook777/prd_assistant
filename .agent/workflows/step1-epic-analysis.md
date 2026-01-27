@@ -14,7 +14,19 @@ Analyze the Epic or Jira requirements to understand the integration scope and id
 
 ## Task
 
-1. **Read Source Documents**: 
+1. **Pre-computation Check (CRITICAL)**:
+   - Check if `1.epic_analysis.md` already exists.
+   - **IF IT EXISTS**:
+     - Read the **ENTIRE** file content.
+     - Treat this file as the **Primary Source of Truth**. The information here (especially in "Summary", "Requirements", and "Clarified Points") supersedes the raw initial docs.
+     - **Extract & Preserve**:
+       - Any section labeled "Clarified Points" or "User Feedback".
+       - Any Q&A pairs from "Unclear Points".
+     - **Integrate**: Ensure any facts from the existing file represent the baseline for the new generation. Do not revert specific details provided by the user back to the raw docs.
+     - **Augment**: Add the `## Clarified Points (User Feedback)` section if it doesn't exist, populating it with any answered questions.
+   - **IF IT DOES NOT EXIST**: Proceed normally to read source documents.
+
+2. **Read Source Documents**: 
    - Check `0_initial_docs/` for Epic description, Jira ticket, or business requirements
    - Read any PDFs, Word docs, or text files containing requirements
 

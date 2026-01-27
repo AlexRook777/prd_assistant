@@ -14,7 +14,15 @@ Verify the provider's integration is compatible with the current system architec
 
 ## Task
 
-1. **Architecture Review**:
+1. **Pre-computation Check (CRITICAL)**:
+   - Check if `5.compatibility.md` already exists.
+   - **IF IT EXISTS**:
+     - Read the file content.
+     - Extract **Custom Logic Required**, **Blocking Issues**, and **Recommendations**.
+     - **Preserve** these manual assessments in the new report.
+   - **IF IT DOES NOT EXIST**: Proceed normally.
+
+2. **Architecture Review**:
    - Check if integration fits standard flow (H2H, Redirect, HPP)
    - Identify any architectural mismatches
    - Review webhook handling compatibility

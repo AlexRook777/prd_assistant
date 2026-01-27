@@ -14,7 +14,15 @@ Create comprehensive technical specifications for all integration stories.
 
 ## Task
 
-Compile all technical details from previous steps into complete user stories.
+1. **Pre-computation Check (CRITICAL)**:
+   - Check if `6.project_stories.md` already exists.
+   - **IF IT EXISTS**:
+     - Read the file content.
+     - Extract **Acceptance Criteria** status (checked/unchecked boxes).
+     - **Preserve** any completed criteria in the new stories.
+   - **IF IT DOES NOT EXIST**: Proceed normally.
+
+2. Compile all technical details from previous steps into complete user stories.
 
 ```markdown
 # Project Stories

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartFastPay Test Page</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: #1e293b;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h2 { margin-top: 0; color: #0f172a; font-size: 1.25rem; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 0.875rem; }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            width: 100%;
+        }
+        button:hover { opacity: 0.9; }
+        button:disabled { background-color: #94a3b8; cursor: not-allowed; }
+        .logs-container {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            max-height: 400px;
+            font-size: 0.875rem;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .status-success { background: #dcfce7; color: #166534; }
+        .status-error { background: #fee2e2; color: #991b1b; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 15px; }
+        .tab { 
+            padding: 8px 16px; 
+            background: #e2e8f0; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            color: #475569;
+        }
+        .tab.active { background: var(--primary-color); color: white; }
+    </style>
+</head>
+<body>
+    <h1>SmartFastPay Integration Test</h1>
+    
+    <div class="container">
+        <!-- Configuration -->
+        <div class="card">
+            <h2>Configuration</h2>
+            <div class="form-group">
+                <label>API URL</label>
+                <input type="text" id="apiUrl" value="https://sandbox.smartfastpay.com">
+            </div>
+            <div class="form-group">
+                <label>Client ID</label>
+                <input type="text" id="clientId" value="fd8111f7-6ace-4789-b05a-40a6a36cb0be">
+            </div>
+            <div class="form-group">
+                <label>Client Secret</label>
+                <input type="password" id="clientSecret" value="nST8TYE78oANwe6dvhMiCQQZfthIoWlG">
+            </div>
+            <button onclick="getToken()">Generated Token</button>
+            <div id="tokenStatus" style="margin-top: 10px;"></div>
+        </div>
+
+        <!-- Transaction Form -->
+        <div class="card">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('payin')">Payin</button>
+                <button class="tab" onclick="switchTab('payout')">Payout</button>
+            </div>
+
+            <!-- Payin Form -->
+            <div id="payinForm">
+                <div class="form-group">
+                    <label>Amount (USD)</label>
+                    <input type="number" id="payinAmount" value="10.00" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" id="payinName" value="Test User">
+                </div>
+                <div class="form-group">
+                    <label>Document ID</label>
+                    <input type="text" id="payinDoc" value="1234567890">
+                </div>
+                <button onclick="createPayin()">Create Payin</button>
+            </div>
+
+            <!-- Payout Form -->
+            <div id="payoutForm" style="display: none;">
+                <div class="form-group">
+                    <label>Amount (USD)</label>
+                    <input type="number" id="payoutAmount" value="5.00" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label>Bank Code</label>
+                    <input type="text" id="payoutBankCode" value="10">
+                </div>
+                <div class="form-group">
+                    <label>Account Number</label>
+                    <input type="text" id="payoutAccount" value="12345678">
+                </div>
+                <button onclick="createPayout()">Create Payout</button>
+            </div>
+            
+            <div id="txnResult" style="margin-top: 15px;"></div>
+        </div>
+    </div>
+
+    <!-- Logs -->
+    <div class="container">
+        <div class="logs-container">
+            <div class="card">
+                <h2>Request Logs</h2>
+                <pre id="requestLogs">// API requests will appear here...</pre>
+            </div>
+            <div class="card">
+                <h2>Webhooks (Polling) <button onclick="pollWebhooks()" style="width: auto; padding: 2px 8px; font-size: 10px;">Refresh</button></h2>
+                <pre id="webhookLogs">// Webhooks will appear here...</pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Constants from Global Config
+        const WEBHOOK_POST_URL_TEMPLATE = "https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/:orderId";
+        const WEBHOOK_GET_URL_TEMPLATE = "https://n8n.4bill.io/webhook/ea6540ee-da8f-499e-a2bb-92111e8fb689/:orderId";
+        
+        let accessToken = '';
+        let currentOrderId = '';
+        let pollInterval = null;
+
+        function log(elementId, message, type = 'info') {
+            const el = document.getElementById(elementId);
+            const timestamp = new Date().toISOString().split('T')[1].split('.')[0];
+            el.innerHTML = `[${timestamp}] ${message}\n` + el.innerHTML;
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('payinForm').style.display = tab === 'payin' ? 'block' : 'none';
+            document.getElementById('payoutForm').style.display = tab === 'payout' ? 'block' : 'none';
+        }
+
+        async function getToken() {
+            const apiUrl = document.getElementById('apiUrl').value;
+            const clientId = document.getElementById('clientId').value;
+            const clientSecret = document.getElementById('clientSecret').value;
+
+            try {
+                const response = await fetch(`${apiUrl}/oauth/token`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Basic ' + btoa(`${clientId}:${clientSecret}`)
+                    },
+                    body: JSON.stringify({ grant_type: 'client_credentials' })
+                });
+
+                const data = await response.json();
+                log('requestLogs', `POST /oauth/token\n${JSON.stringify(data, null, 2)}`);
+
+                if (data.access_token) {
+                    accessToken = data.access_token;
+                    document.getElementById('tokenStatus').innerHTML = '<span class="status-badge status-success">Token Generated</span>';
+                } else {
+                    throw new Error('No access token in response');
+                }
+            } catch (err) {
+                log('requestLogs', `Error getting token: ${err.message}`);
+                document.getElementById('tokenStatus').innerHTML = '<span class="status-badge status-error">Token Failed</span>';
+            }
+        }
+
+        async function createPayin() {
+            if (!accessToken) return alert('Please get token first');
+            
+            const apiUrl = document.getElementById('apiUrl').value;
+            const orderId = `TXN_${Date.now()}`;
+            currentOrderId = orderId;
+            startPolling(orderId);
+
+            const payload = {
+                customer: {
+                    id: `CUST_${Date.now()}`,
+                    name: document.getElementById('payinName').value,
+                    email: "test@example.com",
+                    document: {
+                        number: document.getElementById('payinDoc').value,
+                        type: "CC"
+                    },
+                    phone: "+5930999000000"
+                },
+                transaction: {
+                    id: orderId,
+                    currency: "USD",
+                    amount: parseFloat(document.getElementById('payinAmount').value)
+                },
+                country: "ECU",
+                payment_method: "bank_transfer",
+                notification_url: WEBHOOK_POST_URL_TEMPLATE.replace(':orderId', orderId)
+            };
+
+            try {
+                const response = await fetch(`${apiUrl}/v2/payin`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                log('requestLogs', `POST /v2/payin\n${JSON.stringify(data, null, 2)}`);
+
+                if (data.data?.url) {
+                    document.getElementById('txnResult').innerHTML = 
+                        `<a href="${data.data.url}" target="_blank" style="display:block;background:#16a34a;color:white;padding:10px;text-align:center;border-radius:4px;text-decoration:none;">Open Payment Page</a>`;
+                } else {
+                    document.getElementById('txnResult').innerText = 'Error creating transaction';
+                }
+            } catch (err) {
+                log('requestLogs', `Error: ${err.message}`);
+            }
+        }
+
+        async function createPayout() {
+            if (!accessToken) return alert('Please get token first');
+            
+            const apiUrl = document.getElementById('apiUrl').value;
+            const orderId = `PO_${Date.now()}`;
+            currentOrderId = orderId;
+            startPolling(orderId);
+
+            const payload = {
+                customer: {
+                    id: `CUST_${Date.now()}`,
+                    name: "Test User",
+                    email: "test@example.com",
+                    phone: "+5930999000000",
+                    document: {
+                        type: "CC",
+                        number: "1234567890"
+                    }
+                },
+                country: "ECU",
+                payment_method: "bank_transfer",
+                notification_url: WEBHOOK_POST_URL_TEMPLATE.replace(':orderId', orderId),
+                bank_transfer: {
+                    bank_code: document.getElementById('payoutBankCode').value,
+                    bank_account_number: document.getElementById('payoutAccount').value,
+                    bank_account_type: "CHECKING"
+                },
+                transaction: {
+                    id: orderId,
+                    currency: "USD",
+                    amount: parseFloat(document.getElementById('payoutAmount').value)
+                }
+            };
+
+            try {
+                const response = await fetch(`${apiUrl}/v2/payout`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                log('requestLogs', `POST /v2/payout\n${JSON.stringify(data, null, 2)}`);
+                document.getElementById('txnResult').innerText = 'Payout Request Sent';
+            } catch (err) {
+                log('requestLogs', `Error: ${err.message}`);
+            }
+        }
+
+        function startPolling(orderId) {
+            if (pollInterval) clearInterval(pollInterval);
+            pollWebhooks(orderId);
+            pollInterval = setInterval(() => pollWebhooks(orderId), 5000);
+        }
+
+        async function pollWebhooks(specificOrderId) {
+            const oid = specificOrderId || currentOrderId;
+            if (!oid) return;
+
+            const url = WEBHOOK_GET_URL_TEMPLATE.replace(':orderId', oid);
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                // Assuming n8n returns an array of webhooks or last webhook
+                if (data && data.length > 0) {
+                     log('webhookLogs', `Received Webhooks for ${oid}:\n${JSON.stringify(data, null, 2)}`);
+                } else if (Object.keys(data).length > 0) {
+                     log('webhookLogs', `Received Webhook for ${oid}:\n${JSON.stringify(data, null, 2)}`);
+                }
+            } catch (err) {
+                console.error("Polling error", err);
+            }
+        }
+    </script>
+</body>
+</html>

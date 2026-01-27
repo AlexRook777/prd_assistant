@@ -17,7 +17,18 @@ Perform a deep dive into the payment provider's API documentation to understand 
 
 ## Task
 
-1. **Read Provider Documentation**:
+1. **Pre-computation Check (CRITICAL)**:
+   - Check if `2.docs_analysis.md` already exists.
+   - **IF IT EXISTS**:
+     - Read the **ENTIRE** file content.
+     - Treat this file as the **Primary Source of Truth**. Any corrections or specific details in it (e.g. "Currency: USD") must be preserved and supersede raw docs.
+     - **Extract & Preserve**:
+       - Any section labeled "Clarified Points", "User Feedback", or "Questions / Gaps" with answers.
+     - **Integrate**: Ensure the new analysis builds upon these established facts.
+     - **Augment**: Add the `## Clarified Points (User Feedback)` section to formatting if relevant answers are found.
+   - **IF IT DOES NOT EXIST**: Proceed normally.
+
+2. **Read Provider Documentation**:
    - Open and review the provider's API documentation from the URL in `config`
    - Also check `0_initial_docs/` for any downloaded documentation PDFs
 

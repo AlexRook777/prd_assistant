@@ -14,7 +14,16 @@ Test edge cases and specific field handling requirements with the provider's API
 
 ## Task
 
-Test specific field formats and edge cases to understand provider requirements.
+1. **Pre-computation Check (CRITICAL)**:
+   - Check if `7.field_testing.md` already exists.
+   - **IF IT EXISTS**:
+     - Read the file content.
+     - Extract **Actual Result** and **Status** columns from all test tables.
+     - Extract **Conclusion** notes.
+     - **Preserve** these test results in the new report (do not overwrite with empty templates).
+   - **IF IT DOES NOT EXIST**: Proceed normally.
+
+2. Test specific field formats and edge cases to understand provider requirements.
 
 ```markdown
 # Field Testing

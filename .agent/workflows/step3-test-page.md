@@ -21,7 +21,16 @@ Create a functional HTML test page to physically verify the payment provider's A
 
 ## Task
 
-This step **automatically invokes** the `test_page_generator` skill. The skill will:
+1. **Pre-computation Check (CRITICAL)**:
+   - Check if `3.local_test_page.md` already exists.
+   - **IF IT EXISTS**:
+     - Read the file content.
+     - Extract **Test Results** (Token status, Transaction IDs, Screenshots).
+     - Extract **Issues Found**.
+     - **Preserve** these details in the new report.
+   - **IF IT DOES NOT EXIST**: Proceed normally.
+
+2. This step **automatically invokes** the `test_page_generator` skill. The skill will:
 
 1. Read the provider's API documentation
 2. Read the `config` file for webhook URLs and API details
