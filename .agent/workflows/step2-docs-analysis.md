@@ -141,3 +141,20 @@ Perform a deep dive into the payment provider's API documentation to understand 
 ## User Confirmation
 After creating the file, ask:
 - "Documentation Analysis complete. Review `2.docs_analysis.md`. Should I proceed to Step 3 (Local Test Page), or refine this step?"
+
+## 5. Logging
+Run the `work_logger` skill to record the results of this step.
+- **skill**: `work_logger`
+- **args**:
+    - `integration`: Name of the current integration
+    - `step`: "Step 2: Docs Analysis"
+    - `status`: "Success"
+    - `output_file`: `1_research/2.docs_analysis.md`
+    - `summary`: "Analyzed docs for [Provider]..."
+    - `execution_details`: JSON string with:
+        - `files_analyzed`: ["0_initial_docs/...", "config"]
+        - `files_edited`: ["1_research/2.docs_analysis.md"]
+        - `actions`: ["Analyzed auth", "Mapped endpoints"]
+        - `reasoning`: "Detailed narrative of your analysis process, gaps found, and decisions made."
+
+

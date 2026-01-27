@@ -131,7 +131,7 @@ User might say:
 > "Execute Step 3 - create the local test page for this integration"
 
 You should:
-1. Read the integration's `config` file
+1. Read the integration's `config` file. If `TEST_POST_WEBHOOK_URL` or `TEST_GET_WEBHOOK_URL` are missing, read them from `global_config` in the root directory.
 2. Read the provider's API documentation
 3. Generate `3.test_page.html` with all required functionality
 4. Create `3.local_test_page.md` with usage instructions

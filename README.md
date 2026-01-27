@@ -77,25 +77,101 @@ prd_assistant/
 └── _archive/                     # Deprecated: old instruction files
 ```
 
-## Workflow Commands
+## Workflow Details & Commands
 
-### Phase 1: Research (7 Steps)
-| Command | Description |
-|---------|-------------|
-| `/phase1-full` | Execute all 7 research steps |
-| `/step1-epic-analysis` | Analyze Epic/Jira requirements |
-| `/step2-docs-analysis` | Deep dive into API documentation |
-| `/step3-test-page` | Create functional HTML test page |
-| `/step4-access-fields` | Verify credentials and field mappings |
-| `/step5-compatibility` | Check architectural compatibility |
-| `/step6-project-stories` | Fill technical specifications for all stories |
-| `/step7-field-testing` | Test edge cases and field formats |
+### Phase 1: Research
+**Goal**: Complete deep analysis and fill all necessary stories before writing code.
+**Command**: `/phase1-full` (Run all steps) or run individually below.
+**Output Directory**: `1_research/`
 
-### Phase 2: Development (Coming Soon)
-Development workflows to be added.
+#### Step 1: Epic Analysis
+**Command**: `/step1-epic-analysis`
+**File**: `1_research/1.epic_analysis.md`
+*   **Action**: Evaluate the completeness of the Epic description (e.g., Jira link).
+*   **Content**:
+    *   Summary of requirements.
+    *   Identification of unclear points.
+    *   List of questions for the Product Owner (PO).
 
-### Phase 4: Testing (Coming Soon)
-QA and validation workflows to be added.
+#### Step 2: Documentation Analysis
+**Command**: `/step2-docs-analysis`
+**File**: `1_research/2.docs_analysis.md`
+*   **Action**: Deep dive into the provider's documentation.
+*   **Content**:
+    *   Links to official docs.
+    *   Authentication method analysis.
+    *   List of available payment methods and restrictions.
+
+#### Step 3: Local Test Page
+**Command**: `/step3-test-page`
+**File**: `1_research/3.local_test_page.md`
+*   **Action**: Create a functional HTML test page in file `1_research/3.test_page.html` to verify API behavior physically.
+*   **Instructions**:
+    1.  Populate the `config` file with `PROVIDER_API_DOCUMENTATION_URL`, `TEST_POST_WEBHOOK_URL`, `TEST_GET_WEBHOOK_URL`.
+    2.  Use the test page generator skill (or run slash command).
+*   **Content**:
+    *   The generated HTML file (embedded or linked).
+    *   Screenshots/Logs of a successful transaction created via this page.
+
+#### Step 4: Access & Field Verification
+**Command**: `/step4-access-fields`
+**File**: `1_research/4.access_and_fields.md`
+*   **Action**:
+    *   Verify credentials (login to portal, API keys).
+    *   Compare `service.fields` required for transaction creation against the documentation.
+*   **Content**:
+    *   Status of access (Ready/Pending).
+    *   Table comparing "Requested Fields" vs "Actual Provider Fields".
+
+#### Step 5: Compatibility Check
+**Command**: `/step5-compatibility`
+**File**: `1_research/5.compatibility.md`
+*   **Action**: Check if the new method is compatible with the current system architecture.
+*   **Content**:
+    *   Flag any blocking architectural mismatches.
+    *   Confirm if standard flow applies or if custom logic is needed.
+
+#### Step 6: Fill Project Stories
+**Command**: `/step6-project-stories`
+**File**: `1_research/6.project_stories.md`
+*   **Action**: Fill in the technical details for the standard set of stories.
+*   **Content Sections**:
+    1.  **Authorization**: How to authenticate (Headers, Token, Signature).
+    2.  **Create Transaction Request**: Full payload example with mappings.
+    3.  **Create Transaction Response**: Expected success/error response parsing.
+    4.  **Callback (Webhook)**: Structure of the notification, validation logic (signature check), and response acknowledgment.
+    5.  **Check Status**: Endpoint to poll status if callbacks fail.
+    6.  **Final Statuses**: Mapping of Provider Statuses → Internal Statuses.
+    7.  **Error Mapping**: Table of Provider Error Codes → Internal User Messages.
+
+#### Step 7: Field Testing
+**Command**: `/step7-field-testing`
+**File**: `1_research/7.field_testing.md`
+*   **Action**: Test edge cases and specific field handling.
+*   **Content**:
+    *   **International Format**: Phone number validation.
+    *   **Transliteration**: Cyrillic/Special char acceptance.
+    *   **Amount Handling**: Cents vs Integers.
+    *   **Tester Specifics**: QA verification values.
+
+### Phase 2: Development
+**Goal**: Implement the logic defined in Phase 1.
+**Output Directory**: `2_development/`
+
+#### Step 8: Balance Retrieval
+**File**: `2_development/8.balance_retrieval.md`
+*   **Action**: Describe the method for obtaining account balances.
+*   **Content**:
+    *   Endpoint URL.
+    *   Request/Response structure.
+    *   Frequency limits.
+
+### Phase 4: Testing
+**Goal**: Integration Verification.
+**Output Directory**: `4_test/`
+
+*   Place all QA reports, automated test scripts (Python/Postman), and final sign-off documents here.
+*   Follow the standard validation checklist (Happy Path, Error Cases, Timeout handling).
 
 ## Key Features
 
@@ -137,8 +213,12 @@ Create 3-4 integrations daily from standardized template:
 
 ### Configuration Files
 Every integration has:
-- `config`: API credentials, documentation URL, webhook test URLs
+- `config`: API credentials, documentation URL. **Note**: Inherits defaults from `global_config` in root if not specified.
 - `project_rules.md` (optional): Integration-specific overrides
+
+### Global Configuration
+- `global_config`: Shared variables (e.g. `TEST_POST_WEBHOOK_URL`) located in the root directory.
+
 
 ## Skills
 
@@ -155,20 +235,6 @@ Auto-triggered during Step 3 or when user mentions "create test page".
 - `3.test_page.html`
 - `3.local_test_page.md` (with usage instructions)
 
-## Migration from Old System
-
-### Deprecated Files (archived in `_archive/`)
-- `integrations/instruction.md` → Now `.agent/workflows/`
-- `global_prompts/*.md` → Now `.gemini.md` + Skills
-- `global_rules/README.md` → Merged into `.gemini.md`
-
-### What Changed
-- **Before**: Manually tell agent to "follow instruction.md"
-- **After**: Antigravity auto-loads `.gemini.md` rules
-- **Before**: Copy instructions for each step
-- **After**: Run `/step1-epic-analysis` workflows
-- **Before**: Manually create test pages
-- **After**: `test_page_generator` skill auto-triggers
 
 ## Tips
 

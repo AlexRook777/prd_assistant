@@ -270,4 +270,20 @@ Map provider error codes to user-friendly messages.
 - Status mappings defined
 
 ## User Confirmation
-"Project Stories complete. Review `6.project_stories.md`. Proceed to Step 7 or refine?"
+- "Project Stories filled. Review `6.project_stories.md`. Should I proceed to Step 7 (Field Testing), or do you want to refine this step?"
+
+## 5. Logging
+Run the `work_logger` skill to record the results of this step.
+- **skill**: `work_logger`
+- **args**:
+    - `integration`: Name of the current integration
+    - `step`: "Step 6: Project Stories"
+    - `status`: "Success"
+    - `output_file`: `1_research/6.project_stories.md`
+    - `summary`: "Documented technical stories..."
+    - `execution_details`: JSON string with:
+        - `files_analyzed`: ["1_research/*.md"]
+        - `files_edited`: ["1_research/6.project_stories.md"]
+        - `actions`: ["Filled Authorization", "Mapped Statuses", "Defined Webhooks"]
+        - `reasoning`: "Narrative of how technical specs were derived."
+

@@ -77,3 +77,19 @@ Verify the provider's integration is compatible with the current system architec
 
 ## User Confirmation
 "Compatibility Check complete. Review `5.compatibility.md`. Proceed to Step 6 or refine?"
+
+## 5. Logging
+Run the `work_logger` skill to record the results of this step.
+- **skill**: `work_logger`
+- **args**:
+    - `integration`: Name of the current integration
+    - `step`: "Step 5: Compatibility"
+    - `status`: "Success"
+    - `output_file`: `1_research/5.compatibility.md`
+    - `summary`: "Checked architectural compatibility..."
+    - `execution_details`: JSON string with:
+        - `files_analyzed`: ["1_research/1.epic_analysis.md", "1_research/2.docs_analysis.md"]
+        - `files_edited`: ["1_research/5.compatibility.md"]
+        - `actions`: ["Assessed flow", "Checked webhooks"]
+        - `reasoning`: "Narrative of the compatibility assessment and any risks identified."
+

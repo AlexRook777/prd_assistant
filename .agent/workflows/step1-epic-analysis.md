@@ -79,3 +79,18 @@ Analyze the Epic or Jira requirements to understand the integration scope and id
 ## User Confirmation
 After creating the file, ask the user:
 - "Epic Analysis complete. Review `1.epic_analysis.md`. Should I proceed to Step 2 (Documentation Analysis), or do you want to refine this step?"
+
+## 5. Logging
+Run the `work_logger` skill to record the results of this step.
+- **skill**: `work_logger`
+- **args**:
+    - `integration`: Name of the current integration
+    - `step`: "Step 1: Epic Analysis"
+    - `status`: "Success"
+    - `output_file`: `1_research/1.epic_analysis.md`
+    - `summary`: "Analyzed epic for [Provider]..."
+    - `execution_details`: JSON string with:
+        - `files_analyzed`: ["0_initial_docs/..."]
+        - `files_edited`: ["1_research/1.epic_analysis.md"]
+        - `actions`: ["Read requirements", "Identified gaps"]
+        - `reasoning`: "Detailed narrative of what you did and why, including thoughts on unclear points."
