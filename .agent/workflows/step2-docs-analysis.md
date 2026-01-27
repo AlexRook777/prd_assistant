@@ -23,6 +23,7 @@ Perform a deep dive into the payment provider's API documentation to understand 
 
 2. **Authentication Analysis**:
    - Identify authentication method (API Key, OAuth, JWT, HMAC signature, etc.)
+   - **Crucial**: Check if `grant_type` (e.g., `client_credentials`) is required in the body, even if Basic Auth is used for headers.
    - Document required headers
    - Note token generation process if applicable
 
@@ -30,6 +31,7 @@ Perform a deep dive into the payment provider's API documentation to understand 
    - List all relevant endpoints (create transaction, check status, webhooks)
    - Document HTTP methods (POST, GET, PUT)
    - Note required and optional parameters
+   - **Error Handling**: Document the JSON structure for API errors and list common HTTP error codes.
 
 4. **Payment Method Codes**:
    - Extract payment method identifiers
@@ -37,14 +39,18 @@ Perform a deep dive into the payment provider's API documentation to understand 
 
 5. **Webhook Structure**:
    - Document callback URL format
-   - Identify webhook authentication/validation method
+   - **Crucial**: Identify specific hashing algorithm for the signature (HMAC-SHA256, MD5?) and where to find the secret.
    - Note expected response acknowledgment
 
 6. **Customer Fields**:
    - List required customer fields (name, email, phone, document ID, etc.)
    - Document field formats and validation rules
 
-7. **Create Documentation**:
+7. **Redirect Flows**:
+   - Map the full redirect flow (success, cancel, failure parameters).
+   - Identify if there are specific failure redirect URLs or just a general one.
+
+8. **Create Documentation**:
 
 ```markdown
 # Documentation Analysis
@@ -94,7 +100,9 @@ Perform a deep dive into the payment provider's API documentation to understand 
 
 ### Webhook Callback
 - **Expected Format**: POST to our callback URL
-- **Authentication**: [Signature in header / HMAC / IP whitelist]
+- **Authentication**: [Signature header name]
+  - **Algorithm**: [HMAC-SHA256 / MD5 / etc]
+  - **Secret Location**: [Dashboard / API Endpoint]
 - **Payload Structure**:
   ```json
   {
@@ -103,6 +111,18 @@ Perform a deep dive into the payment provider's API documentation to understand 
     "timestamp": "..."
   }
   ```
+
+### Error Handling
+- **Error JSON Structure**:
+  ```json
+  {
+    "error": "code",
+    "message": "description"
+  }
+  ```
+- **Common Codes**:
+  - 401: Unauthorized
+  - 422: Validation Error
 
 ## Payment Methods
 
@@ -135,26 +155,14 @@ Perform a deep dive into the payment provider's API documentation to understand 
 ## Success Criteria
 - File `2.docs_analysis.md` created with all sections filled
 - All key endpoints documented with examples
-- Authentication flow clearly described
+- Authentication flow clearly described (including body params)
+- Webhook signature algorithm identified
 - Customer fields table complete
 
 ## User Confirmation
 After creating the file, ask:
 - "Documentation Analysis complete. Review `2.docs_analysis.md`. Should I proceed to Step 3 (Local Test Page), or refine this step?"
 
-## 5. Logging
-Run the `work_logger` skill to record the results of this step.
-- **skill**: `work_logger`
-- **args**:
-    - `integration`: Name of the current integration
-    - `step`: "Step 2: Docs Analysis"
-    - `status`: "Success"
-    - `output_file`: `1_research/2.docs_analysis.md`
-    - `summary`: "Analyzed docs for [Provider]..."
-    - `execution_details`: JSON string with:
-        - `files_analyzed`: ["0_initial_docs/...", "config"]
-        - `files_edited`: ["1_research/2.docs_analysis.md"]
-        - `actions`: ["Analyzed auth", "Mapped endpoints"]
-        - `reasoning`: "Detailed narrative of your analysis process, gaps found, and decisions made."
+
 
 

@@ -85,18 +85,5 @@ Verify API credentials work and compare required fields between the system and p
 ## User Confirmation
 - "Access & Field verification complete. Review `4.access_and_fields.md`. Should I proceed to Step 5 (Compatibility), or do you want to refine this step?"
 
-## 5. Logging
-Run the `work_logger` skill to record the results of this step.
-- **skill**: `work_logger`
-- **args**:
-    - `integration`: Name of the current integration
-    - `step`: "Step 4: Access & Fields"
-    - `status`: "Success"
-    - `output_file`: `1_research/4.access_and_fields.md`
-    - `summary`: "Verified credentials and field requirements..."
-    - `execution_details`: JSON string with:
-        - `files_analyzed`: ["1_research/2.docs_analysis.md"]
-        - `files_edited`: ["1_research/4.access_and_fields.md"]
-        - `actions`: ["Checked credentials", "Compared fields"]
-        - `reasoning`: "Narrative of the field comparison logic and any mismatches found."
+
 

@@ -147,18 +147,5 @@ The page will automatically poll for webhooks every 5 seconds. Review the receiv
 After creating files, ask:
 - "Local Test Page created and transaction verified. Review `3.local_test_page.md` and `3.test_page.html`. Should I proceed to Step 4 (Access & Fields), or do you want to refine this step?"
 
-## 5. Logging
-Run the `work_logger` skill to record the results of this step.
-- **skill**: `work_logger`
-- **args**:
-    - `integration`: Name of the current integration
-    - `step`: "Step 3: Test Page"
-    - `status`: "Success"
-    - `output_file`: `1_research/3.local_test_page.md`
-    - `summary`: "Created test page and verified transaction..."
-    - `execution_details`: JSON string with:
-        - `files_analyzed`: ["config"]
-        - `files_edited`: ["1_research/3.local_test_page.md", "1_research/3.test_page.html"]
-        - `actions`: ["Generated HTML", "Tested transaction"]
-        - `reasoning`: "Narrative of how you verified the API, what payloads were sent, and the outcome."
+
 
