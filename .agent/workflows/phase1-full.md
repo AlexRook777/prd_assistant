@@ -38,10 +38,19 @@ Deep dive into provider's API documentation and create `1_research/2.docs_analys
 - Available payment methods and restrictions
 - API endpoint inventory
 
-### Step 3: Local Test Page
-Invoke the `test_page_generator` skill to create:
+### Step 3: Local Test Page (Split)
+Execute the following two steps:
+
+**Step 3a: Create Test Page**
+Invoke the `step3a-create-test-page` workflow (which uses `test_page_generator` skill) to create:
 - `1_research/3.test_page.html` - Functional test page
-- `1_research/3.local_test_page.md` - Documentation with usage instructions and test results
+- `1_research/3.test_page.md` - Documentation with usage instructions
+
+**Step 3b: Auto Test Page**
+Invoke the `step3b-auto-test-page` workflow to:
+- Automatically test the page with a browser agent
+- Fix issues if found
+- Update `1_research/3.test_page.md` with test results
 
 ### Step 4: Access & Field Verification
 Verify credentials and create `1_research/4.access_and_fields.md` with:

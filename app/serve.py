@@ -5,13 +5,31 @@ import requests
 import json
 import os
 from datetime import datetime
+import logging
+from logging.handlers import RotatingFileHandler
 
 WEBHOOKS = []
 
 PORT = 8000
 DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 
+# Configure logging
+log_file = os.path.join(DIRECTORY, 'serve.log')
+logging.basicConfig(
+    handlers=[
+        RotatingFileHandler(log_file, maxBytes=100*1024, backupCount=1),
+        logging.StreamHandler()
+    ],
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
 class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
+    def log_message(self, format, *args):
+        logging.info("%s - - [%s] %s" %
+                     (self.client_address[0],
+                      self.log_date_time_string(),
+                      format%args))
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=DIRECTORY, **kwargs)
 
@@ -54,7 +72,7 @@ class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     return
 
                 # Forward the request
-                print(f"Proxying {method} to {target_url}")
+                logging.info(f"Proxying {method} to {target_url}")
                 
                 # Filter out headers that might cause issues or should be recreated
                 headers_to_send = {k: v for k, v in headers.items() if k.lower() not in ['host', 'content-length']}
@@ -82,7 +100,7 @@ class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.wfile.write(json.dumps(proxy_response).encode('utf-8'))
 
             except Exception as e:
-                print(f"Error: {e}")
+                logging.error(f"Error: {e}")
                 self.send_response(500)
                 self.send_header('Access-Control-Allow-Origin', '*')
                 self.end_headers()
@@ -106,14 +124,14 @@ class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     'body': body
                 }
                 WEBHOOKS.append(webhook_entry)
-                print(f"Received webhook: {body}")
+                logging.info(f"Received webhook: {body}")
 
                 self.send_response(200)
                 self.send_header('Access-Control-Allow-Origin', '*')
                 self.end_headers()
                 self.wfile.write(b'OK')
             except Exception as e:
-                print(f"Error processing webhook: {e}")
+                logging.error(f"Error processing webhook: {e}")
                 self.send_response(500)
                 self.end_headers()
 
@@ -131,8 +149,8 @@ class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
 if __name__ == "__main__":
     with socketserver.TCPServer(("", PORT), ProxyHTTPRequestHandler) as httpd:
-        print(f"Serving at http://localhost:{PORT}")
-        print(f"Proxy endpoint at http://localhost:{PORT}/proxy")
+        logging.info(f"Serving at http://localhost:{PORT}")
+        logging.info(f"Proxy endpoint at http://localhost:{PORT}/proxy")
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:

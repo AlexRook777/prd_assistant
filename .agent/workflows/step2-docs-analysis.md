@@ -1,10 +1,10 @@
 ---
-description: Phase 1 Step 2 - Analyze provider's API documentation
+description: Phase 1 Step 2 - Analyze provider's API documentation with active verification
 ---
 
-# Step 2: Documentation Analysis
+# Step 2: Documentation Analysis & Active Verification
 
-Perform a deep dive into the payment provider's API documentation to understand authentication, endpoints, and payment flows.
+This step performs a deep dive into the payment provider's API documentation and uses the **API Verification Skill** to actively test the endpoints.
 
 ## Working Directory
 `<current_integration>/1_research/`
@@ -13,170 +13,30 @@ Perform a deep dive into the payment provider's API documentation to understand 
 `2.docs_analysis.md`
 
 ## Prerequisites
-- `config` file must have `PROVIDER_API_DOCUMENTATION_URL` filled in
+- `config` file must have `PROVIDER_API_DOCUMENTATION_URL`, `CLIENT_ID`, and `CLIENT_SECRET` filled in.
+- You must have Internet access to reach the Provider's Sandbox environment.
 
 ## Task
 
-1. **Pre-computation Check (CRITICAL)**:
-   - Check if `2.docs_analysis.md` already exists.
-   - **IF IT EXISTS**:
-     - Read the **ENTIRE** file content.
-     - Treat this file as the **Primary Source of Truth**. Any corrections or specific details in it (e.g. "Currency: USD") must be preserved and supersede raw docs.
-     - **Extract & Preserve**:
-       - Any section labeled "Clarified Points", "User Feedback", or "Questions / Gaps" with answers.
-     - **Integrate**: Ensure the new analysis builds upon these established facts.
-     - **Augment**: Add the `## Clarified Points (User Feedback)` section to formatting if relevant answers are found.
-   - **IF IT DOES NOT EXIST**: Proceed normally.
+1.  **Reference Check**:
+    -   Check if `2.docs_analysis.md` already exists. If so, read it to preserve any clarified points or user feedback.
 
-2. **Read Provider Documentation**:
-   - Open and review the provider's API documentation from the URL in `config`
-   - Also check `0_initial_docs/` for any downloaded documentation PDFs
+2.  **Read Documentation**:
+    -   Review the provider's API documentation (URL in `config`) and any PDFs in `0_initial_docs/`.
 
-2. **Authentication Analysis**:
-   - Identify authentication method (API Key, OAuth, JWT, HMAC signature, etc.)
-   - **Crucial**: Check if `grant_type` (e.g., `client_credentials`) is required in the body, even if Basic Auth is used for headers.
-   - Document required headers
-   - Note token generation process if applicable
-   - **Verification (MANDATORY)**: Run a `curl` command to verify credentials and endpoint *now*. Do not proceed until you have a successful 200 OK response.
-     - If you get 404/401, search for alternative endpoints (e.g., `/oauth2/token` vs `/oauth/token`) or check credentials.
-     - Document the working `curl` command and response structure.
+3.  **Execute API Verification Skill**:
+    -   Use the **API Verification Report** skill (`.agent/skills/api_verification_report/SKILL.md`).
+    -   **Context**:
+        -   Use credentials from the local `config`.
+        -   Target the Sandbox environment.
+        -   Focus on the "Payin" or "Checkout" flow relevant to this integration.
+    -   **Output**: Save the generated report to `2.docs_analysis.md`.
+    -   **Action**: Follow the skill's instructions to:
+        -   Verify Authentication.
+        -   Provide a "Happy Path" transaction creation example.
+        -   Run "Negative Tests" (Validation) to find error codes.
+        -   Compile the "Discrepancy Table".
 
-3. **API Endpoints Inventory**:
-   - List all relevant endpoints (create transaction, check status, webhooks)
-   - Document HTTP methods (POST, GET, PUT)
-   - Note required and optional parameters
-   - **Error Handling**: Document the JSON structure for API errors and list common HTTP error codes.
-
-4. **Payment Method Codes**:
-   - Extract payment method identifiers
-   - Document any country or currency restrictions per method
-
-5. **Webhook Structure**:
-   - Document callback URL format
-   - **Crucial**: Identify specific hashing algorithm for the signature (HMAC-SHA256, MD5?) and where to find the secret.
-   - Note expected response acknowledgment
-
-6. **Customer Fields**:
-   - List required customer fields (name, email, phone, document ID, etc.)
-   - Document field formats and validation rules
-
-7. **Redirect Flows**:
-   - Map the full redirect flow (success, cancel, failure parameters).
-   - Identify if there are specific failure redirect URLs or just a general one.
-
-8. **Create Documentation**:
-
-```markdown
-# Documentation Analysis
-
-**Provider**: [Provider Name]  
-**Documentation URL**: [Link from config]  
-**Date**: [Current Date]
-
-## Authentication
-
-### Method
-[API Key / OAuth 2.0 / JWT / HMAC / Basic Auth]
-
-### Token Generation
-- **Endpoint**: `[POST /auth/token]`
-- **Required Headers**: 
-  - `Authorization: Basic <base64(client_id:client_secret)>`
-- **Request Body**:
-  ```json
-  {
-    "grant_type": "client_credentials"
-  }
-  ```
-- **Response**:
-  ```json
-  {
-    "access_token": "eyJhbGc...",
-    "expires_in": 3600
-  }
-  ```
-
-## API Endpoints
-
-### Create Transaction
-- **Endpoint**: `[POST /api/v1/transactions]`
-- **Authentication**: [Bearer Token]
-- **Required Parameters**:
-  - `amount` (integer, cents)
-  - `currency` (string, ISO 4217)
-  - `customer.email` (string)
-  - [etc.]
-
-### Check Status
-- **Endpoint**: `[GET /api/v1/transactions/{id}]`
-- **Authentication**: [Bearer Token]
-- **Response Statuses**: [pending, success, failed, etc.]
-
-### Webhook Callback
-- **Expected Format**: POST to our callback URL
-- **Authentication**: [Signature header name]
-  - **Algorithm**: [HMAC-SHA256 / MD5 / etc]
-  - **Secret Location**: [Dashboard / API Endpoint]
-- **Payload Structure**:
-  ```json
-  {
-    "transaction_id": "...",
-    "status": "success",
-    "timestamp": "..."
-  }
-  ```
-
-### Error Handling
-- **Error JSON Structure**:
-  ```json
-  {
-    "error": "code",
-    "message": "description"
-  }
-  ```
-- **Common Codes**:
-  - 401: Unauthorized
-  - 422: Validation Error
-
-## Payment Methods
-
-| Method Code | Description | Countries | Currencies |
-|-------------|-------------|-----------|------------|
-| `wallet` | Digital wallet | EC | USD |
-| [etc.] | | | |
-
-## Required Customer Fields
-
-| Field | Format | Required | Example |
-|-------|--------|----------|---------|
-| `email` | Email | Yes | `user@example.com` |
-| `phone` | E.164 | No | `+593991234567` |
-| `document_id` | Alphanumeric | Yes | `1234567890` |
-
-## Restrictions & Quirks
-- [Any unusual requirements]
-- [Rate limits]
-- [Sandbox vs Production differences]
-
-## Questions / Gaps
-- [Any unclear documentation]
-- [Missing information]
-
-## Next Steps
-- [ ] Proceed to Step 3 (Local Test Page)
-```
-
-## Success Criteria
-- File `2.docs_analysis.md` created with all sections filled
-- All key endpoints documented with examples
-- Authentication flow clearly described (including body params)
-- Webhook signature algorithm identified
-- Customer fields table complete
-
-## User Confirmation
-After creating the file, ask:
-- "Documentation Analysis complete. Review `2.docs_analysis.md`. Should I proceed to Step 3 (Local Test Page), or refine this step?"
-
-
-
-
+4.  **Final Review**:
+    -   Ensure the generated `2.docs_analysis.md` follows the format defined in the Skill.
+    -   Verify that it contains *real* `curl` output, not just documentation copies.

@@ -55,7 +55,8 @@ This skill is specifically designed for **Phase 1, Step 3** of the integration w
 - **Robust Parsing**: Handle nested JSON responses (e.g., `data.data.access_token` vs `data.access_token`). Check multiple common paths for tokens and links.
 - **Valid Data**: Use valid, check-summed national IDs (CI, CPF) by default. VALIDATE document types (e.g., 'CI' vs 'CC').
 - **Comprehensive Field Coverage**:
-    - **Analyze API Params**: You MUST analyze the API documentation to identify **ALL** possible parameters for the transaction endpoint (mandatory AND optional).
+    - **Analyze API Params**: You MUST read `1_research/2.docs_analysis.md` to identify **ALL** parameters for the transaction endpoint (mandatory AND optional).
+    - **Field Completeness**: You MUST include input fields for **ALL** parameters identified in the analysis. Do NOT skip optional fields.
     - **No Hardcoding**: Create UI inputs for ALL identified parameters. Do NOT hardcode values in the JS logic (except for sensible defaults in the input `value` attribute).
     - **Critical Fields**: Ensure you include inputs for often-missed fields such as:
         - `currency`, `country`
@@ -67,6 +68,12 @@ This skill is specifically designed for **Phase 1, Step 3** of the integration w
         - Phone numbers (e.g., "E.164 format: +593...")
         - Dates (e.g., "YYYY-MM-DD")
         - IDs (e.g., "CPF", "CI")
+    - **Sorting & Grouping**:
+        - **Sort Order**: strict "Mandatory First, then Optional".
+        - **Grouping**: Within those two primary categories, group fields logically (e.g., Customer info together, Transaction info together).
+    - **Layout Rules**:
+        - If there are **more than 6 fields** total in a section (e.g., "Create Transaction"), you **MUST** use a 2-column grid layout.
+        - If 6 or fewer, use a single column.
     - **UI Indicators**:
         - Mark all mandatory fields with a red asterisk (*) in the label.
         - Use CSS to style the asterisk appropriately (e.g., `color: var(--error)`).
@@ -112,13 +119,13 @@ If requested, execute automated testing:
 8. Click "Refresh Webhooks" to fetch webhooks
 9. View the webhooks list in chronological order
 10. Click "Copy Webhooks" to copy the entire list
-11. Write test results in `1_research/3.local_test_page.md` as a new section "Test Results"
+11. Write test results in `1_research/3.test_page.md` as a new section "Test Results"
 
 ## Output Requirements
 
 **Files to Create**:
 1. `<integration_folder>/1_research/3.test_page.html` - The functional test page
-2. `<integration_folder>/1_research/3.local_test_page.md` - Documentation with:
+2. `<integration_folder>/1_research/3.test_page.md` - Documentation with:
    - Embedded link to the HTML file
    - Instructions for using the test page
    - (If Phase 2 executed) Screenshots/Logs of successful transaction
@@ -168,7 +175,7 @@ You should:
 1. Read the integration's `config` file.
 2. Read the provider's API documentation
 3. Generate `3.test_page.html` with all required functionality
-4. Create `3.local_test_page.md` with usage instructions
+4. Create `3.test_page.md` with usage instructions
 5. If user requests, execute automated testing with browser tool
 
 ## Related Resources

@@ -43,7 +43,7 @@ Open the integration folder in Antigravity and run:
 **Option B: Full phase** (automated)
 ```
 /phase1-full
-[Agent executes all 7 steps, confirms between steps]
+[Agent executes all Steps 1-7 (including 3a/3b), confirms between steps]
 ```
 
 ## Project Structure
@@ -58,7 +58,8 @@ prd_assistant/
 │       ├── phase1-full.md        # /phase1-full
 │       ├── step1-epic-analysis.md
 │       ├── step2-docs-analysis.md
-│       ├── step3-test-page.md
+│       ├── step3a-create-test-page.md
+│       ├── step3b-auto-test-page.md
 │       ├── step4-access-fields.md
 │       ├── step5-compatibility.md
 │       ├── step6-project-stories.md
@@ -106,16 +107,21 @@ prd_assistant/
     *   Authentication method analysis.
     *   List of available payment methods and restrictions.
 
-#### Step 3: Local Test Page
-**Command**: `/step3-test-page`
-**File**: `1_research/3.local_test_page.md`
-*   **Action**: Create a functional HTML test page in file `1_research/3.test_page.html` to verify API behavior physically.
-*   **Instructions**:
-    1.  Populate the `config` file with `PROVIDER_API_DOCUMENTATION_URL`, `TEST_POST_WEBHOOK_URL`, `TEST_GET_WEBHOOK_URL`.
-    2.  Use the test page generator skill (or run slash command).
+#### Step 3a: Create Test Page
+**Command**: `/step3a-create-test-page`
+**File**: `1_research/3.test_page.md`
+*   **Action**: Create a functional HTML test page in file `1_research/3.test_page.html`.
 *   **Content**:
     *   The generated HTML file (embedded or linked).
-    *   Screenshots/Logs of a successful transaction created via this page.
+    *   Usage instructions.
+
+#### Step 3b: Auto Test Page
+**Command**: `/step3b-auto-test-page`
+**File**: `1_research/3.test_page.md` (Update)
+*   **Action**: Automatically test the page using a browser agent and fix issues.
+*   **Content**:
+    *   Screenshots/Logs of a successful transaction.
+    *   Test Results section.
 
 #### Step 4: Access & Field Verification
 **Command**: `/step4-access-fields`
@@ -251,7 +257,7 @@ Auto-triggered during Step 3 or when user mentions "create test page".
 
 **Output**:
 - `3.test_page.html`
-- `3.local_test_page.md` (with usage instructions)
+- `3.test_page.md` (with usage instructions)
 
 
 ## Tips
