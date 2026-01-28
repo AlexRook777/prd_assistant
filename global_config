@@ -1,2 +1,0 @@
-TEST_POST_WEBHOOK_URL = https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/:orderId
-TEST_GET_WEBHOOK_URL = https://n8n.4bill.io/webhook/ea6540ee-da8f-499e-a2bb-92111e8fb689/:orderId

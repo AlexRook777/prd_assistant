@@ -1,4 +1,3 @@
-# Project Rules: SmartFastPay Ecuador USD Payin HPP
+# Integration-Specific Rules
 
 Local overrides and specific context for this integration.
-

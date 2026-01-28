@@ -37,6 +37,9 @@ Perform a deep dive into the payment provider's API documentation to understand 
    - **Crucial**: Check if `grant_type` (e.g., `client_credentials`) is required in the body, even if Basic Auth is used for headers.
    - Document required headers
    - Note token generation process if applicable
+   - **Verification (MANDATORY)**: Run a `curl` command to verify credentials and endpoint *now*. Do not proceed until you have a successful 200 OK response.
+     - If you get 404/401, search for alternative endpoints (e.g., `/oauth2/token` vs `/oauth/token`) or check credentials.
+     - Document the working `curl` command and response structure.
 
 3. **API Endpoints Inventory**:
    - List all relevant endpoints (create transaction, check status, webhooks)

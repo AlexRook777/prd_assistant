@@ -1,8 +1,0 @@
-# Configuration file for payment provider integration
-
-# Provider API Documentation
-PROVIDER_API_DOCUMENTATION_URL=https://docs.provider.com/api/v1
-
-# Provider API Credentials (from provider's dashboard)
-CLIENT_ID=your_client_id_here
-CLIENT_SECRET=your_client_secret_here

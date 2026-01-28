@@ -63,6 +63,10 @@ prd_assistant/
 │       ├── step5-compatibility.md
 │       ├── step6-project-stories.md
 │       └── step7-field-testing.md
+├── app/                      # Centralized helper apps
+│   ├── serve.py              # Local testing server (CORS + Webhooks)
+│   ├── webhook_viewer.html   # Webhook Visualization UI
+│   └── serve.log             # Server logs
 ├── global_rules/
 │   └── master_prd.yaml           # PRD schema definition
 ├── integrations/
@@ -213,12 +217,26 @@ Create 3-4 integrations daily from standardized template:
 
 ### Configuration Files
 Every integration has:
-- `config`: API credentials, documentation URL. **Note**: Inherits defaults from `global_config` in root if not specified.
+- `config`: API credentials, documentation URL.
 - `project_rules.md` (optional): Integration-specific overrides
 
-### Global Configuration
-- `global_config`: Shared variables (e.g. `TEST_POST_WEBHOOK_URL`) located in the root directory.
+### Centralized App (`app/`)
+Contains utility tools to support testing across all integrations:
+- **`serve.py`**: A unified local server that handles:
+    - **CORS Proxy**: `POST /proxy`
+    - **Webhook Ingestion**: `POST /webhook`
+    - **API**: `GET/DELETE /api/webhooks`
+- **`webhook_viewer.html`**: A modern UI for viewing caught webhooks.
 
+**Usage**:
+The workflows (e.g., `/step3-test-page`) automatically manage this server.
+To run manually:
+```bash
+# From repository root
+nohup python3 app/serve.py > /dev/null 2>&1 &
+```
+- Webhook Viewer: [http://localhost:8000/webhook_viewer.html](http://localhost:8000/webhook_viewer.html)
+- Webhook Ingest URL: `http://localhost:8000/webhook`
 
 ## Skills
 

@@ -16,8 +16,8 @@ Create a functional HTML test page to physically verify the payment provider's A
 ## Prerequisites
 - `config` file must have:
   - `PROVIDER_API_DOCUMENTATION_URL`
-  - `TEST_POST_WEBHOOK_URL`
-  - `TEST_GET_WEBHOOK_URL`
+- `global_config` file **NO LONGER REQUIRED** to have `TEST_POST_WEBHOOK_URL`.
+  - We now use the local `serve.py` which provides `http://localhost:8000/webhook`.
 
 ## Task
 
@@ -29,13 +29,24 @@ Create a functional HTML test page to physically verify the payment provider's A
      - Extract **Issues Found**.
      - **Preserve** these details in the new report.
    - **IF IT DOES NOT EXIST**: Proceed normally.
+   - **ENSURE PORT 8000 IS CLEAR & START SERVER**:
+     - **Linux**: `fuser -k 8000/tcp` followed by `nohup python3 app/serve.py > /dev/null 2>&1 &` (run from repo root)
+     - **Mac**: `lsof -ti:8000 | xargs kill -9` followed by `nohup python3 app/serve.py > /dev/null 2>&1 &`
+     - **Windows**: `taskkill /F /IM python.exe /T` (to kill) -> `start /B python app/serve.py`
+     - **WAIT** 2 seconds for server to start.
 
 2. This step **automatically invokes** the `test_page_generator` skill. The skill will:
 
 1. Read the provider's API documentation
-2. Read the `config` file for webhook URLs and API details
-3. Generate a functional HTML test page (`3.test_page.html`)
+2. Read the `config` file for API details
+3. **Generate a functional HTML test page** (`3.test_page.html`) that **INCLUDES** the Webhook Viewer UI.
 4. Create documentation (`3.local_test_page.md`)
+
+### Data Requirements (CRITICAL)
+- **Valid Documents**: You MUST use a valid national ID number for the target country (e.g., valid Ecuador CI with checksum, valid Brazil CPF).
+  - Search for "valid [Country] ID generator" or use a known valid test number.
+  - **DO NOT** use `1234567890` or random strings, as most APIs validate checksums.
+- **Strict Typing**: Ensure document type codes match the country (e.g., `CI` for Ecuador vs `CC` or `RUC`) based on Docs Analysis.
 
 ### What the Test Page Must Include
 

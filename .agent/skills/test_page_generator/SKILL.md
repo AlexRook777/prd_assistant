@@ -14,53 +14,87 @@ Automatically activate when user mentions:
 
 This skill is specifically designed for **Phase 1, Step 3** of the integration workflow.
 
+
 ## Prerequisites
-The following must be configured in the integration's `config` file:
-- `PROVIDER_API_DOCUMENTATION_URL`: Link to the provider's API documentation
-- `TEST_POST_WEBHOOK_URL`: Universal webhook test URL (format: `https://webhook.site/unique-uuid-{orderId}`)
-- `TEST_GET_WEBHOOK_URL`: URL to retrieve webhooks via GET request (protected by Basic Auth)
+- `global_config` file **NO LONGER REQUIRED** to have `TEST_POST_WEBHOOK_URL` as we use local `serve.py`.
 
 ## Task Description
 
 ### Phase 1: Create Test Page
 
-**Step 1**: Create a test HTML page where the user can:
-- Enter all required credentials (from the provider's documentation)
-- Receive a payment link
-- Open the payment link in a new tab
-- Check payment status via a button
-- View updated payment status within the payment details on the page
+**Step 1**: Create a test HTML page with a **Proxy Switcher**:
+- The "API Credentials" card header must have a toggle switch on the right side labeled "Use Proxy".
+- If enabled, all API requests (OAuth, Transaction, Status) must be routed through `http://localhost:8000/proxy`.
+- If disabled, requests go directly to the provider's API.
+- The page must allow the user to:
+    - Enter all required credentials
+    - Receive a payment link
+    - Open the payment link in a new tab
+    - Check payment status via a button
+    - View updated payment status within the payment details on the page
 
 **Step 2**: Add optional callback URL configuration. The page must include:
 - Option to view and copy all requests and responses (including headers)
 - Request log with individual entry copy functionality
 - Button to copy the entire log (including URL, method, headers, body, and response)
 
-**Step 3**: Design the page to be professional and user-friendly. However, **functional correctness and flexibility** in configuring request parameters is the main priority. 
-- Save all entered credentials in `sessionStorage` so they persist on page reload
+**Step 3**: Design and Logic Requirements.
+- **MANDATORY**: You **MUST** use the standard CSS and HTML structure definitions from `resources/style_guide.md`. Read this file before generating the HTML.
+- **Proxy Logic**:
+    - **Header Layout**: Use `<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;"><h2>API Credentials</h2><div class="switch-container">...</div></div>`.
+    - **Persistence**: Save the switch state in `sessionStorage` (key: `use-proxy`).
+    - **Request Format (Proxy ON)**:
+        - URL: `http://localhost:8000/proxy`
+        - Method: `POST`
+        - Body: `JSON.stringify({ url: targetUrl, method: targetMethod, headers: targetHeaders, body: targetBody })`
+    - **Response Handling (Proxy ON)**:
+        - The proxy *always* returns 200 if the proxying succeeded.
+        - The actual upstream response is in the JSON body: `{ status: <int>, headers: <dict>, body: <string|obj> }`.
+        - **CRITICAL**: The `body` from the proxy might be a JSON **string** (serialized) or an object. You **MUST** check if `data.body` is a string and, if so, `JSON.parse()` it before using it.
+        - You MUST unwrap this to treat it effectively as the real response (e.g., use `data.status` for success checks).
+- **Robust Parsing**: Handle nested JSON responses (e.g., `data.data.access_token` vs `data.access_token`). Check multiple common paths for tokens and links.
+- **Valid Data**: Use valid, check-summed national IDs (CI, CPF) by default. VALIDATE document types (e.g., 'CI' vs 'CC').
+- **Comprehensive Field Coverage**:
+    - **Analyze API Params**: You MUST analyze the API documentation to identify **ALL** possible parameters for the transaction endpoint (mandatory AND optional).
+    - **No Hardcoding**: Create UI inputs for ALL identified parameters. Do NOT hardcode values in the JS logic (except for sensible defaults in the input `value` attribute).
+    - **Critical Fields**: Ensure you include inputs for often-missed fields such as:
+        - `currency`, `country`
+        - `payment_method` (e.g., as a text input or select)
+        - `notification_url` / `callback_url`
+        - `customer.email`, `customer.phone`, `customer.address`
+        - `customer.document.type` (if applicable)
+    - **Format Hints**: Provide placeholder text or labels indicating required formats, especially:
+        - Phone numbers (e.g., "E.164 format: +593...")
+        - Dates (e.g., "YYYY-MM-DD")
+        - IDs (e.g., "CPF", "CI")
+    - **UI Indicators**:
+        - Mark all mandatory fields with a red asterisk (*) in the label.
+        - Use CSS to style the asterisk appropriately (e.g., `color: var(--error)`).
+- **Standard Fields**: Include `email`, `phone`, `name`, `document` in the form payload *even if* documentation says optional. Sandbox often requires them.
+- Save all entered credentials in `sessionStorage` so they persist on page reload (including the proxy switch state)
 - Clear credentials when the browser is closed
 - Use a clean, modern design with proper form validation
 
 **Step 4**: Webhook Verification
-- Use the universal test URL from config: `{TEST_POST_WEBHOOK_URL}` where `orderId` is substituted dynamically and uniquely for each transaction
-- To retrieve webhooks, use GET request to `{TEST_GET_WEBHOOK_URL}` (protected by Basic Auth)
-- User will enter the Basic Auth username and password in the form before creating a transaction
-- After transaction creation, automatically fetch processed webhooks every 5 seconds
-- Display webhooks in chronological order in the interface
-- Add a manual refresh button
-- Expected webhook response format:
+- **Hardcode** the webhook URL to `http://localhost:8000/webhook`.
+- **Hardcode** the polling endpoint to `http://localhost:8000/api/webhooks`.
+- **EMBED THE WEBHOOK VIEWER UI**:
+  - Do not just make a list. create a dedicated section that mimics the functionality of `serve.py`'s webhook viewer.
+  - See `repos/prd_assistant/app/webhook_viewer.html` for reference on CSS and Logic.
+  - It MUST include:
+    - Auto-polling every 5 seconds.
+    - "Refresh" and "Clear Logs" buttons (Clear logs via `DELETE /api/webhooks`).
+    - Expandable details for Body and Headers.
+    - Copy buttons.
+- Display webhooks in chronological order (newest first).
+- Expected webhook response format from `http://localhost:8000/api/webhooks`:
   ```json
   [
     {
-      "_id": "694b97fc8faa2c4927f343f3",
-      "callbackRawData": {
-        "headers": {},
-        "query": {},
-        "body": {}
-      },
-      "timestamp": "2025-12-24T07:36:28.893Z",
-      "timestampEpoch": 1766561788893,
-      "callbackId": "orderId"
+      "method": "POST",
+      "headers": {...},
+      "body": {...},
+      "timestamp": "2026-01-28T07:36:33.640932"
     }
   ]
   ```
@@ -131,7 +165,7 @@ User might say:
 > "Execute Step 3 - create the local test page for this integration"
 
 You should:
-1. Read the integration's `config` file. If `TEST_POST_WEBHOOK_URL` or `TEST_GET_WEBHOOK_URL` are missing, read them from `global_config` in the root directory.
+1. Read the integration's `config` file.
 2. Read the provider's API documentation
 3. Generate `3.test_page.html` with all required functionality
 4. Create `3.local_test_page.md` with usage instructions
@@ -140,3 +174,4 @@ You should:
 ## Related Resources
 - Example test page: `examples/sample_test_page.html`
 - Webhook format reference: `resources/webhook_format.json`
+- **Style Guide**: `resources/style_guide.md` (Contains mandatory CSS and Layout definitions)
