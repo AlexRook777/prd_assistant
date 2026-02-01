@@ -2,7 +2,7 @@
 description: Phase 1 Step 2 - Analyze provider's API documentation with active verification
 ---
 
-# Step 2: Documentation Analysis & Active Verification
+# Step 2: Documentation & API Verification
 
 This step performs a deep dive into the payment provider's API documentation and uses the **API Verification Skill** to actively test the endpoints.
 

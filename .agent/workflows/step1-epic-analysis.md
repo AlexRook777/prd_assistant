@@ -35,6 +35,7 @@ Analyze the Epic or Jira requirements to understand the integration scope and id
    - Target countries/regions
    - Flow type (H2H, Redirect, HPP)
    - Transaction types (Payin, Payout, Refund)
+   - **BetterBro Alignment**: Search for "BetterBro Service URL" or specific "Service Rule" mentioned in the ticket.
    - Special requirements or constraints
 
 3. **Identify Gaps**:
@@ -58,6 +59,10 @@ Analyze the Epic or Jira requirements to understand the integration scope and id
 - **Flow Type**: [H2H/Redirect/HPP]
 - **Transaction Types**: [Payin/Payout/Refund]
 
+## BetterBro Alignment (Draft)
+- **Service Rule**: [e.g. Acquiring Form / H2H / Payouts] (if provided in Epic)
+- **BetterBro Service URL**: [Link if provided] (if provided in Epic)
+
 ## Requirements
 - [Bullet list of business requirements]
 - [Include volume expectations if mentioned]
@@ -73,9 +78,6 @@ Analyze the Epic or Jira requirements to understand the integration scope and id
 - [Question 2 for Product Owner]
 - [etc.]
 
-## BetterBro Compatibility
-- [Any requirements that might conflict with BetterBro standards]
-- [Suggested resolutions]
 
 ## Next Steps
 - [ ] Clarify unclear points with PO

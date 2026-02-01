@@ -8,12 +8,13 @@ This project handles 3-4 payment provider integrations daily using a standardize
 ## Quick Start
 
 ### 1. Create New Integration
-```bash
-# Copy the template
-cp -r integrations/_TEMPLATE integrations/Integration_ProviderName_Country_Currency_Method
-
-# Example: Integration_SmartFastPay_Ecuador_USD_PayinHPP
+Run the workflow command:
 ```
+/create-new-integration
+```
+*   **Prompt**: The agent will ask for the integration name.
+*   **Convention**: `Integration_<ProviderName> <Country> <Currency> <Flow>`
+*   **Example**: `Integration_SmartFastPay Ecuador USD Payin HPP`
 
 ### 2. Prepare Integration Folder
 ```bash
@@ -34,8 +35,11 @@ Open the integration folder in Antigravity and run:
 /step2-docs-analysis
 [Review output, re-run if needed]
 
-/step3-test-page
+/step3-create-test-page
 [Review output, test manually, re-run if needed]
+
+/step4-auto-test-page
+[Automated verification]
 
 ... continue through step7
 ```
@@ -57,10 +61,9 @@ prd_assistant/
 │   └── workflows/
 │       ├── phase1-full.md        # /phase1-full
 │       ├── step1-epic-analysis.md
-│       ├── step2-docs-analysis.md
-│       ├── step3a-create-test-page.md
-│       ├── step3b-auto-test-page.md
-│       ├── step4-access-fields.md
+│       ├── step2-doc-and-api-analysis.md
+│       ├── step3-create-test-page.md
+│       ├── step4-auto-test-page.md
 │       ├── step5-compatibility.md
 │       ├── step6-project-stories.md
 │       └── step7-field-testing.md
@@ -98,8 +101,8 @@ prd_assistant/
     *   Identification of unclear points.
     *   List of questions for the Product Owner (PO).
 
-#### Step 2: Documentation Analysis
-**Command**: `/step2-docs-analysis`
+#### Step 2: Documentation & API Analysis
+**Command**: `/step2-doc-and-api-analysis`
 **File**: `1_research/2.docs_analysis.md`
 *   **Action**: Deep dive into the provider's documentation.
 *   **Content**:
@@ -107,31 +110,21 @@ prd_assistant/
     *   Authentication method analysis.
     *   List of available payment methods and restrictions.
 
-#### Step 3a: Create Test Page
-**Command**: `/step3a-create-test-page`
+#### Step 3: Create Test Page
+**Command**: `/step3-create-test-page`
 **File**: `1_research/3.test_page.md`
 *   **Action**: Create a functional HTML test page in file `1_research/3.test_page.html`.
 *   **Content**:
     *   The generated HTML file (embedded or linked).
     *   Usage instructions.
 
-#### Step 3b: Auto Test Page
-**Command**: `/step3b-auto-test-page`
-**File**: `1_research/3.test_page.md` (Update)
+#### Step 4: Auto Test Page
+**Command**: `/step4-auto-test-page`
+**File**: `1_research/4.auto_test_page.md`
 *   **Action**: Automatically test the page using a browser agent and fix issues.
 *   **Content**:
     *   Screenshots/Logs of a successful transaction.
     *   Test Results section.
-
-#### Step 4: Access & Field Verification
-**Command**: `/step4-access-fields`
-**File**: `1_research/4.access_and_fields.md`
-*   **Action**:
-    *   Verify credentials (login to portal, API keys).
-    *   Compare `service.fields` required for transaction creation against the documentation.
-*   **Content**:
-    *   Status of access (Ready/Pending).
-    *   Table comparing "Requested Fields" vs "Actual Provider Fields".
 
 #### Step 5: Compatibility Check
 **Command**: `/step5-compatibility`
@@ -235,7 +228,7 @@ Contains utility tools to support testing across all integrations:
 - **`webhook_viewer.html`**: A modern UI for viewing caught webhooks.
 
 **Usage**:
-The workflows (e.g., `/step3-test-page`) automatically manage this server.
+The workflows (e.g., `/step3-create-test-page`) automatically manage this server.
 To run manually:
 ```bash
 # From repository root
@@ -263,9 +256,9 @@ Auto-triggered during Step 3 or when user mentions "create test page".
 ## Tips
 
 ### Creating New Integrations
-1. Always copy from `_TEMPLATE`, don't create from scratch
-2. Fill `config` before starting workflows
-3. Populate `0_initial_docs/` with Epic and provider docs
+1. Use `/create-new-integration` to scaffold the folder structure automatically.
+2. Fill the `config` file with credentials and API documentation URLs.
+3. Populate `0_initial_docs/` with the Epic (Jira) requirements and official provider PDF/Markdown docs.
 
 ### Iterative Refinement
 ```
@@ -275,7 +268,7 @@ Agent: [Creates 2.docs_analysis.md]
 You: The authentication section is incomplete, re-run step 2
 Agent: [Re-runs step 2 with more detail]
 
-You: Perfect! /step3-test-page
+You: Perfect! /step3-create-test-page
 ```
 
 ### Custom Rules

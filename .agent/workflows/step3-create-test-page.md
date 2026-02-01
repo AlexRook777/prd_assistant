@@ -41,4 +41,4 @@ Create a functional HTML test page to physically verify the payment provider's A
 - `3.test_page.md` created with usage instructions
 
 ## Next Steps
-- Run `/step3b-auto-test-page` to automatically test the page with a browser agent.
+- Run `/step4-auto-test-page` to automatically test the page with a browser agent.

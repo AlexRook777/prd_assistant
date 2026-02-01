@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartFastPay Ecuador Testing Console</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00ff88;
+            --primary-dark: #00cc6e;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: #334155;
+            --error: #ef4444;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        h1 {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-dim);
+            margin-bottom: 0.25rem;
+        }
+
+        label .required {
+            color: var(--error);
+            margin-left: 0.125rem;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            background-color: #0f172a;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.875rem;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: #0f172a;
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        button.secondary {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        button.secondary:hover {
+            background-color: rgba(0, 255, 136, 0.1);
+        }
+
+        button.danger {
+            background-color: transparent;
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+
+        button.danger:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        .log-container,
+        .webhook-container {
+            height: 400px;
+            overflow-y: auto;
+            background-color: #0c111d;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.75rem;
+        }
+
+        .log-entry,
+        .webhook-entry {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .log-entry:last-child,
+        .webhook-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+        }
+
+        .status-badge {
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background-color: #f59e0b;
+            color: #fff;
+        }
+
+        .status-success {
+            background-color: #22c55e;
+            color: #fff;
+        }
+
+        .status-failed {
+            background-color: #ef4444;
+            color: #fff;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: #e2e8f0;
+            background: #1e293b;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin: 0.25rem 0;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 0.7rem;
+            padding: 0;
+            text-decoration: underline;
+        }
+
+        .grid-span-2 {
+            grid-column: 1 / -1;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            color: var(--text-dim);
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .loading-spinner {
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #payment-link-container {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 6px;
+            display: none;
+        }
+
+        #payment-link-container a {
+            color: var(--primary);
+            word-break: break-all;
+        }
+
+        .switch-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #334155;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--primary);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(24px);
+        }
+
+        .header-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .webhook-details {
+            margin-top: 0.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--border);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>SmartFastPay Ecuador Testing Console</h1>
+
+        <div class="card">
+            <div class="header-controls">
+                <h2>API Credentials</h2>
+                <div class="switch-container">
+                    <label for="use-proxy">Use Proxy</label>
+                    <label class="switch">
+                        <input type="checkbox" id="use-proxy" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="client-id">Client ID <span class="required">*</span></label>
+                <input type="text" id="client-id" value="fd8111f7-6ace-4789-b05a-40a6a36cb0be">
+            </div>
+            <div class="form-group">
+                <label for="client-secret">Client Secret <span class="required">*</span></label>
+                <input type="password" id="client-secret" value="nST8TYE78oANwe6dvhMiCQQZfthIoWlG">
+            </div>
+            <div class="form-group">
+                <label for="access-token">Access Token</label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="text" id="access-token" placeholder="Authorization Bearer">
+                    <button id="btn-get-token" style="white-space: nowrap;">Get Token</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Create Transaction</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="cust-id">Customer ID <span class="required">*</span></label>
+                    <input type="text" id="cust-id" value="cust-ecu-101">
+                </div>
+                <div class="form-group">
+                    <label for="trans-id">Transaction ID <span class="required">*</span></label>
+                    <input type="text" id="trans-id" value="">
+                </div>
+                <div class="form-group">
+                    <label for="currency">Currency <span class="required">*</span></label>
+                    <input type="text" id="currency" value="USD">
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount <span class="required">*</span></label>
+                    <input type="number" id="amount" value="25.00" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="country">Country <span class="required">*</span></label>
+                    <input type="text" id="country" value="ECU">
+                </div>
+                <div class="form-group">
+                    <label for="payment-method">Payment Methods (comma separated) <span
+                            class="required">*</span></label>
+                    <input type="text" id="payment-method" value="bank_transfer">
+                </div>
+                <div class="form-group full-width">
+                    <label for="notification-url">Notification URL <span class="required">*</span></label>
+                    <input type="text" id="notification-url" value="http://localhost:8000/webhook">
+                </div>
+
+                <div class="form-group">
+                    <label for="cust-name">Customer Name</label>
+                    <input type="text" id="cust-name" value="Ecuador Verifier">
+                </div>
+                <div class="form-group">
+                    <label for="cust-email">Customer Email</label>
+                    <input type="email" id="cust-email" value="verifier@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="doc-type">Doc Type</label>
+                    <select id="doc-type">
+                        <option value="PA">Passport (PA)</option>
+                        <option value="CI">Cédula de Identidad (CI)</option>
+                        <option value="RUC">RUC</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="doc-number">Doc Number</label>
+                    <input type="text" id="doc-number" value="A12345678">
+                </div>
+                <div class="form-group full-width">
+                    <label for="redirect-url">Redirect URL</label>
+                    <input type="text" id="redirect-url" value="https://example.com/success">
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button id="btn-create-tx" class="full-width">Create Transaction</button>
+                <button id="btn-check-status" class="secondary" disabled>Check Status</button>
+            </div>
+
+            <div id="payment-link-container">
+                <p><strong>Payment Link:</strong></p>
+                <a href="#" id="payment-link" target="_blank"></a>
+            </div>
+            <div id="status-container" style="margin-top: 1rem; display: none;">
+                <p><strong>Status:</strong> <span id="payment-status-badge" class="status-badge"></span></p>
+            </div>
+        </div>
+
+        <div class="card grid-span-2">
+            <div class="tabs">
+                <div class="tab active" data-target="api-logs">API Logs</div>
+                <div class="tab" data-target="webhook-logs">Webhooks</div>
+                <div style="margin-left: auto; display: flex; gap: 0.5rem;">
+                    <button class="secondary copy-btn" id="btn-copy-all-logs"
+                        style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Copy All Logs</button>
+                    <button class="danger secondary" id="btn-clear-webhooks"
+                        style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Clear Webhooks</button>
+                </div>
+            </div>
+            <div id="api-logs" class="log-container">
+                <div style="color: var(--text-dim);">API logs will appear here...</div>
+            </div>
+            <div id="webhook-logs" class="webhook-container" style="display: none;">
+                <div style="color: var(--text-dim);">Webhooks will appear here (auto-polling)...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const proxyUrl = 'http://localhost:8000/proxy';
+        const webhookListUrl = 'http://localhost:8000/api/webhooks';
+        
+        let lastTransactionId = null;
+
+        window.addEventListener('load', () => {
+            const fields = [
+                'client-id', 'client-secret', 'access-token', 
+                'cust-id', 'currency', 'amount', 'country', 
+                'payment-method', 'notification-url', 'cust-name', 
+                'cust-email', 'doc-type', 'doc-number', 'redirect-url'
+            ];
+            fields.forEach(id => {
+                const val = sessionStorage.getItem(id);
+                if (val) document.getElementById(id).value = val;
+            });
+            const useProxy = sessionStorage.getItem('use-proxy');
+            if (useProxy !== null) {
+                document.getElementById('use-proxy').checked = useProxy === 'true';
+            }
+            if (!document.getElementById('trans-id').value) {
+                document.getElementById('trans-id').value = 'tx_' + Date.now();
+            }
+        });
+
+        document.querySelectorAll('input, select').forEach(el => {
+            el.addEventListener('change', () => {
+                if (el.id === 'use-proxy') {
+                    sessionStorage.setItem(el.id, el.checked);
+                } else {
+                    sessionStorage.setItem(el.id, el.value);
+                }
+            });
+        });
+
+        const logApi = (method, url, status, headers, body, response) => {
+            const container = document.getElementById('api-logs');
+            if (container.children.length > 0 && container.firstChild.style?.color === 'var(--text-dim)') {
+                container.innerHTML = '';
+            }
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            const timestamp = new Date().toLocaleTimeString();
+            const statusClass = status >= 200 && status < 300 ? 'status-success' : 'status-failed';
+            
+            entry.innerHTML = `
+                <div class="log-meta">
+                    <span>${timestamp} | ${method} ${url}</span>
+                    <span class="status-badge ${statusClass}">${status}</span>
+                </div>
+                <div><strong>Request Body:</strong> <pre>${JSON.stringify(body, null, 2)}</pre></div>
+                <div><strong>Response Headers:</strong> <pre>${JSON.stringify(headers, null, 2)}</pre></div>
+                <div><strong>Response Body:</strong> <pre>${JSON.stringify(response, null, 2)}</pre></div>
+                <button class="copy-btn">Copy Entry</button>
+            `;
+            entry.querySelector('.copy-btn').onclick = () => {
+                const text = \`TIME: \${timestamp}\nMETHOD: \${method}\nURL: \${url}\nSTATUS: \${status}\n\nREQUEST BODY:\n\${JSON.stringify(body, null, 2)}\n\nRESPONSE BODY:\n\${JSON.stringify(response, null, 2)}\`;
+                navigator.clipboard.writeText(text);
+            };
+            container.prepend(entry);
+        };
+
+        async function makeRequest(url, method, headers, body) {
+            const useProxy = document.getElementById('use-proxy').checked;
+            let finalUrl = url;
+            let finalMethod = method;
+            let finalHeaders = headers;
+            let finalBody = body ? JSON.stringify(body) : null;
+
+            if (useProxy) {
+                finalUrl = proxyUrl;
+                finalMethod = 'POST';
+                finalHeaders = { 'Content-Type': 'application/json' };
+                finalBody = JSON.stringify({ url, method, headers, body });
+            }
+
+            try {
+                const response = await fetch(finalUrl, {
+                    method: finalMethod,
+                    headers: finalHeaders,
+                    body: finalBody
+                });
+
+                let result;
+                if (useProxy) {
+                    const proxyData = await response.json();
+                    result = {
+                        status: proxyData.status,
+                        headers: proxyData.headers,
+                        body: typeof proxyData.body === 'string' ? JSON.parse(proxyData.body) : proxyData.body
+                    };
+                } else {
+                    const resHeaders = {};
+                    response.headers.forEach((v, k) => resHeaders[k] = v);
+                    const text = await response.text();
+                    let parsedBody;
+                    try { parsedBody = JSON.parse(text); } catch(e) { parsedBody = text; }
+                    result = { status: response.status, headers: resHeaders, body: parsedBody };
+                }
+                
+                logApi(method, url, result.status, result.headers, body, result.body);
+                return result;
+            } catch (error) {
+                logApi(method, url, 'ERROR', {}, body, { error: error.message });
+                return { status: 'ERROR', body: { error: error.message }, headers: {} };
+            }
+        }
+
+        document.getElementById('btn-get-token').onclick = async () => {
+            const btn = document.getElementById('btn-get-token');
+            const originalText = btn.innerText;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loading-spinner"></div>';
+            const clientId = document.getElementById('client-id').value;
+            const clientSecret = document.getElementById('client-secret').value;
+            const auth = btoa(\`\${clientId}:\${clientSecret}\`);
+            const res = await makeRequest('https://sandbox.smartfastpay.com/oauth2/token', 'POST', {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': \`Basic \${auth}\`
+            }, {});
+            if (res.status === 200) {
+                const token = res.body.data?.access_token || res.body.access_token;
+                if (token) {
+                    document.getElementById('access-token').value = token;
+                    sessionStorage.setItem('access-token', token);
+                }
+            }
+            btn.disabled = false;
+            btn.innerText = originalText;
+        };
+
+        document.getElementById('btn-create-tx').onclick = async () => {
+            const btn = document.getElementById('btn-create-tx');
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loading-spinner"></div> Creating...';
+            const token = document.getElementById('access-token').value;
+            const payload = {
+                customer: {
+                    id: document.getElementById('cust-id').value,
+                    name: document.getElementById('cust-name').value,
+                    email: document.getElementById('cust-email').value,
+                    document: {
+                        number: document.getElementById('doc-number').value,
+                        type: document.getElementById('doc-type').value
+                    }
+                },
+                transaction: {
+                    id: document.getElementById('trans-id').value,
+                    currency: document.getElementById('currency').value,
+                    amount: parseFloat(document.getElementById('amount').value)
+                },
+                country: document.getElementById('country').value,
+                payment_method: document.getElementById('payment-method').value.split(',').map(s => s.trim()),
+                notification_url: document.getElementById('notification-url').value,
+                redirect_url: document.getElementById('redirect-url').value
+            };
+            const res = await makeRequest('https://sandbox.smartfastpay.com/v2/transaction/checkout', 'POST', {
+                'Content-Type': 'application/json',
+                'Authorization': \`Bearer \${token}\`
+            }, payload);
+            if (res.status === 200 && res.body.data?.url) {
+                const linkContainer = document.getElementById('payment-link-container');
+                const link = document.getElementById('payment-link');
+                link.href = res.body.data.url;
+                link.innerText = res.body.data.url;
+                linkContainer.style.display = 'block';
+                lastTransactionId = res.body.data.transaction_id || res.body.data.id;
+                document.getElementById('btn-check-status').disabled = false;
+            }
+            btn.disabled = false;
+            btn.innerText = 'Create Transaction';
+        };
+
+        document.getElementById('btn-check-status').onclick = async () => {
+            const btn = document.getElementById('btn-check-status');
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loading-spinner"></div> Polling...';
+            const token = document.getElementById('access-token').value;
+            const res = await makeRequest(\`https://sandbox.smartfastpay.com/v2/transaction/\${lastTransactionId}\`, 'GET', {
+                'Authorization': \`Bearer \${token}\`
+            });
+            if (res.status === 200 && res.body.data) {
+                const badge = document.getElementById('payment-status-badge');
+                const status = res.body.data.status || 'unknown';
+                badge.innerText = status;
+                badge.className = 'status-badge ' + (status === 'paid' ? 'status-success' : (status === 'pending' ? 'status-pending' : 'status-failed'));
+                document.getElementById('status-container').style.display = 'block';
+            }
+            btn.disabled = false;
+            btn.innerText = 'Check Status';
+        };
+
+        async function fetchWebhooks() {
+            try {
+                const response = await fetch(webhookListUrl);
+                const webhooks = await response.json();
+                const container = document.getElementById('webhook-logs');
+                if (webhooks.length === 0) {
+                    container.innerHTML = '<div style="color: var(--text-dim);">No webhooks received yet.</div>';
+                    return;
+                }
+                container.innerHTML = '';
+                webhooks.slice().reverse().forEach(wh => {
+                    const entry = document.createElement('div');
+                    entry.className = 'webhook-entry';
+                    const timestamp = new Date(wh.timestamp).toLocaleString();
+                    entry.innerHTML = \`
+                        <div class="log-meta">
+                            <span>\${timestamp} | \${wh.method}</span>
+                            <span class="status-badge status-success">RECEIVED</span>
+                        </div>
+                        <div class="webhook-details">
+                            <strong>Headers:</strong> <pre>\${JSON.stringify(wh.headers, null, 2)}</pre>
+                            <strong>Body:</strong> <pre>\${JSON.stringify(wh.body, null, 2)}</pre>
+                        </div>
+                    \`;
+                    container.appendChild(entry);
+                });
+            } catch (error) { console.error('Failed to fetch webhooks:', error); }
+        }
+
+        document.getElementById('btn-clear-webhooks').onclick = async () => {
+            await fetch(webhookListUrl, { method: 'DELETE' });
+            fetchWebhooks();
+        };
+
+        setInterval(fetchWebhooks, 5000);
+
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.onclick = () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const targetId = tab.getAttribute('data-target');
+                document.getElementById('api-logs').style.display = targetId === 'api-logs' ? 'block' : 'none';
+                document.getElementById('webhook-logs').style.display = targetId === 'webhook-logs' ? 'block' : 'none';
+            };
+        });
+
+        document.getElementById('btn-copy-all-logs').onclick = () => {
+            const logs = document.getElementById('api-logs').innerText;
+            navigator.clipboard.writeText(logs);
+            alert('All logs copied to clipboard');
+        };
+    </script>
+</body>
+
+</html>

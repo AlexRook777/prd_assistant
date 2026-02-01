@@ -14,9 +14,9 @@ Executes all research steps for the current integration in the `1_research/` fol
 ## Execution Pattern
 This workflow runs all 7 research steps in sequence:
 1. Epic Analysis
-2. Documentation Analysis
-3. Local Test Page (triggers `test_page_generator` skill)
-4. Access & Field Verification
+2. Documentation & API Analysis
+3. Create Test Page (triggers `test_page_generator` skill)
+4. Auto Test Page
 5. Compatibility Check
 6. Fill Project Stories
 7. Field Testing
@@ -31,32 +31,24 @@ Read Epic/Jira requirements from `0_initial_docs/` and create `1_research/1.epic
 - List of requirements
 - Unclear points and questions for Product Owner
 
-### Step 2: Documentation Analysis
+### Step 2: Documentation & API Analysis
 Deep dive into provider's API documentation and create `1_research/2.docs_analysis.md` with:
 - Links to official docs
 - Authentication method analysis
 - Available payment methods and restrictions
 - API endpoint inventory
 
-### Step 3: Local Test Page (Split)
-Execute the following two steps:
 
-**Step 3a: Create Test Page**
-Invoke the `step3a-create-test-page` workflow (which uses `test_page_generator` skill) to create:
+### Step 3: Create Test Page
+Invoke the `step3-create-test-page` workflow (which uses `test_page_generator` skill) to create:
 - `1_research/3.test_page.html` - Functional test page
 - `1_research/3.test_page.md` - Documentation with usage instructions
 
-**Step 3b: Auto Test Page**
-Invoke the `step3b-auto-test-page` workflow to:
+### Step 4: Auto Test Page
+Invoke the `step4-auto-test-page` workflow to:
 - Automatically test the page with a browser agent
 - Fix issues if found
-- Update `1_research/3.test_page.md` with test results
-
-### Step 4: Access & Field Verification
-Verify credentials and create `1_research/4.access_and_fields.md` with:
-- Status of access (Ready/Pending)
-- Table comparing "Requested Fields" vs "Actual Provider Fields"
-- Login verification results
+- Create `1_research/4.auto_test_page.md` with test results
 
 ### Step 5: Compatibility Check
 Check system compatibility and create `1_research/5.compatibility.md` with:
@@ -82,7 +74,7 @@ Test edge cases and create `1_research/7.field_testing.md` with:
 - **Tester Specifics**: QA-provided test values
 
 ## Success Criteria
-All 7 files created in `1_research/` folder with complete, accurate information ready for Phase 2 development.
+All 6 files created in `1_research/` folder with complete, accurate information ready for Phase 2 development.
 
 ## Output Directory
 `<current_integration>/1_research/`

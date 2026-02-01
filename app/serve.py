@@ -11,10 +11,11 @@ from logging.handlers import RotatingFileHandler
 WEBHOOKS = []
 
 PORT = 8000
-DIRECTORY = os.path.dirname(os.path.abspath(__file__))
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DIRECTORY = os.path.dirname(SCRIPT_DIR)
 
 # Configure logging
-log_file = os.path.join(DIRECTORY, 'serve.log')
+log_file = os.path.join(SCRIPT_DIR, 'serve.log')
 logging.basicConfig(
     handlers=[
         RotatingFileHandler(log_file, maxBytes=100*1024, backupCount=1),

@@ -8,7 +8,7 @@ description: Generate functional HTML test pages for payment provider API verifi
 ## When to Use This Skill
 Automatically activate when user mentions:
 - "create test page" or "generate test page"
-- "Step 3" or "local test page" in research context
+- "Step 3" or "create test page" in research context
 - Testing payment provider APIs
 - HPP (Hosted Payment Page) testing
 
