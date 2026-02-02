@@ -7,7 +7,7 @@ description: Phase 1 Step 2 - Analyze provider's API documentation with active v
 This step performs a deep dive into the payment provider's API documentation and uses the **API Verification Skill** to actively test the endpoints.
 
 ## Working Directory
-`<current_integration>/1_research/`
+`<current_integration>/1_result/`
 
 ## Output File
 `2.docs_analysis.md`

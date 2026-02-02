@@ -7,7 +7,7 @@ description: Phase 1 Step 1 - Analyze Epic/Jira requirements
 Analyze the Epic or Jira requirements to understand the integration scope and identify unclear points.
 
 ## Working Directory
-`<current_integration>/1_research/`
+`<current_integration>/1_result/`
 
 ## Output File
 `1.epic_analysis.md`
@@ -85,7 +85,7 @@ Analyze the Epic or Jira requirements to understand the integration scope and id
 ```
 
 ## Success Criteria
-- File `1.epic_analysis.md` created in `1_research/` folder
+- File `1.epic_analysis.md` created in `1_result/` folder
 - All template sections filled with accurate information
 - Clear list of questions if any requirements are unclear
 - Summary is concise (1-2 paragraphs max)

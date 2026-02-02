@@ -7,7 +7,7 @@ description: Phase 1 Step 3a - Create functional HTML test page for API verifica
 Create a functional HTML test page to physically verify the payment provider's API behavior and test webhooks. This step handles only the **generation** of the page. Step 3b handles the automated testing.
 
 ## Working Directory
-`<current_integration>/1_research/`
+`<current_integration>/1_result/`
 
 ## Output Files
 - `3.test_page.html` - Functional test page
@@ -31,7 +31,7 @@ Create a functional HTML test page to physically verify the payment provider's A
 
 2. This step **automatically invokes** the `test_page_generator` skill. The skill will:
    - Read the provider's API documentation
-   - **Read `1_research/2.docs_analysis.md`** for comprehensive field list and requirements.
+   - **Read `1_result/2.docs_analysis.md`** for comprehensive field list and requirements.
    - Read the `config` file for API details
    - **Generate a functional HTML test page** (`3.test_page.html`) that **INCLUDES** the Webhook Viewer UI.
    - Create documentation (`3.test_page.md`) with usage instructions.

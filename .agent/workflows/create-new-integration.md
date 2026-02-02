@@ -35,14 +35,14 @@ description: Create a new integration workspace
      **Linux / macOS (Bash/Zsh):**
      ```bash
      mkdir -p "integrations/<Integration_Name>/0_initial_docs"
-     mkdir -p "integrations/<Integration_Name>/1_research"
+     mkdir -p "integrations/<Integration_Name>/1_result"
      mkdir -p "integrations/<Integration_Name>/2_development"
      mkdir -p "integrations/<Integration_Name>/4_test"
      ```
 
      **Windows (PowerShell):**
      ```powershell
-     $subfolders = "0_initial_docs", "1_research", "2_development", "4_test"
+     $subfolders = "0_initial_docs", "1_result", "2_development", "4_test"
      foreach ($folder in $subfolders) {
          New-Item -ItemType Directory -Path "integrations\<Integration_Name>\$folder" -Force
      }

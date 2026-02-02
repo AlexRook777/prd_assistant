@@ -7,7 +7,7 @@ description: Phase 1 Step 5 - Check compatibility with system architecture and B
 **Goal**: Validate that the provider's integration can be fully normalized into the "BetterBro" 4bill internal standard. This ensures that every field has a home and every status corresponds to a 4bill internal code, enabling full automation.
 
 ## Working Directory
-`<current_integration>/1_research/`
+`<current_integration>/1_result/`
 
 ## Output File
 `5.betterbro_compatibility.md`

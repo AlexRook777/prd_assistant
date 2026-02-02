@@ -77,7 +77,7 @@ prd_assistant/
 │   ├── _TEMPLATE/                # Template for new integrations
 │   └── Integration_<Name>/       # Actual integration workspaces
 │       ├── 0_initial_docs/       # Epic, provider docs (immutable)
-│       ├── 1_research/           # Phase 1 outputs (7 files)
+│       ├── 1_result/           # Phase 1 outputs (7 files)
 │       ├── 2_development/        # Phase 2 outputs
 │       ├── 4_test/               # Phase 4 QA outputs
 │       ├── config                # API credentials, URLs
@@ -90,11 +90,11 @@ prd_assistant/
 ### Phase 1: Research
 **Goal**: Complete deep analysis and fill all necessary stories before writing code.
 **Command**: `/phase1-full` (Run all steps) or run individually below.
-**Output Directory**: `1_research/`
+**Output Directory**: `1_result/`
 
 #### Step 1: Epic Analysis
 **Command**: `/step1-epic-analysis`
-**File**: `1_research/1.epic_analysis.md`
+**File**: `1_result/1.epic_analysis.md`
 *   **Action**: Evaluate the completeness of the Epic description (e.g., Jira link).
 *   **Content**:
     *   Summary of requirements.
@@ -103,7 +103,7 @@ prd_assistant/
 
 #### Step 2: Documentation & API Analysis
 **Command**: `/step2-doc-and-api-analysis`
-**File**: `1_research/2.docs_analysis.md`
+**File**: `1_result/2.docs_analysis.md`
 *   **Action**: Deep dive into the provider's documentation.
 *   **Content**:
     *   Links to official docs.
@@ -112,15 +112,15 @@ prd_assistant/
 
 #### Step 3: Create Test Page
 **Command**: `/step3-create-test-page`
-**File**: `1_research/3.test_page.md`
-*   **Action**: Create a functional HTML test page in file `1_research/3.test_page.html`.
+**File**: `1_result/3.test_page.md`
+*   **Action**: Create a functional HTML test page in file `1_result/3.test_page.html`.
 *   **Content**:
     *   The generated HTML file (embedded or linked).
     *   Usage instructions.
 
 #### Step 4: Auto Test Page
 **Command**: `/step4-auto-test-page`
-**File**: `1_research/4.auto_test_page.md`
+**File**: `1_result/4.auto_test_page.md`
 *   **Action**: Automatically test the page using a browser agent and fix issues.
 *   **Content**:
     *   Screenshots/Logs of a successful transaction.
@@ -128,7 +128,7 @@ prd_assistant/
 
 #### Step 5: Compatibility Check
 **Command**: `/step5-compatibility`
-**File**: `1_research/5.compatibility.md`
+**File**: `1_result/5.compatibility.md`
 *   **Action**: Check if the new method is compatible with the current system architecture.
 *   **Content**:
     *   Flag any blocking architectural mismatches.
@@ -136,7 +136,7 @@ prd_assistant/
 
 #### Step 6: Fill Project Stories
 **Command**: `/step6-project-stories`
-**File**: `1_research/6.project_stories.md`
+**File**: `1_result/6.project_stories.md`
 *   **Action**: Fill in the technical details for the standard set of stories.
 *   **Content Sections**:
     1.  **Authorization**: How to authenticate (Headers, Token, Signature).
@@ -149,7 +149,7 @@ prd_assistant/
 
 #### Step 7: Field Testing
 **Command**: `/step7-field-testing`
-**File**: `1_research/7.field_testing.md`
+**File**: `1_result/7.field_testing.md`
 *   **Action**: Test edge cases and specific field handling.
 *   **Content**:
     *   **International Format**: Phone number validation.
@@ -210,7 +210,7 @@ Create 3-4 integrations daily from standardized template:
 - Field mapping follows BetterBro schema
 
 ### Working Directory Isolation
-- Research Agent → `1_research/` only
+- Research Agent → `1_result/` only
 - Development Agent → `2_development/` only
 - Test Agent → `4_test/` only
 

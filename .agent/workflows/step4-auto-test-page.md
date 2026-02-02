@@ -7,7 +7,7 @@ description: Phase 1 Step 3b - Automate test page verification and fixing
 Automatically test the generated `3.test_page.html` using a browser agent. If issues are found, the agent will attempt to fix the HTML file and retry.
 
 ## Working Directory
-`<current_integration>/1_research/`
+`<current_integration>/1_result/`
 
 ## Prerequisites
 - `3.test_page.html` must exist (Run Step 3a first).
@@ -25,14 +25,14 @@ Automatically test the generated `3.test_page.html` using a browser agent. If is
 2. **Loop: Test & fix**:
    - **Goal**: Successfully create a transaction and verify status.
    - **Action**:
-         - Use `open_browser` to navigate to `http://localhost:8000/integrations/<Integration_Name>/1_research/3.test_page.html`.
+         - Use `open_browser` to navigate to `http://localhost:8000/integrations/<Integration_Name>/1_result/3.test_page.html`.
          - Fill in credentials from `config`.
          - Click "Get Token" (if applicable).
          - Click "Create Transaction".
          - **Verify**: Did it succeed?
            - **YES**: 
              - Take screenshot.
-             - Create `1_research/4.auto_test_page.md` with a **Detailed Test Log**:
+             - Create `1_result/4.auto_test_page.md` with a **Detailed Test Log**:
                - **General Status**: Success/Fail.
                - **Step-by-Step Log**: Detailed actions and results for Token, Transaction, and Webhook.
                - **Issues & Fixes**: List any issues encountered, what caused them, and how they were fixed.
@@ -43,7 +43,7 @@ Automatically test the generated `3.test_page.html` using a browser agent. If is
          - Analyse the error (Console logs, UI error message).
          - **Fix**: Edit `3.test_page.html` to correct the issue (e.g., incorrect field name, missing header, wrong JSON format).
          - **Retry**: Reload page and try again.
-         - **Limit**: Max 5 fix attempts. If still failing, create `1_research/4.auto_test_page.md` with "Issues Found" section and Stop.
+         - **Limit**: Max 5 fix attempts. If still failing, create `1_result/4.auto_test_page.md` with "Issues Found" section and Stop.
 
 3. **Output**:
    - Updated `3.test_page.html` (if fixes were needed).
