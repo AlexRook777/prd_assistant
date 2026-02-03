@@ -14,7 +14,7 @@ Create a functional HTML test page to physically verify the payment provider's A
 - `3.test_page.md` - Documentation and test results (partially filled)
 
 ## Prerequisites
-- `config` file must have:
+- `integration_config` file must have:
   - `PROVIDER_API_DOCUMENTATION_URL`
   - We use the local `serve.py` which provides `http://localhost:8000/webhook`.
 
@@ -32,7 +32,7 @@ Create a functional HTML test page to physically verify the payment provider's A
 2. This step **automatically invokes** the `test_page_generator` skill. The skill will:
    - Read the provider's API documentation
    - **Read `1_result/2.docs_analysis.md`** for comprehensive field list and requirements.
-   - Read the `config` file for API details
+   - Read the `integration_config` file for API details
    - **Generate a functional HTML test page** (`3.test_page.html`) that **INCLUDES** the Webhook Viewer UI.
    - Create documentation (`3.test_page.md`) with usage instructions.
 

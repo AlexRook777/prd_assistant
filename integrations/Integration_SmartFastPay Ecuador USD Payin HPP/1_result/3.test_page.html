@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartFastPay Ecuador Testing Console</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00ff88;
+            --primary-dark: #00cc6e;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: #334155;
+            --error: #ef4444;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        h1 {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .mandatory-label::after {
+            content: " *";
+            color: var(--error);
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-dim);
+            margin-bottom: 0.25rem;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            background-color: #0f172a;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.875rem;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: #0f172a;
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        button.secondary {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        button.secondary:hover {
+            background-color: rgba(0, 255, 136, 0.1);
+        }
+
+        button.danger {
+            background-color: transparent;
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+
+        button.danger:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        .log-container,
+        .webhook-container {
+            height: 400px;
+            overflow-y: auto;
+            background-color: #0c111d;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.75rem;
+        }
+
+        .log-entry,
+        .webhook-entry {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .log-entry:last-child,
+        .webhook-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+        }
+
+        .status-badge {
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-success {
+            background-color: #22c55e;
+            color: #fff;
+        }
+
+        .status-failed {
+            background-color: #ef4444;
+            color: #fff;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: #e2e8f0;
+            padding: 0.5rem;
+            background: #1a202c;
+            border-radius: 4px;
+            margin-top: 0.25rem;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 0.7rem;
+            padding: 0;
+            text-decoration: underline;
+            margin-top: 0.5rem;
+        }
+
+        .grid-span-2 {
+            grid-column: 1 / -1;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            color: var(--text-dim);
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .loading-spinner {
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #payment-link-container {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 6px;
+            display: none;
+        }
+
+        #payment-link-container a {
+            color: var(--primary);
+            word-break: break-all;
+        }
+
+        /* Toggle Switch */
+        .switch-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #334155;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--primary);
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px var(--primary);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(24px);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>SmartFastPay Ecuador Testing Console</h1>
+
+        <!-- Left Column: Credentials & Config -->
+        <div class="card">
+            <div class="section-header">
+                <h2>API Credentials</h2>
+                <div class="switch-container">
+                    <span style="font-size: 0.8rem; color: var(--text-dim);">Use Proxy</span>
+                    <label class="switch">
+                        <input type="checkbox" id="use-proxy">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="client-id" class="mandatory-label">Client ID</label>
+                <input type="text" id="client-id" value="fd8111f7-6ace-4789-b05a-40a6a36cb0be">
+            </div>
+            <div class="form-group">
+                <label for="client-secret" class="mandatory-label">Client Secret</label>
+                <input type="password" id="client-secret" value="nST8TYE78oANwe6dvhMiCQQZfthIoWlG">
+            </div>
+            <div class="form-group">
+                <label for="base-url">Base URL</label>
+                <input type="text" id="base-url" value="https://sandbox.smartfastpay.com">
+            </div>
+            <div class="form-group">
+                <label for="access-token">Access Token</label>
+                <input type="text" id="access-token" placeholder="Bearer Token (auto-filled after Get Token)">
+            </div>
+            <div class="button-group">
+                <button id="btn-get-token">
+                    <span>Get Token</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Column: Transaction Actions -->
+        <div class="card">
+            <h2>Create Transaction</h2>
+            <div class="form-grid">
+                <!-- Mandatory Fields -->
+                <div class="form-group">
+                    <label for="customer-id" class="mandatory-label">Customer ID</label>
+                    <input type="text" id="customer-id" value="cust_12345">
+                </div>
+                <div class="form-group">
+                    <label for="customer-name" class="mandatory-label">Customer Name</label>
+                    <input type="text" id="customer-name" value="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="customer-doc-number" class="mandatory-label">Document Number (Passport for Sandbox)</label>
+                    <input type="text" id="customer-doc-number" value="A12345678">
+                </div>
+                <div class="form-group">
+                    <label for="customer-doc-type" class="mandatory-label">Document Type</label>
+                    <select id="customer-doc-type">
+                        <option value="PA">Passport (PA)</option>
+                        <option value="CC">Cedula Ciudadania (CC)</option>
+                        <option value="RUC">RUC</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transaction-id" class="mandatory-label">Transaction ID</label>
+                    <input type="text" id="transaction-id" value="order_67890">
+                </div>
+                <div class="form-group">
+                    <label for="transaction-amount" class="mandatory-label">Amount (USD)</label>
+                    <input type="number" id="transaction-amount" value="10.00" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="country" class="mandatory-label">Country</label>
+                    <input type="text" id="country" value="ECU" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="payment-method" class="mandatory-label">Payment Method</label>
+                    <input type="text" id="payment-method" value="bank_transfer">
+                </div>
+                <div class="form-group grid-span-2">
+                    <label for="notification-url" class="mandatory-label">Notification URL</label>
+                    <input type="text" id="notification-url" value="http://localhost:8000/webhook">
+                </div>
+            </div>
+
+            <div id="payment-link-container">
+                <p style="font-weight: 600; font-size: 0.875rem; margin-bottom: 0.5rem;">Payment Link Generated:</p>
+                <a id="payment-link" href="#" target="_blank"></a>
+                <div class="button-group" style="margin-top: 1rem;">
+                    <button id="btn-check-status" class="secondary">
+                        <span>Check Status</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button id="btn-create-transaction">
+                    <span>Create Transaction</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Full Width: Logs & Webhooks -->
+        <div class="card grid-span-2">
+            <div class="tabs">
+                <div class="tab active" data-target="api-logs">API Logs</div>
+                <div class="tab" data-target="webhook-logs">Webhooks</div>
+            </div>
+
+            <div id="api-logs" class="log-container">
+                <div style="text-align: center; color: var(--text-dim); padding-top: 2rem;">No logs yet.</div>
+            </div>
+
+            <div id="webhook-logs" class="webhook-container" style="display: none;">
+                <div style="text-align: center; color: var(--text-dim); padding-top: 2rem;">No webhooks yet.</div>
+            </div>
+
+            <div class="button-group">
+                <button id="btn-clear-logs" class="danger">Clear Logs</button>
+                <button id="btn-refresh-webhooks" class="secondary">Refresh Webhooks</button>
+                <button id="btn-copy-all-logs" class="secondary">Copy All Logs</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Persistence Logic ---
+        const storageKeys = [
+            'use-proxy', 'client-id', 'client-secret', 'access-token', 'base-url',
+            'customer-id', 'customer-name', 'customer-doc-number', 'customer-doc-type',
+            'transaction-id', 'transaction-amount', 'notification-url'
+        ];
+
+        function saveInputs() {
+            storageKeys.forEach(key => {
+                const el = document.getElementById(key);
+                if (el) {
+                    const value = el.type === 'checkbox' ? el.checked : el.value;
+                    sessionStorage.setItem(key, value);
+                }
+            });
+        }
+
+        function loadInputs() {
+            storageKeys.forEach(key => {
+                const el = document.getElementById(key);
+                const saved = sessionStorage.getItem(key);
+                if (el && saved !== null) {
+                    if (el.type === 'checkbox') {
+                        el.checked = saved === 'true';
+                    } else {
+                        el.value = saved;
+                    }
+                }
+            });
+        }
+
+        document.querySelectorAll('input, select').forEach(el => {
+            el.addEventListener('change', saveInputs);
+        });
+
+        loadInputs();
+
+        // --- UI Helpers ---
+        function setButtonLoading(btnId, isLoading) {
+            const btn = document.getElementById(btnId);
+            const span = btn.querySelector('span');
+            if (isLoading) {
+                btn.disabled = true;
+                btn.dataset.originalText = span.innerText;
+                span.innerHTML = '<div class="loading-spinner"></div>';
+            } else {
+                btn.disabled = false;
+                span.innerText = btn.dataset.originalText;
+            }
+        }
+
+        function logRequest(method, url, headers, body, status, response) {
+            const container = document.getElementById('api-logs');
+            if (container.querySelector('div[style*="text-align: center"]')) {
+                container.innerHTML = '';
+            }
+
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+
+            const statusClass = status >= 200 && status < 300 ? 'status-success' : 'status-failed';
+            const timestamp = new Date().toLocaleTimeString();
+
+            entry.innerHTML = `
+                <div class="log-meta">
+                    <span>[${timestamp}] ${method} ${url}</span>
+                    <span class="status-badge ${statusClass}">${status}</span>
+                </div>
+                <div><strong>Headers:</strong> <pre>${JSON.stringify(headers, null, 2)}</pre></div>
+                <div><strong>Request Body:</strong> <pre>${JSON.stringify(body, null, 2)}</pre></div>
+                <div><strong>Response Body:</strong> <pre>${typeof response === 'object' ? JSON.stringify(response, null, 2) : response}</pre></div>
+                <button class="copy-btn" onclick="copyEntry(this)">Copy Entry</button>
+            `;
+            container.prepend(entry);
+        }
+
+        function copyEntry(btn) {
+            const pre = btn.parentElement.querySelectorAll('pre');
+            const sections = btn.parentElement.querySelectorAll('strong');
+            let textToCopy = "";
+            sections.forEach((s, i) => {
+                textToCopy += s.innerText + "\n" + pre[i].innerText + "\n\n";
+            });
+            navigator.clipboard.writeText(textToCopy);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => btn.innerText = originalText, 2000);
+        }
+
+        document.getElementById('btn-copy-all-logs').addEventListener('click', () => {
+            const container = document.getElementById('api-logs');
+            navigator.clipboard.writeText(container.innerText);
+            const btn = document.getElementById('btn-copy-all-logs');
+            const originalText = btn.innerText;
+            btn.innerText = 'All Logs Copied!';
+            setTimeout(() => btn.innerText = originalText, 2000);
+        });
+
+        // --- Tabs ---
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                const target = tab.dataset.target;
+                document.getElementById('api-logs').style.display = target === 'api-logs' ? 'block' : 'none';
+                document.getElementById('webhook-logs').style.display = target === 'webhook-logs' ? 'block' : 'none';
+            });
+        });
+
+        // --- Core Logic ---
+        async function makeRequest(method, path, headers = {}, body = null) {
+            const useProxy = document.getElementById('use-proxy').checked;
+            const baseUrl = document.getElementById('base-url').value.replace(/\/$/, '');
+            const targetUrl = path.startsWith('http') ? path : `${baseUrl}/${path.replace(/^\//, '')}`;
+
+            let finalUrl = targetUrl;
+            let finalMethod = method;
+            let finalHeaders = { ...headers };
+            let finalBody = body;
+
+            if (useProxy) {
+                finalUrl = 'http://localhost:8000/proxy';
+                finalMethod = 'POST';
+                finalBody = {
+                    url: targetUrl,
+                    method: method,
+                    headers: headers,
+                    body: body
+                };
+            }
+
+            try {
+                const response = await fetch(finalUrl, {
+                    method: finalMethod,
+                    headers: { 'Content-Type': 'application/json', ...finalHeaders },
+                    body: finalBody ? JSON.stringify(finalBody) : null
+                });
+
+                const data = await response.json();
+
+                if (useProxy) {
+                    let parsedBody = data.body;
+                    try {
+                        if (typeof parsedBody === 'string') parsedBody = JSON.parse(parsedBody);
+                    } catch (e) { }
+
+                    logRequest(method, targetUrl, headers, body, data.status, parsedBody);
+                    return { status: data.status, body: parsedBody };
+                } else {
+                    logRequest(method, targetUrl, headers, body, response.status, data);
+                    return { status: response.status, body: data };
+                }
+            } catch (error) {
+                logRequest(method, targetUrl, headers, body, 500, { error: error.message });
+                return { status: 500, body: { error: error.message } };
+            }
+        }
+
+        // --- Event Handlers ---
+        document.getElementById('btn-get-token').addEventListener('click', async () => {
+            setButtonLoading('btn-get-token', true);
+            const clientId = document.getElementById('client-id').value;
+            const clientSecret = document.getElementById('client-secret').value;
+            const auth = btoa(`${clientId}:${clientSecret}`);
+
+            const res = await makeRequest('POST', '/oauth2/token', {
+                'Authorization': `Basic ${auth}`,
+                'Accept': 'application/json'
+            }, {
+                'grant_type': 'client_credentials'
+            });
+
+            if (res.status === 200 && res.body.data && res.body.data.access_token) {
+                document.getElementById('access-token').value = res.body.data.access_token;
+                saveInputs();
+            } else if (res.body.access_token) {
+                // Fallback for different response structure
+                document.getElementById('access-token').value = res.body.access_token;
+                saveInputs();
+            }
+            setButtonLoading('btn-get-token', false);
+        });
+
+        document.getElementById('btn-create-transaction').addEventListener('click', async () => {
+            setButtonLoading('btn-create-transaction', true);
+            const token = document.getElementById('access-token').value;
+
+            const payload = {
+                customer: {
+                    id: document.getElementById('customer-id').value,
+                    name: document.getElementById('customer-name').value,
+                    document: {
+                        number: document.getElementById('customer-doc-number').value,
+                        type: document.getElementById('customer-doc-type').value
+                    }
+                },
+                transaction: {
+                    id: document.getElementById('transaction-id').value,
+                    amount: parseFloat(document.getElementById('transaction-amount').value),
+                    currency: 'USD'
+                },
+                payment_method: [document.getElementById('payment-method').value],
+                country: 'ECU',
+                notification_url: document.getElementById('notification-url').value
+            };
+
+            const res = await makeRequest('POST', '/v2/transaction/checkout', {
+                'Authorization': `Bearer ${token}`
+            }, payload);
+
+            if (res.status >= 200 && res.status < 300) {
+                const link = res.body.url || (res.body.data && res.body.data.url);
+                if (link) {
+                    const container = document.getElementById('payment-link-container');
+                    const linkEl = document.getElementById('payment-link');
+                    linkEl.href = link;
+                    linkEl.innerText = link;
+                    container.style.display = 'block';
+                }
+            }
+            setButtonLoading('btn-create-transaction', false);
+        });
+
+        document.getElementById('btn-check-status').addEventListener('click', async () => {
+            setButtonLoading('btn-check-status', true);
+            const token = document.getElementById('access-token').value;
+            const txId = document.getElementById('transaction-id').value;
+
+            await makeRequest('GET', `/v2/transaction/${txId}`, {
+                'Authorization': `Bearer ${token}`
+            });
+            setButtonLoading('btn-check-status', false);
+        });
+
+        document.getElementById('btn-clear-logs').addEventListener('click', async () => {
+            if (document.querySelector('.tab.active').dataset.target === 'api-logs') {
+                document.getElementById('api-logs').innerHTML = '<div style="text-align: center; color: var(--text-dim); padding-top: 2rem;">No logs yet.</div>';
+            } else {
+                await fetch('http://localhost:8000/api/webhooks', { method: 'DELETE' });
+                refreshWebhooks();
+            }
+        });
+
+        // --- Webhook Polling ---
+        async function refreshWebhooks() {
+            try {
+                const res = await fetch('http://localhost:8000/api/webhooks');
+                const webhooks = await res.json();
+
+                const container = document.getElementById('webhook-logs');
+                if (webhooks.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; color: var(--text-dim); padding-top: 2rem;">No webhooks yet.</div>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                webhooks.reverse().forEach(hook => {
+                    const entry = document.createElement('div');
+                    entry.className = 'webhook-entry';
+                    entry.innerHTML = `
+                        <div class="log-meta">
+                            <span>[${new Date(hook.timestamp).toLocaleTimeString()}] ${hook.method}</span>
+                        </div>
+                        <div><strong>Headers:</strong> <pre>${JSON.stringify(hook.headers, null, 2)}</pre></div>
+                        <div><strong>Body:</strong> <pre>${JSON.stringify(hook.body, null, 2)}</pre></div>
+                    `;
+                    container.appendChild(entry);
+                });
+            } catch (e) { }
+        }
+
+        document.getElementById('btn-refresh-webhooks').addEventListener('click', refreshWebhooks);
+        setInterval(refreshWebhooks, 5000);
+    </script>
+</body>
+
+</html>

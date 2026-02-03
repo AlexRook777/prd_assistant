@@ -1,0 +1,4 @@
+Test 1: Missing transaction.id
+{"requestId":"43189b9b529edbfb576a286dc2caa68a\/13552313851747206276","timestamp":"2026-02-02T07:56:47-03:00","moreInformation":[{"code":"INVALID_REQUEST","detail":"The transaction.id field is required."}]}
+---
+Test 2: Invalid Data Type (amount as string)

@@ -34,22 +34,21 @@ description: Create a new integration workspace
 
      **Linux / macOS (Bash/Zsh):**
      ```bash
-     mkdir -p "integrations/<Integration_Name>/0_initial_docs"
+     mkdir -p "integrations/<Integration_Name>/0_initial_docs_and_config"
      mkdir -p "integrations/<Integration_Name>/1_result"
-     mkdir -p "integrations/<Integration_Name>/2_development"
-     mkdir -p "integrations/<Integration_Name>/4_test"
+
      ```
 
      **Windows (PowerShell):**
      ```powershell
-     $subfolders = "0_initial_docs", "1_result", "2_development", "4_test"
+     $subfolders = "0_initial_docs_and_config", "1_result"
      foreach ($folder in $subfolders) {
          New-Item -ItemType Directory -Path "integrations\<Integration_Name>\$folder" -Force
      }
      ```
 
-4. ALWAYS Create the `config` file.
-   - create file `integrations/<Integration_Name>/config` with the following content:
+4. ALWAYS Create the `integration_config` file.
+   - create file `integrations/<Integration_Name>/0_initial_docs_and_config/integration_config` with the following content:
      ```
      # Configuration file for payment provider integration
 
@@ -62,7 +61,7 @@ description: Create a new integration workspace
      ```
 
 5. ALWAYS Create the `project_rules.md` file.
-   - create file `integrations/<Integration_Name>/project_rules.md` with the following content:
+   - create file `integrations/<Integration_Name>/0_initial_docs_and_config/project_rules.md` with the following content:
      ```markdown
      # Integration-Specific Rules
 

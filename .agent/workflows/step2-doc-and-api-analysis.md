@@ -13,7 +13,7 @@ This step performs a deep dive into the payment provider's API documentation and
 `2.docs_analysis.md`
 
 ## Prerequisites
-- `config` file must have `PROVIDER_API_DOCUMENTATION_URL`, `CLIENT_ID`, and `CLIENT_SECRET` filled in.
+- `integration_config` file must have `PROVIDER_API_DOCUMENTATION_URL`, `CLIENT_ID`, and `CLIENT_SECRET` filled in.
 - You must have Internet access to reach the Provider's Sandbox environment.
 
 ## Task
@@ -22,12 +22,12 @@ This step performs a deep dive into the payment provider's API documentation and
     -   Check if `2.docs_analysis.md` already exists. If so, read it to preserve any clarified points or user feedback.
 
 2.  **Read Documentation**:
-    -   Review the provider's API documentation (URL in `config`) and any PDFs in `0_initial_docs/`.
+    -   Review the provider's API documentation (URL in `integration_config`) and any PDFs in `0_initial_docs_and_config/`.
 
 3.  **Execute API Verification Skill**:
     -   Use the **API Verification Report** skill (`.agent/skills/api_verification_report/SKILL.md`).
     -   **Context**:
-        -   Use credentials from the local `config`.
+        -   Use credentials from the local `integration_config`.
         -   Target the Sandbox environment.
         -   Focus on the "Payin" or "Checkout" flow relevant to this integration.
     -   **Output**: Save the generated report to `2.docs_analysis.md`.

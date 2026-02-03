@@ -20,8 +20,8 @@ Run the workflow command:
 ```bash
 cd integrations/Integration_ProviderName_...
 
-# Add provider docs and Epic requirements to 0_initial_docs/
-# Fill in the config file with credentials and API URLs
+# Add provider docs and Epic requirements to 0_initial_docs_and_config/
+# Fill in the integration_config file with credentials and API URLs
 ```
 
 ### 3. Execute Research Phase
@@ -66,22 +66,18 @@ prd_assistant/
 │       ├── step4-auto-test-page.md
 │       ├── step5-compatibility.md
 │       ├── step6-project-stories.md
-│       └── step7-field-testing.md
 ├── app/                      # Centralized helper apps
 │   ├── serve.py              # Local testing server (CORS + Webhooks)
 │   ├── webhook_viewer.html   # Webhook Visualization UI
 │   └── serve.log             # Server logs
-├── global_rules/
+├── .master_prd/
 │   └── master_prd.yaml           # PRD schema definition
 ├── integrations/
-│   ├── _TEMPLATE/                # Template for new integrations
 │   └── Integration_<Name>/       # Actual integration workspaces
-│       ├── 0_initial_docs/       # Epic, provider docs (immutable)
-│       ├── 1_result/           # Phase 1 outputs (7 files)
-│       ├── 2_development/        # Phase 2 outputs
-│       ├── 4_test/               # Phase 4 QA outputs
-│       ├── config                # API credentials, URLs
-│       └── project_rules.md      # Optional: integration-specific overrides
+│       ├── 0_initial_docs_and_config/       # Epic, provider docs (immutable) and Config
+│       │   ├── integration_config           # API credentials, URLs
+│       │   └── project_rules.md             # Optional: integration-specific overrides
+│       └── 1_result/                        # Phase 1, 2, and 4 outputs (All project files)
 └── _archive/                     # Deprecated: old instruction files
 ```
 
@@ -159,10 +155,10 @@ prd_assistant/
 
 ### Phase 2: Development
 **Goal**: Implement the logic defined in Phase 1.
-**Output Directory**: `2_development/`
+**Output Directory**: `1_result/`
 
 #### Step 8: Balance Retrieval
-**File**: `2_development/8.balance_retrieval.md`
+**File**: `1_result/8.balance_retrieval.md`
 *   **Action**: Describe the method for obtaining account balances.
 *   **Content**:
     *   Endpoint URL.
@@ -171,7 +167,7 @@ prd_assistant/
 
 ### Phase 4: Testing
 **Goal**: Integration Verification.
-**Output Directory**: `4_test/`
+**Output Directory**: `1_result/`
 
 *   Place all QA reports, automated test scripts (Python/Postman), and final sign-off documents here.
 *   Follow the standard validation checklist (Happy Path, Error Cases, Timeout handling).
@@ -211,13 +207,13 @@ Create 3-4 integrations daily from standardized template:
 
 ### Working Directory Isolation
 - Research Agent → `1_result/` only
-- Development Agent → `2_development/` only
-- Test Agent → `4_test/` only
+- Development Agent → `1_result/` only
+- Test Agent → `1_result/` only
 
 ### Configuration Files
 Every integration has:
-- `config`: API credentials, documentation URL.
-- `project_rules.md` (optional): Integration-specific overrides
+- `integration_config`: API credentials, documentation URL.
+- `project_rules.md` (optional): Integration-specific overrides (in `0_initial_docs_and_config`)
 
 ### Centralized App (`app/`)
 Contains utility tools to support testing across all integrations:
@@ -253,12 +249,34 @@ Auto-triggered during Step 3 or when user mentions "create test page".
 - `3.test_page.md` (with usage instructions)
 
 
+## Jira/Confluence Access
+
+To enable direct Jira/Confluence access in Antigravity, follow these instructions:
+
+### 1. Generate an Atlassian API Token
+The agent requires a secure token to act on your behalf.
+
+1. Navigate to your Atlassian Security Settings.
+2. Select **Create API token** and name it "Antigravity-Integration".
+3. Copy the token immediately, as it will not be shown again.
+
+### 2. Configure the MCP Server in Antigravity
+You must register the server in Antigravity's raw configuration to unlock the Jira tools.
+
+1. In the Antigravity Agent panel, click the "..." dropdown and select **MCP Servers**.
+2. Find the **atlassian** server and click **Install**.
+3. Follow the install instructions that appear on browser.
+4. Verify that the agent can "see" the new tools. Type this into your Antigravity chat:
+"@mcp:atlassian: List all available Jira projects."
+
+**Expected Behavior**: The agent should trigger a browser window for OAuth 2.1 authorization if this is your first run. Once authorized, it will return a list of projects.
+
 ## Tips
 
 ### Creating New Integrations
 1. Use `/create-new-integration` to scaffold the folder structure automatically.
-2. Fill the `config` file with credentials and API documentation URLs.
-3. Populate `0_initial_docs/` with the Epic (Jira) requirements and official provider PDF/Markdown docs.
+2. Fill the `integration_config` file with credentials and API documentation URLs.
+3. Populate `0_initial_docs_and_config/` with the Epic (Jira) requirements and official provider PDF/Markdown docs.
 
 ### Iterative Refinement
 ```
@@ -273,7 +291,7 @@ You: Perfect! /step3-create-test-page
 
 ### Custom Rules
 If an integration needs special handling:
-1. Create `project_rules.md` in that integration folder
+1. Create `project_rules.md` in that integration's `0_initial_docs_and_config` folder
 2. Document the override (e.g., "Skip webhook testing")
 3. Rules apply only to that integration
 

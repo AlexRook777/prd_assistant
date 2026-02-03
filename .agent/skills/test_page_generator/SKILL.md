@@ -172,7 +172,7 @@ User might say:
 > "Execute Step 3 - create the local test page for this integration"
 
 You should:
-1. Read the integration's `config` file.
+1. Read the integration's `integration_config` file.
 2. Read the provider's API documentation
 3. Generate `3.test_page.html` with all required functionality
 4. Create `3.test_page.md` with usage instructions

@@ -11,7 +11,7 @@ This skill guides you through creating a high-quality API verification report (`
 To produce a comprehensive report that not only analyzes the static documentation but **Proves** how the API works by executing real requests and analyzing the differences.
 
 ## Prerequisites
--   You typically need `clientId`, `clientSecret` (or similar credentials) available in the workspace `config`.
+-   You typically need `clientId`, `clientSecret` (or similar credentials) available in the workspace `integration_config`.
 -   You must be able to reach the Sandbox environment via `curl`.
 
 ## Execution Steps
@@ -105,16 +105,16 @@ Successfully verified. Obtained token using:
 \`\`\`
 
 ### Negative Testing (Validation)
-| Test Case | Variation | Expected | Actual Code | JSON Error |
-|-----------|-----------|----------|-------------|------------|
-| Missing Name | Omit Name | 400 | 422 | \`{"error":...}\` |
-| Bad Type | String Amount | 400 | 200 | (Accepted) |
+| Test Case    | Variation     | Expected | Actual Code | JSON Error        |
+| ------------ | ------------- | -------- | ----------- | ----------------- |
+| Missing Name | Omit Name     | 400      | 422         | \`{"error":...}\` |
+| Bad Type     | String Amount | 400      | 200         | (Accepted)        |
 
 ## Gap Analysis (Discrepancies)
-| # | Issue | Documentation | Actual Behavior | Severity |
-|---|-------|---------------|-----------------|----------|
-| 1 | Amount Type | Integer | String | Low |
-| 2 | Email | Optional | Required (500 Error) | High |
+| #   | Issue       | Documentation | Actual Behavior      | Severity |
+| --- | ----------- | ------------- | -------------------- | -------- |
+| 1   | Amount Type | Integer       | String               | Low      |
+| 2   | Email       | Optional      | Required (500 Error) | High     |
 
 ## Questions for Provider
 - [Specific technical questions]

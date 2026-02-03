@@ -27,7 +27,7 @@ Analyze the Epic or Jira requirements to understand the integration scope and id
    - **IF IT DOES NOT EXIST**: Proceed normally to read source documents.
 
 2. **Read Source Documents**: 
-   - Check `0_initial_docs/` for Epic description, Jira ticket, or business requirements
+   - Check `0_initial_docs_and_config/` for Epic description, Jira ticket, or business requirements
    - Read any PDFs, Word docs, or text files containing requirements
 
 2. **Extract Key Information**:

@@ -26,7 +26,7 @@ Automatically test the generated `3.test_page.html` using a browser agent. If is
    - **Goal**: Successfully create a transaction and verify status.
    - **Action**:
          - Use `open_browser` to navigate to `http://localhost:8000/integrations/<Integration_Name>/1_result/3.test_page.html`.
-         - Fill in credentials from `config`.
+         - Fill in credentials from `integration_config`.
          - Click "Get Token" (if applicable).
          - Click "Create Transaction".
          - **Verify**: Did it succeed?
