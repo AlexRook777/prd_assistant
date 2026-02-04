@@ -105,3 +105,5 @@ This step performs a deep dive into the payment provider's API documentation and
     -   Ensure the generated `2.docs_analysis.md` follows the format defined in the Skill.
     -   Verify that it contains *real* `curl` output, not just documentation copies.
     -   Confirm that the **Live Payment Link** section is present and clearly visible.
+
+6. **Include Workflow Suggestions**: End the file with `## Workflow Suggestions` section (see `.gemini.md` for format).

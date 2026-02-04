@@ -30,15 +30,20 @@ body {
     background-color: var(--bg);
     color: var(--text);
     line-height: 1.5;
-    padding: 2rem;
+    padding: 1rem;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 100%;
+    height: calc(100vh - 2rem);
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 1rem;
 }
 
 h1, h2, h3 {
@@ -50,8 +55,8 @@ h1 {
     grid-column: 1 / -1;
     text-align: center;
     color: var(--primary);
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
     text-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
 }
 
@@ -59,8 +64,10 @@ h1 {
     background-color: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 1rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow-y: auto;
+    height: 100%;
 }
 
 .form-group {
@@ -145,14 +152,14 @@ button.danger:hover {
 }
 
 .log-container, .webhook-container {
-    height: 400px;
+    flex: 1;
     overflow-y: auto;
     background-color: #0c111d;
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 1rem;
+    padding: 0.75rem;
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
 }
 
 .log-entry, .webhook-entry {
@@ -200,27 +207,25 @@ pre {
     text-decoration: underline;
 }
 
-.grid-span-2 {
-    grid-column: 1 / -1;
-}
-
-.tabs {
+.logs-webhooks-column {
     display: flex;
+    flex-direction: column;
     gap: 1rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
+    height: 100%;
 }
 
-.tab {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    color: var(--text-dim);
-    border-bottom: 2px solid transparent;
+.logs-section, .webhooks-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
 }
 
-.tab.active {
+.section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
     color: var(--primary);
-    border-bottom-color: var(--primary);
 }
 
 .loading-spinner {
@@ -322,21 +327,26 @@ input:checked + .slider:before {
             <!-- ... -->
         </div>
 
-        <!-- Right Column: Transaction Actions -->
+        <!-- Middle Column: Transaction Actions -->
         <div class="card">
             <h2>Create Transaction</h2>
             <div class="form-group"> ... </div>
             <!-- ... -->
         </div>
 
-        <!-- Full Width: Logs & Webhooks -->
-        <div class="card grid-span-2">
-            <div class="tabs">
-                <div class="tab active" data-target="api-logs">API Logs</div>
-                <div class="tab" data-target="webhook-logs">Webhooks</div>
+        <!-- Right Column: Logs & Webhooks (Split Vertically) -->
+        <div class="logs-webhooks-column">
+            <!-- API Logs Section -->
+            <div class="logs-section">
+                <h3 class="section-title">API Logs</h3>
+                <div id="api-logs" class="log-container"> ... </div>
             </div>
-            <div id="api-logs" class="log-container"> ... </div>
-            <div id="webhook-logs" class="webhook-container" style="display: none;"> ... </div>
+
+            <!-- Webhooks Section -->
+            <div class="webhooks-section">
+                <h3 class="section-title">Webhooks</h3>
+                <div id="webhook-logs" class="webhook-container"> ... </div>
+            </div>
         </div>
     </div>
 </body>

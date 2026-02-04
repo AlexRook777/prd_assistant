@@ -22,7 +22,10 @@ This skill is specifically designed for **Phase 1, Step 3** of the integration w
 
 ### Phase 1: Create Test Page
 
-**Step 1**: Create a test HTML page with a **Proxy Switcher**:
+**Step 1**: Create a test HTML page with **3-column layout**:
+- **Column 1**: API Credentials with Proxy Switcher toggle
+- **Column 2**: Transaction creation form
+- **Column 3**: API Logs (top) and Webhooks (bottom) - **NO TABS**
 - The "API Credentials" card header must have a toggle switch on the right side labeled "Use Proxy".
 - If enabled, all API requests (OAuth, Transaction, Status) must be routed through `http://localhost:8000/proxy`.
 - If disabled, requests go directly to the provider's API.
@@ -33,13 +36,20 @@ This skill is specifically designed for **Phase 1, Step 3** of the integration w
     - Check payment status via a button
     - View updated payment status within the payment details on the page
 
-**Step 2**: Add optional callback URL configuration. The page must include:
+**Step 2**: Logs and Webhooks Display:
+- **API Logs** section at the top of the third column with "Clear" button
+- **Webhooks** section at the bottom of the third column with "Refresh" and "Clear" buttons
+- Both sections visible simultaneously (no tab switching)
 - Option to view and copy all requests and responses (including headers)
 - Request log with individual entry copy functionality
-- Button to copy the entire log (including URL, method, headers, body, and response)
 
 **Step 3**: Design and Logic Requirements.
 - **MANDATORY**: You **MUST** use the standard CSS and HTML structure definitions from `resources/style_guide.md`. Read this file before generating the HTML.
+- **Layout Structure**:
+    - **3-column grid**: `grid-template-columns: 1fr 1fr 1fr`
+    - **No scrolling**: Page fits within viewport (`height: 100vh`, `overflow: hidden`)
+    - **Third column**: Flexbox vertical layout with API Logs on top, Webhooks on bottom
+    - **NO TABS**: Both logs and webhooks always visible
 - **Proxy Logic**:
     - **Header Layout**: Use `<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;"><h2>API Credentials</h2><div class="switch-container">...</div></div>`.
     - **Persistence**: Save the switch state in `sessionStorage` (key: `use-proxy`).
@@ -52,7 +62,19 @@ This skill is specifically designed for **Phase 1, Step 3** of the integration w
         - The actual upstream response is in the JSON body: `{ status: <int>, headers: <dict>, body: <string|obj> }`.
         - **CRITICAL**: The `body` from the proxy might be a JSON **string** (serialized) or an object. You **MUST** check if `data.body` is a string and, if so, `JSON.parse()` it before using it.
         - You MUST unwrap this to treat it effectively as the real response (e.g., use `data.status` for success checks).
-- **Robust Parsing**: Handle nested JSON responses (e.g., `data.data.access_token` vs `data.access_token`). Check multiple common paths for tokens and links.
+    - **Robust Parsing**: Handle nested JSON responses (e.g., `data.data.access_token` vs `data.access_token`). Check multiple common paths for tokens and links:
+      ```javascript
+      const token = data.access_token || (data.data && data.data.access_token);
+      ```
+    - **Dynamic ID Generation** (MANDATORY):
+      - The Transaction ID field MUST NOT contain literal template strings (e.g., `${Date.now()}`).
+      - On page load, if the field is empty, generate a unique ID: `'order_' + Date.now()`.
+      - Example:
+        ```javascript
+        if (!document.getElementById('transaction-id').value) {
+            document.getElementById('transaction-id').value = 'order_' + Date.now();
+        }
+        ```
 - **Valid Data**: Use valid, check-summed national IDs (CI, CPF) by default. VALIDATE document types (e.g., 'CI' vs 'CC').
 - **Comprehensive Field Coverage**:
     - **Analyze API Params**: You MUST read `1_result/2.docs_analysis.md` to identify **ALL** parameters for the transaction endpoint (mandatory AND optional).
@@ -95,15 +117,16 @@ This skill is specifically designed for **Phase 1, Step 3** of the integration w
   - Generate a unique order ID using `crypto.randomUUID()` when creating a transaction.
   - Construct webhook URL: `https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/{orderId}`
   - Use this URL as the callback/notification URL in the transaction request.
-  - Poll for webhooks at: `https://n8n.4bill.io/webhook/ea6540ee-da8f-499e-a2bb-92111e8fb689/{orderId}`
+  - Poll for webhooks at: `https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/{orderId}` **(SAME as send URL)**
+  - **IMPORTANT**: The send and retrieve URLs use the **same** UUID. Do NOT use a different UUID for retrieval.
   - Use Basic Auth: `btoa('callbacks-test:callbacks-test123')`
   - Display the order ID prominently in the UI for reference.
 - **EMBED THE WEBHOOK VIEWER UI**:
-  - Do not just make a list. create a dedicated section that mimics the functionality of `serve.py`'s webhook viewer.
-  - See `repos/prd_assistant/app/webhook_viewer.html` for reference on CSS and Logic.
+  - Create a dedicated section in the third column (bottom half) for webhooks.
+  - **NO TABS**: Webhooks section is always visible below API Logs.
   - It MUST include:
     - Auto-polling every 5 seconds.
-    - "Refresh" and "Clear Logs" buttons (Clear logs via `DELETE /api/webhooks` for local mode).
+    - "Refresh" and "Clear" buttons (Clear logs via `DELETE /api/webhooks` for local mode).
     - Expandable details for Body and Headers.
     - Copy buttons.
     - Display current webhook mode (Local/N8n) and order ID (if N8n mode).

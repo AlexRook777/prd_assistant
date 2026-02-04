@@ -66,6 +66,8 @@ As a System, I want to authenticate with the provider API.
 *   **Then** I receive a 401 Unauthorized response
 ```
 
+4. **Include Workflow Suggestions**: End the file with `## Workflow Suggestions` section (see `.gemini.md` for format).
+
 ## Success Criteria
 *   Output file follows the Epic/Story/Gherkin structure.
 *   All technical details (endpoints, params, mappings) are included.

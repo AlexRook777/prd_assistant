@@ -33,8 +33,14 @@ Create a functional HTML test page to physically verify the payment provider's A
    - Read the provider's API documentation
    - **Read `1_result/2.docs_analysis.md`** for comprehensive field list and requirements.
    - Read the `integration_config` file for API details
-   - **Generate a functional HTML test page** (`3.test_page.html`) that **INCLUDES** the Webhook Viewer UI.
+   - **Generate a functional HTML test page** (`3.test_page.html`) with:
+     - **3-column layout**: Credentials | Transaction Form | Logs & Webhooks
+     - **Split Logs/Webhooks**: API Logs on top, Webhooks on bottom (no tabs)
+     - **Webhook Viewer UI** integrated in the third column
+     - **No scrolling required**: Fits within viewport
    - Create documentation (`3.test_page.md`) with usage instructions.
+
+3. **Include Workflow Suggestions**: End `3.test_page.md` with `## Workflow Suggestions` section (see `.gemini.md` for format).
 
 ## Success Criteria
 - `3.test_page.html` created and functional

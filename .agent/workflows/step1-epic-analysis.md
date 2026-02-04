@@ -84,6 +84,8 @@ Analyze the Epic or Jira requirements to understand the integration scope and id
 - [ ] Proceed to Documentation Analysis (Step 2)
 ```
 
+5. **Include Workflow Suggestions**: End the file with `## Workflow Suggestions` section (see `.gemini.md` for format).
+
 ## Success Criteria
 - File `1.epic_analysis.md` created in `1_result/` folder
 - All template sections filled with accurate information

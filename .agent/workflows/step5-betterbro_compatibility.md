@@ -24,7 +24,7 @@ description: Phase 1 Step 5 - Check compatibility with system architecture and B
     -   **Step A: Check Epic/Input**:
         -   Review `1.epic_analysis.md` for a provided **BetterBro Service Rule** OR **BetterBro Service URL**.
         -   **IF PROVIDED**: Use it to identify the Rule (derive from URL if needed), treat it as a *Draft Result*, and validate if it aligns with the provider's capabilities.
-    -   **Step B: Active Web Search (Validation)**:
+    -   **Step B: Active Web Search (Discovery)**:
         -   **Action**: Perform a web search to confirm the correct "BetterBro Service URL" and "Rule" if not absolutely certain.
         -   **Queries**:
             -   `"BetterBro" [Service Rule] documentation`
@@ -42,16 +42,35 @@ description: Phase 1 Step 5 - Check compatibility with system architecture and B
         -   `Card Payouts` (Disbursements)
     -   **Action**: Explicitly state which Rule applies.
     -   **Service Identification**: Include the specific "Service Instance" name, the "Service URL" from the provider docs, and the "BetterBro Service URL" from the internal docs.
+    -   **Step D: Download BetterBro Specification (NEW - Deep Analysis)**:
+        -   **Action**: Once the correct BetterBro Service URL is identified, use the browser to navigate to that page.
+        -   **Export Markdown**: Click the menu (⋮) → "Export page as Markdown" to download the complete specification.
+        -   **Save Location**: Save the markdown file as `betterbro_service_spec.md` in the `<current_integration>/0_initial_docs_and_config/` directory.
+        -   **CRITICAL**: The downloaded markdown file is the SOURCE OF TRUTH. Do NOT re-read the URL with `read_url_content` as it may return generic/root page content instead of the specific service documentation.
+        -   **Purpose**: This provides the complete, structured specification for comprehensive field mapping and status code analysis.
+    -   **Step E: Verify Download (Validation)**:
+        -   **Action**: Check that `betterbro_service_spec.md` exists in the `0_initial_docs_and_config/` directory.
+        -   **Validation**: Open the file and verify it contains service-specific content (field mappings, status codes, regional requirements) and NOT generic introduction text.
+        -   **Fallback**: If the download failed, the file is missing, or it contains only generic content:
+            -   Manually create `betterbro_service_spec.md` based on web search results and BetterBro documentation.
+            -   Document the standard Acquiring Form (HPP) field mappings and status codes.
+            -   Include regional requirements if applicable (e.g., Ecuador document fields).
 
 3.  **Field Mapping Analysis**:
-    -   Review `2.docs_analysis.md` and `4.auto_test_page.md`.
+    -   Review `2.docs_analysis.md` and `4.auto_test_page.md` for provider field requirements.
+    -   Review the **downloaded** `<current_integration>/0_initial_docs_and_config/betterbro_service_spec.md` for the complete BetterBro field specification.
+    -   **IMPORTANT**: Use ONLY the downloaded markdown file, not the live URL.
+    -   **Cross-Reference**: Compare provider fields against BetterBro standard fields from the downloaded specification.
     -   Verify that every mandatory request field from the Provider has a corresponding standard field in the BetterBro internal schema for the selected **Rule**.
     -   Verify that every response field (synchronous or webhook) can be mapped to a standard internal field.
+    -   **Parse Tables**: Extract field mapping tables, data type requirements, and validation rules from the BetterBro spec.
 
 4.  **Status Mapping Analysis**:
-    -   Identify all possible transaction statuses from the Provider.
-    -   Map each one to a 4bill internal status (e.g., `1 SUCCESS`, `2 FAILED`, `3 PENDING`, `4 REFUNDED`, `5 CHARGEBACK`).
-    -   **CRITICAL**: If a status is ambiguous, mark it as a RISK.
+    -   Identify all possible transaction statuses from the Provider (from `2.docs_analysis.md`).
+    -   Review status code definitions in the **downloaded** `<current_integration>/0_initial_docs_and_config/betterbro_service_spec.md`.
+    -   **IMPORTANT**: Use ONLY the downloaded markdown file for status mapping reference.
+    -   Map each provider status to a 4bill internal status (e.g., `1 SUCCESS`, `2 FAILED`, `3 PENDING`, `4 REFUNDED`, `5 CHARGEBACK`).
+    -   **CRITICAL**: If a status is ambiguous or doesn't have a clear BetterBro equivalent, mark it as a RISK.
 
 5.  **Automation Feasibility**:
     -   Confirm the flow is deterministic (Rulebook compliant).
@@ -109,6 +128,8 @@ description: Phase 1 Step 5 - Check compatibility with system architecture and B
 ## Next Steps
 - [ ] Proceed to Step 6 (Project Stories)
 ```
+
+7. **Include Workflow Suggestions**: End the file with `## Workflow Suggestions` section (see `.gemini.md` for format).
 
 ## User Confirmation
 "BetterBro validation complete. Review `5.betterbro_compatibility.md`. Does this integration fit our 'internal language'?"
