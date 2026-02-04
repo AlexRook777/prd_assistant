@@ -1,0 +1,15 @@
+{
+    "n8n_endpoints": {
+        "send_webhook_base_url": "https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b",
+        "retrieve_webhook_base_url": "https://n8n.4bill.io/webhook/ea6540ee-da8f-499e-a2bb-92111e8fb689"
+    },
+    "auth": {
+        "username": "callbacks-test",
+        "password": "callbacks-test123"
+    },
+    "defaults": {
+        "timeout_seconds": 60,
+        "poll_interval_seconds": 5,
+        "max_retries": 12
+    }
+}

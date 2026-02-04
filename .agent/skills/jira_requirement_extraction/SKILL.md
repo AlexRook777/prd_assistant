@@ -7,7 +7,7 @@ description: deeply fetches all data from a Jira issue (tables, comments, limits
 
 This skill allows you to extract comprehensive information from a Jira issue—including complex formatting like tables, lists, transaction limits, and all comments—and save it to a structured Markdown file (`bizdev_request`).
 
-**Crucial:** This skill typically requires NO Python scripts. You (the Agent) act as the parser. You must read the complex JSON output from the Jira MCP tool and intelligently convert it into a human-readable Markdown report.
+**Crucial:** This skill uses a Python script to fetch data. You (the Agent) act as the parser of the JSON output. You must read the complex JSON output and intelligently convert it into a human-readable Markdown report.
 
 ## Inputs
 - **Issue Key**: The Jira ticket ID (e.g., `IN-1137`).
@@ -16,10 +16,11 @@ This skill allows you to extract comprehensive information from a Jira issue—i
 ## Workflow
 
 ### 1. Fetch Issue Data
-Call `mcp_atlassian-mcp-server_jira_get_issue` with the following parameters:
-- `issueKey`: [Input Issue Key]
-- `expand`: `["renderedFields", "names", "schema", "operations", "editmeta", "changelog", "versionedRepresentations"]`
-- `fields`: `["*all"]` (Or omit to get all default fields)
+### 1. Fetch Issue Data
+Execute the robust Python fetcher script which bypasses truncation limits:
+- Command: `python3 app/jira_fetcher.py [Input Issue Key]`
+- Output: The script prints the full JSON to stdout.
+- **Note**: Ensure `.env` exists with valid `ATLASSIAN_EMAIL` and `ATLASSIAN_API_TOKEN`.
 
 ### 2. Parse and Analyze (Mental Step)
 carefully examine the JSON output. Do NOT just read the summary. You are looking for:

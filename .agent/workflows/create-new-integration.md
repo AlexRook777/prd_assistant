@@ -10,8 +10,11 @@ description: Create a new integration workspace
     - If the link is not valid (e.g., doesn't contain `/browse/IN-`), explain the error to the user and ask them to provide a correct link. Repeat this step until a valid link is provided.
 
 3. Fetch the Jira issue details.
-   - Use the `mcp_atlassian-mcp-server_getJiraIssue` tool to fetch the issue details using the Issue Key or ID from the URL (e.g., `IN-1137`).
-   - Ensure you get the description, summary, and comments.
+   - Use the custom Python script `app/jira_fetcher.py` to fetch issue details.
+   - Command: `python3 app/jira_fetcher.py <Issue Key>`
+     - Example: `python3 app/jira_fetcher.py IN-1137`
+   - **Goal**: Fetch full details (Description, Comments, etc) without truncation limits.
+   - The script will output the full JSON structure to standard output.
 
 4. Extract and confirm the integration name from the Jira Issue Summary.
    - The naming convention MUST be: `Integration_<ProviderName> <Country> <Currency> <Flow>` (e.g., `Integration_SmartFastPay Ecuador USD Payin HPP`).

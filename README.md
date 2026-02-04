@@ -7,6 +7,23 @@ This project handles 3-4 payment provider integrations daily using a standardize
 
 ## Quick Start
 
+### 0. System Configuration (First Run Only)
+Before running any workflows, you must configure your Atlassian credentials to allow the system to fetch Jira issues.
+
+1.  **Generate an API Token**:
+    *   Go to [https://id.atlassian.com/manage-profile/security/api-tokens](https://id.atlassian.com/manage-profile/security/api-tokens).
+    *   Click "Create API token".
+    *   Label it (e.g., "PRD Assistant") and copy the token.
+
+2.  **Configure `.env`**:
+    *   Create a file named `.env` in the root of the project.
+    *   Add your Atlassian credentials:
+        ```bash
+        ATLASSIAN_EMAIL=your_email@domain.com
+        ATLASSIAN_API_TOKEN=your_generated_token_here
+        ATLASSIAN_DOMAIN=your_domain.atlassian.net
+        ```
+
 ### 1. Create New Integration
 Run the workflow command:
 ```
@@ -249,30 +266,6 @@ Auto-triggered during Step 3 or when user mentions "create test page".
 - `3.test_page.md` (with usage instructions)
 
 
-## Jira/Confluence Access
-
-To enable direct Jira/Confluence access in Antigravity, run the workflow:
-
-```
-/install-atlassian-mcp
-```
-
-This workflow will guide you through:
-1. Generating an Atlassian API token
-2. Configuring the MCP server with your credentials
-3. Verifying the installation
-
-**Quick Summary:**
-- The workflow uses API token authentication (more reliable than OAuth)
-- Works on Ubuntu, macOS, and Windows
-- Automatically validates the installation
-- Retries until successful
-
-### Manual Verification
-After installation, verify by typing:
-```
-@mcp:atlassian: List all available Jira projects.
-```
 
 
 ## Tips

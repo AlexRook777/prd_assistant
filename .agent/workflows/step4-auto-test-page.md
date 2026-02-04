@@ -31,10 +31,16 @@ Automatically test the generated `3.test_page.html` using a browser agent. If is
          - Click "Create Transaction".
          - **Verify**: Did it succeed?
            - **YES**: 
+             - **Webhook Verification (Optional N8n)**:
+               - If the test page supports n8n webhooks, verify webhook delivery.
+               - Use the **N8n Webhook Tester** skill (`.agent/skills/n8n_webhook_tester/SKILL.md`).
+               - Poll for webhooks using the order ID from the transaction.
+               - Document webhook payloads in the test results.
              - Take screenshot.
              - Create `1_result/4.auto_test_page.md` with a **Detailed Test Log**:
                - **General Status**: Success/Fail.
                - **Step-by-Step Log**: Detailed actions and results for Token, Transaction, and Webhook.
+               - **Webhook Results**: Include n8n webhook verification if performed.
                - **Issues & Fixes**: List any issues encountered, what caused them, and how they were fixed.
                - **Workflow Suggestions**: Suggest improvements for future phases based on findings.
                - **Screenshots**: Embed successful transaction screenshots.

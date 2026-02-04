@@ -83,16 +83,30 @@ This skill is specifically designed for **Phase 1, Step 3** of the integration w
 - Use a clean, modern design with proper form validation
 
 **Step 4**: Webhook Verification
-- **Hardcode** the webhook URL to `http://localhost:8000/webhook`.
-- **Hardcode** the polling endpoint to `http://localhost:8000/api/webhooks`.
+- **Webhook Mode Toggle**:
+  - Add a toggle switch in the "Webhook Configuration" section to choose between:
+    - **Local Webhooks**: `http://localhost:8000/webhook` (default)
+    - **N8n Webhooks**: `https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/{orderId}`
+  - Save the webhook mode preference in `sessionStorage`.
+- **Local Webhook Mode**:
+  - **Hardcode** the webhook URL to `http://localhost:8000/webhook`.
+  - **Hardcode** the polling endpoint to `http://localhost:8000/api/webhooks`.
+- **N8n Webhook Mode**:
+  - Generate a unique order ID using `crypto.randomUUID()` when creating a transaction.
+  - Construct webhook URL: `https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/{orderId}`
+  - Use this URL as the callback/notification URL in the transaction request.
+  - Poll for webhooks at: `https://n8n.4bill.io/webhook/ea6540ee-da8f-499e-a2bb-92111e8fb689/{orderId}`
+  - Use Basic Auth: `btoa('callbacks-test:callbacks-test123')`
+  - Display the order ID prominently in the UI for reference.
 - **EMBED THE WEBHOOK VIEWER UI**:
   - Do not just make a list. create a dedicated section that mimics the functionality of `serve.py`'s webhook viewer.
   - See `repos/prd_assistant/app/webhook_viewer.html` for reference on CSS and Logic.
   - It MUST include:
     - Auto-polling every 5 seconds.
-    - "Refresh" and "Clear Logs" buttons (Clear logs via `DELETE /api/webhooks`).
+    - "Refresh" and "Clear Logs" buttons (Clear logs via `DELETE /api/webhooks` for local mode).
     - Expandable details for Body and Headers.
     - Copy buttons.
+    - Display current webhook mode (Local/N8n) and order ID (if N8n mode).
 - Display webhooks in chronological order (newest first).
 - Expected webhook response format from `http://localhost:8000/api/webhooks`:
   ```json
@@ -102,6 +116,17 @@ This skill is specifically designed for **Phase 1, Step 3** of the integration w
       "headers": {...},
       "body": {...},
       "timestamp": "2026-01-28T07:36:33.640932"
+    }
+  ]
+  ```
+- Expected webhook response format from n8n endpoint:
+  ```json
+  [
+    {
+      "transaction_id": "TXN123",
+      "status": "paid",
+      "amount": 100.50,
+      "timestamp": "2026-02-04T18:30:00Z"
     }
   ]
   ```
