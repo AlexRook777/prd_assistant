@@ -78,12 +78,19 @@ class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 # Filter out headers that might cause issues or should be recreated
                 headers_to_send = {k: v for k, v in headers.items() if k.lower() not in ['host', 'content-length']}
                 
+                # Determine if we should send as JSON or raw data
+                req_kwargs = {}
+                if isinstance(body, (dict, list)):
+                    req_kwargs['json'] = body
+                else:
+                    req_kwargs['data'] = body
+
                 response = requests.request(
                     method=method,
                     url=target_url,
                     headers=headers_to_send,
-                    json=body,  # Assuming JSON body for this integration
-                    timeout=30
+                    timeout=30,
+                    **req_kwargs
                 )
 
                 # Send back response

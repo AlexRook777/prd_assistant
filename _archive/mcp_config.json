@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "atlassian-mcp-server": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@xuandev/atlassian-mcp"
+      ],
+      "env": {
+        "ATLASSIAN_EMAIL": "o.hrachov@4bill.io",
+        "ATLASSIAN_API_TOKEN": "ATATT3xFfGF049yHCWcljDxYrbSj5R3AMO6FGOWoVlosOg8wuPFPpazwAVWmu1CQYYFq3T4HVyxzqV9lr9rIthFDbR9ZIje5Ad3cbqx_KszOyrNUo2g69OUkdRZReMe8Jj-akQehWD4Tvnufwv5oAl6kDVGdLvywG6CKKoos-MR1w3onGXNiBlU=3975C370",
+        "ATLASSIAN_DOMAIN": "4billio.atlassian.net"
+      }
+    }
+  }
+}

@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartFastPay Ecuador Testing Console</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>SmartFastPay Ecuador USD HPP Testing Console</title>
     <style>
         :root {
             --primary: #00ff88;
@@ -42,9 +40,7 @@
             gap: 2rem;
         }
 
-        h1,
-        h2,
-        h3 {
+        h1, h2, h3 {
             margin-bottom: 1rem;
             font-weight: 600;
         }
@@ -70,11 +66,6 @@
             margin-bottom: 1rem;
         }
 
-        .mandatory-label::after {
-            content: " *";
-            color: var(--error);
-        }
-
         label {
             display: block;
             font-size: 0.875rem;
@@ -83,9 +74,12 @@
             margin-bottom: 0.25rem;
         }
 
-        input,
-        select,
-        textarea {
+        label span.required {
+            color: var(--error);
+            margin-left: 2px;
+        }
+
+        input, select, textarea {
             width: 100%;
             background-color: #0f172a;
             border: 1px solid var(--border);
@@ -154,8 +148,7 @@
             background-color: rgba(239, 68, 68, 0.1);
         }
 
-        .log-container,
-        .webhook-container {
+        .log-container, .webhook-container {
             height: 400px;
             overflow-y: auto;
             background-color: #0c111d;
@@ -166,15 +159,13 @@
             font-size: 0.75rem;
         }
 
-        .log-entry,
-        .webhook-entry {
+        .log-entry, .webhook-entry {
             margin-bottom: 1rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid #1e293b;
         }
 
-        .log-entry:last-child,
-        .webhook-entry:last-child {
+        .log-entry:last-child, .webhook-entry:last-child {
             border-bottom: none;
         }
 
@@ -193,29 +184,14 @@
             text-transform: uppercase;
         }
 
-        .status-pending {
-            background-color: #f59e0b;
-            color: #fff;
-        }
-
-        .status-success {
-            background-color: #22c55e;
-            color: #fff;
-        }
-
-        .status-failed {
-            background-color: #ef4444;
-            color: #fff;
-        }
+        .status-pending { background-color: #f59e0b; color: #fff; }
+        .status-success { background-color: #22c55e; color: #fff; }
+        .status-failed { background-color: #ef4444; color: #fff; }
 
         pre {
             white-space: pre-wrap;
             word-break: break-all;
             color: #e2e8f0;
-            padding: 0.5rem;
-            background: #1a202c;
-            border-radius: 4px;
-            margin-top: 0.25rem;
         }
 
         .copy-btn {
@@ -226,7 +202,6 @@
             font-size: 0.7rem;
             padding: 0;
             text-decoration: underline;
-            margin-top: 0.5rem;
         }
 
         .grid-span-2 {
@@ -255,16 +230,14 @@
         .loading-spinner {
             width: 1rem;
             height: 1rem;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #fff;
+            border: 2px solid rgba(15, 23, 42, 0.3);
+            border-top-color: #0f172a;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
+            to { transform: rotate(360deg); }
         }
 
         #payment-link-container {
@@ -325,435 +298,485 @@
             border-radius: 50%;
         }
 
-        input:checked+.slider {
+        input:checked + .slider {
             background-color: var(--primary);
         }
 
-        input:focus+.slider {
+        input:focus + .slider {
             box-shadow: 0 0 1px var(--primary);
         }
 
-        input:checked+.slider:before {
+        input:checked + .slider:before {
             transform: translateX(24px);
         }
-
-        .form-grid {
+        
+        .two-col-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
         }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
     </style>
 </head>
-
 <body>
     <div class="container">
-        <h1>SmartFastPay Ecuador Testing Console</h1>
+        <h1>SmartFastPay Testing Console (Ecuador USD HPP)</h1>
 
-        <!-- Left Column: Credentials & Config -->
+        <!-- Credentials -->
         <div class="card">
-            <div class="section-header">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                 <h2>API Credentials</h2>
                 <div class="switch-container">
-                    <span style="font-size: 0.8rem; color: var(--text-dim);">Use Proxy</span>
+                    <label style="margin-bottom: 0;">Use Proxy</label>
                     <label class="switch">
-                        <input type="checkbox" id="use-proxy">
+                        <input type="checkbox" id="proxy-switch">
                         <span class="slider"></span>
                     </label>
                 </div>
             </div>
+
             <div class="form-group">
-                <label for="client-id" class="mandatory-label">Client ID</label>
-                <input type="text" id="client-id" placeholder="Enter Client ID">
-            </div>
-            <div class="form-group">
-                <label for="client-secret" class="mandatory-label">Client Secret</label>
-                <input type="password" id="client-secret" placeholder="Enter Client Secret">
+                <label for="client-id">Client ID <span class="required">*</span></label>
+                <input type="text" id="client-id" value="fd8111f7-6ace-4789-b05a-40a6a36cb0be">
             </div>
             <div class="form-group">
-                <label for="base-url">Base URL</label>
-                <input type="text" id="base-url" value="https://sandbox.smartfastpay.com">
+                <label for="client-secret">Client Secret <span class="required">*</span></label>
+                <input type="password" id="client-secret" value="nST8TYE78oANwe6dvhMiCQQZfthIoWlG">
             </div>
             <div class="form-group">
-                <label for="access-token">Access Token</label>
-                <input type="text" id="access-token" placeholder="Bearer Token (auto-filled after Get Token)">
+                <label for="access-token">Access Token <span class="required">*</span></label>
+                <input type="text" id="access-token" placeholder="Generated automatically..." readonly>
             </div>
-            <div class="button-group">
-                <button id="btn-get-token">
-                    <span>Get Token</span>
-                </button>
-            </div>
+            
+            <button id="btn-get-token" onclick="getAccessToken()">
+                <span>Get Access Token</span>
+            </button>
         </div>
 
-        <!-- Right Column: Transaction Actions -->
+        <!-- Create Transaction -->
         <div class="card">
             <h2>Create Transaction</h2>
-            <div class="form-grid">
-                <!-- Mandatory Fields -->
-                <div class="form-group">
-                    <label for="customer-id" class="mandatory-label">Customer ID</label>
-                    <input type="text" id="customer-id" value="cust_12345">
-                </div>
-                <div class="form-group">
-                    <label for="customer-name" class="mandatory-label">Customer Name</label>
-                    <input type="text" id="customer-name" value="John Doe">
-                </div>
-                <div class="form-group">
-                    <label for="customer-doc-number" class="mandatory-label">Document Number (CI)</label>
-                    <input type="text" id="customer-doc-number" value="1710034460">
-                </div>
-                <div class="form-group">
-                    <label for="customer-doc-type" class="mandatory-label">Document Type</label>
-                    <select id="customer-doc-type">
-                        <option value="CI">CI (Ecuador)</option>
-                        <option value="RUC">RUC</option>
-                        <option value="PASSPORT">Passport</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="transaction-id" class="mandatory-label">Transaction ID</label>
-                    <input type="text" id="transaction-id" value="order_67890">
-                </div>
-                <div class="form-group">
-                    <label for="transaction-amount" class="mandatory-label">Amount (USD)</label>
-                    <input type="number" id="transaction-amount" value="10.00" step="0.01">
-                </div>
-                <div class="form-group">
-                    <label for="country" class="mandatory-label">Country</label>
-                    <input type="text" id="country" value="ECU" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="payment-method" class="mandatory-label">Payment Method</label>
-                    <input type="text" id="payment-method" value="bank_transfer">
-                </div>
-                <div class="form-group grid-span-2">
-                    <label for="notification-url" class="mandatory-label">Notification URL</label>
-                    <input type="text" id="notification-url" value="http://localhost:8000/webhook">
-                </div>
+            
+            <div class="two-col-grid">
+                 <div class="form-group">
+                    <label for="txn-id">Transaction ID <span class="required">*</span></label>
+                    <input type="text" id="txn-id">
+                 </div>
+                 <div class="form-group">
+                    <label for="txn-amount">Amount (USD) <span class="required">*</span></label>
+                    <input type="number" id="txn-amount" value="10.00" step="0.01">
+                 </div>
+            </div>
 
-                <!-- Optional/Sensible Defaults -->
+            <h3>Customer Config</h3>
+            <div class="two-col-grid">
                 <div class="form-group">
-                    <label for="customer-email">Customer Email</label>
-                    <input type="email" id="customer-email" value="john@example.com">
+                    <label for="cust-name">Name</label>
+                    <input type="text" id="cust-name" value="Test User">
                 </div>
                 <div class="form-group">
-                    <label for="customer-phone">Customer Phone</label>
-                    <input type="text" id="customer-phone" value="+593000000000">
+                    <label for="cust-email">Email</label>
+                    <input type="email" id="cust-email" value="test@example.com">
+                </div>
+                <!-- Document is optional in HPP but nice to have -->
+                <div class="form-group">
+                    <label for="doc-type">Doc Type</label>
+                    <input type="text" id="doc-type" value="CI" placeholder="CI, CPF">
+                </div>
+                <div class="form-group">
+                    <label for="doc-number">Doc Number</label>
+                    <input type="text" id="doc-number" value="1710034065" placeholder="Valid Checksum ID">
+                </div>
+                 <div class="form-group">
+                    <label for="cust-id">Customer ID</label>
+                    <input type="text" id="cust-id" value="cust_12345">
                 </div>
             </div>
+
+            <h3>Payment Config</h3>
+             <div class="form-group">
+                <label for="payment-method">Payment Method</label>
+                <input type="text" id="payment-method" value="bank_transfer" readonly>
+            </div>
+            
+            <button id="btn-create-txn" onclick="createTransaction()">
+                <span>Create Transaction</span>
+            </button>
 
             <div id="payment-link-container">
-                <p style="font-weight: 600; font-size: 0.875rem; margin-bottom: 0.5rem;">Payment Link Generated:</p>
-                <a id="payment-link" href="#" target="_blank"></a>
-                <div class="button-group" style="margin-top: 1rem;">
-                    <button id="btn-check-status" class="secondary">
-                        <span>Check Status</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button id="btn-create-transaction">
-                    <span>Create Transaction</span>
-                </button>
+                <p><strong>Payment Link:</strong></p>
+                <a href="#" id="payment-link" target="_blank"></a>
             </div>
         </div>
 
-        <!-- Full Width: Logs & Webhooks -->
+        <!-- Logs & Webhooks -->
         <div class="card grid-span-2">
             <div class="tabs">
-                <div class="tab active" data-target="api-logs">API Logs</div>
-                <div class="tab" data-target="webhook-logs">Webhooks</div>
+                <div class="tab active" data-target="api-logs" onclick="switchTab('api-logs')">API Logs</div>
+                <div class="tab" data-target="webhook-logs" onclick="switchTab('webhook-logs')">Webhooks</div>
             </div>
-
+            
             <div id="api-logs" class="log-container">
-                <div style="text-align: center; color: var(--text-dim); padding-top: 2rem;">No logs yet.</div>
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 0.5rem;">
+                    <button class="secondary" onclick="copyAllLogs('api')" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">Copy All Logs</button>
+                    <button class="danger" onclick="clearLogs('api')" style="margin-left: 0.5rem; padding: 0.25rem 0.5rem; font-size: 0.75rem;">Clear</button>
+                </div>
+                <div id="api-logs-content"></div>
             </div>
-
+            
             <div id="webhook-logs" class="webhook-container" style="display: none;">
-                <div style="text-align: center; color: var(--text-dim); padding-top: 2rem;">No webhooks yet.</div>
-            </div>
-
-            <div class="button-group">
-                <button id="btn-clear-logs" class="danger">Clear Logs</button>
-                <button id="btn-refresh-webhooks" class="secondary">Refresh Webhooks</button>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                     <div style="font-size: 0.8rem; color: var(--text-dim);">Auto-polling active (5s)</div>
+                     <div>
+                        <button class="secondary" onclick="fetchWebhooks()" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">Refresh Now</button>
+                        <button class="secondary" onclick="copyAllLogs('webhook')" style="margin-left: 0.5rem; padding: 0.25rem 0.5rem; font-size: 0.75rem;">Copy All</button>
+                        <button class="danger" onclick="clearWebhooks()" style="margin-left: 0.5rem; padding: 0.25rem 0.5rem; font-size: 0.75rem;">Clear Server Logs</button>
+                     </div>
+                </div>
+                <div id="webhook-logs-content"></div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- Persistence Logic ---
-        const storageKeys = [
-            'use-proxy', 'client-id', 'client-secret', 'access-token', 'base-url',
-            'customer-id', 'customer-name', 'customer-doc-number', 'customer-doc-type',
-            'transaction-id', 'transaction-amount', 'notification-url',
-            'customer-email', 'customer-phone'
-        ];
-
-        function saveInputs() {
-            storageKeys.forEach(key => {
-                const el = document.getElementById(key);
-                if (el) {
-                    const value = el.type === 'checkbox' ? el.checked : el.value;
-                    sessionStorage.setItem(key, value);
-                }
-            });
+        // --- Configuration & Utils ---
+        const PROXY_URL = 'http://localhost:8000/proxy';
+        const WEBHOOK_URL = 'http://localhost:8000/webhook';
+        const WEBHOOK_API_URL = 'http://localhost:8000/api/webhooks';
+        
+        function uuidv4() {
+          return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+            (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
+          );
         }
 
-        function loadInputs() {
-            storageKeys.forEach(key => {
-                const el = document.getElementById(key);
-                const saved = sessionStorage.getItem(key);
-                if (el && saved !== null) {
-                    if (el.type === 'checkbox') {
-                        el.checked = saved === 'true';
-                    } else {
-                        el.value = saved;
-                    }
-                }
+        // Init fields
+        document.getElementById('txn-id').value = uuidv4();
+        
+        // Persistence
+        const persistFields = ['client-id', 'client-secret', 'cust-name', 'cust-email', 'doc-type', 'doc-number', 'cust-id'];
+        
+        function saveState() {
+            const state = {};
+            persistFields.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) state[id] = el.value;
             });
+            state['use-proxy'] = document.getElementById('proxy-switch').checked;
+            state['access-token'] = document.getElementById('access-token').value;
+            sessionStorage.setItem('smartfastpay_test_config', JSON.stringify(state));
         }
 
-        document.querySelectorAll('input, select').forEach(el => {
-            el.addEventListener('change', saveInputs);
-        });
-
-        loadInputs();
-
-        // --- UI Helpers ---
-        function setButtonLoading(btnId, isLoading) {
-            const btn = document.getElementById(btnId);
-            const span = btn.querySelector('span');
-            if (isLoading) {
-                btn.disabled = true;
-                btn.dataset.originalText = span.innerText;
-                span.innerHTML = '<div class="loading-spinner"></div>';
-            } else {
-                btn.disabled = false;
-                span.innerText = btn.dataset.originalText;
+        function loadState() {
+            const saved = sessionStorage.getItem('smartfastpay_test_config');
+            if (saved) {
+                const state = JSON.parse(saved);
+                persistFields.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el && state[id] !== undefined) el.value = state[id];
+                });
+                if(state['use-proxy'] !== undefined) document.getElementById('proxy-switch').checked = state['use-proxy'];
+                if(state['access-token']) document.getElementById('access-token').value = state['access-token'];
             }
         }
-
-        function logRequest(method, url, headers, body, status, response) {
-            const container = document.getElementById('api-logs');
-            if (container.querySelector('div[style*="text-align: center"]')) {
-                container.innerHTML = '';
-            }
-
-            const entry = document.createElement('div');
-            entry.className = 'log-entry';
-
-            const statusClass = status >= 200 && status < 300 ? 'status-success' : 'status-failed';
-            const timestamp = new Date().toLocaleTimeString();
-
-            entry.innerHTML = `
-                <div class="log-meta">
-                    <span>[${timestamp}] ${method} ${url}</span>
-                    <span class="status-badge ${statusClass}">${status}</span>
-                </div>
-                <div><strong>Headers:</strong> <pre>${JSON.stringify(headers, null, 2)}</pre></div>
-                <div><strong>Request Body:</strong> <pre>${JSON.stringify(body, null, 2)}</pre></div>
-                <div><strong>Response Body:</strong> <pre>${typeof response === 'object' ? JSON.stringify(response, null, 2) : response}</pre></div>
-                <button class="copy-btn" onclick="copyToClipboard(this)">Copy Entry</button>
-            `;
-            container.prepend(entry);
-        }
-
-        function copyToClipboard(btn) {
-            const pre = btn.parentElement.querySelectorAll('pre');
-            const textToCopy = Array.from(pre).map(p => p.innerText).join('\n\n');
-            navigator.clipboard.writeText(textToCopy);
-            const originalText = btn.innerText;
-            btn.innerText = 'Copied!';
-            setTimeout(() => btn.innerText = originalText, 2000);
-        }
-
-        // --- Tabs ---
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-
-                const target = tab.dataset.target;
-                document.getElementById('api-logs').style.display = target === 'api-logs' ? 'block' : 'none';
-                document.getElementById('webhook-logs').style.display = target === 'webhook-logs' ? 'block' : 'none';
-            });
+        
+        window.addEventListener('beforeunload', saveState);
+        window.addEventListener('load', () => {
+             loadState();
+             startWebhookPolling();
         });
 
         // --- Core Logic ---
-        async function makeRequest(method, path, headers = {}, body = null) {
-            const useProxy = document.getElementById('use-proxy').checked;
-            const baseUrl = document.getElementById('base-url').value.replace(/\/$/, '');
-            const targetUrl = path.startsWith('http') ? path : `${baseUrl}/${path.replace(/^\//, '')}`;
 
-            let finalUrl = targetUrl;
+        async function makeRequest(url, method, headers, body) {
+            const useProxy = document.getElementById('proxy-switch').checked;
+            
+            let finalUrl = url;
             let finalMethod = method;
-            let finalHeaders = { ...headers };
+            let finalHeaders = headers;
             let finalBody = body;
 
             if (useProxy) {
-                finalUrl = 'http://localhost:8000/proxy';
+                finalUrl = PROXY_URL;
                 finalMethod = 'POST';
-                finalBody = {
-                    url: targetUrl,
+                finalHeaders = { 'Content-Type': 'application/json' };
+                finalBody = JSON.stringify({
+                    url: url,
                     method: method,
                     headers: headers,
-                    body: body
-                };
+                    body: typeof body === 'string' ? body : JSON.stringify(body)
+                });
             }
+
+            logRequest(url, method, headers, body);
 
             try {
                 const response = await fetch(finalUrl, {
                     method: finalMethod,
-                    headers: { 'Content-Type': 'application/json', ...finalHeaders },
-                    body: finalBody ? JSON.stringify(finalBody) : null
+                    headers: finalHeaders,
+                    body: finalBody
                 });
 
-                const data = await response.json();
+                let data;
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    data = await response.json();
+                } else {
+                    data = await response.text();
+                }
 
                 if (useProxy) {
-                    // Proxy returns 200, unwrap actual response
-                    let parsedBody = data.body;
-                    try {
-                        if (typeof parsedBody === 'string') parsedBody = JSON.parse(parsedBody);
-                    } catch (e) { }
-
-                    logRequest(method, targetUrl, headers, body, data.status, parsedBody);
-                    return { status: data.status, body: parsedBody };
+                    // Unwrap proxy response
+                    // Expected format: { status, headers, body }
+                    if (typeof data.body === 'string') {
+                        try {
+                            data.body = JSON.parse(data.body);
+                        } catch(e) { /* ignore */ }
+                    }
+                    logResponse(data.status, data.body);
+                    return { ok: data.status >= 200 && data.status < 300, data: data.body, status: data.status };
                 } else {
-                    logRequest(method, targetUrl, headers, body, response.status, data);
-                    return { status: response.status, body: data };
+                    logResponse(response.status, data);
+                    return { ok: response.ok, data: data, status: response.status };
                 }
+
             } catch (error) {
-                logRequest(method, targetUrl, headers, body, 500, { error: error.message });
-                return { status: 500, body: { error: error.message } };
+                logResponse('ERROR', error.message);
+                throw error;
             }
         }
 
-        // --- Event Handlers ---
-        document.getElementById('btn-get-token').addEventListener('click', async () => {
-            setButtonLoading('btn-get-token', true);
+        async function getAccessToken() {
+            const btn = document.getElementById('btn-get-token');
+            setLoading(btn, true);
+            
             const clientId = document.getElementById('client-id').value;
             const clientSecret = document.getElementById('client-secret').value;
+            
+            const credentials = btoa(`${clientId}:${clientSecret}`);
+            
+            try {
+                const response = await makeRequest(
+                    'https://sandbox.smartfastpay.com/oauth2/token',
+                    'POST',
+                    {
+                        'Authorization': `Basic ${credentials}`,
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    'grant_type=client_credentials'
+                );
 
-            // SmarFastPay uses Basic Auth for token
-            const auth = btoa(`${clientId}:${clientSecret}`);
-            const res = await makeRequest('POST', '/oauth2/token', {
-                'Authorization': `Basic ${auth}`,
-                'Accept': 'application/json'
-            }, {
-                'grant_type': 'client_credentials'
-            });
-
-            if (res.status === 200 && res.body.access_token) {
-                document.getElementById('access-token').value = res.body.access_token;
-                saveInputs();
+                if (response.ok && response.data.access_token) {
+                    document.getElementById('access-token').value = response.data.access_token;
+                    saveState(); // Save token immediately
+                } else {
+                    alert('Failed to get token: ' + JSON.stringify(response.data));
+                }
+            } catch (e) {
+                alert('Error getting token: ' + e.message);
+            } finally {
+                setLoading(btn, false);
             }
-            setButtonLoading('btn-get-token', false);
-        });
+        }
 
-        document.getElementById('btn-create-transaction').addEventListener('click', async () => {
-            setButtonLoading('btn-create-transaction', true);
+        async function createTransaction() {
+            const btn = document.getElementById('btn-create-txn');
+            setLoading(btn, true);
+            
             const token = document.getElementById('access-token').value;
+            if (!token) {
+                alert('Please get an access token first.');
+                setLoading(btn, false);
+                return;
+            }
 
             const payload = {
                 customer: {
-                    id: document.getElementById('customer-id').value,
-                    name: document.getElementById('customer-name').value,
-                    email: document.getElementById('customer-email').value,
-                    phone: document.getElementById('customer-phone').value,
+                    id: document.getElementById('cust-id').value,
+                    name: document.getElementById('cust-name').value,
+                    email: document.getElementById('cust-email').value,
                     document: {
-                        number: document.getElementById('customer-doc-number').value,
-                        type: document.getElementById('customer-doc-type').value
+                        number: document.getElementById('doc-number').value,
+                        type: document.getElementById('doc-type').value
                     }
                 },
                 transaction: {
-                    id: document.getElementById('transaction-id').value,
-                    amount: parseFloat(document.getElementById('transaction-amount').value),
-                    currency: 'USD'
+                    id: document.getElementById('txn-id').value,
+                    currency: "USD",
+                    amount: parseFloat(document.getElementById('txn-amount').value)
                 },
-                payment_method: document.getElementById('payment-method').value,
-                country: 'ECU',
-                notification_url: document.getElementById('notification-url').value
+                branch: "TestBranch", // Optional
+                country: "ECU", // Ecuador
+                notification_url: WEBHOOK_URL,
+                // redirect_url: "http://localhost:8000/success", // Optional
+                payment_method: [document.getElementById('payment-method').value]
             };
 
-            const res = await makeRequest('POST', '/v2/payin', {
-                'Authorization': `Bearer ${token}`
-            }, payload);
+            try {
+                // IMPORTANT: The docs shown 'data-raw' with country: BRA. User wants ECU.
+                // Currency is USD.
+                
+                const response = await makeRequest(
+                    'https://sandbox.smartfastpay.com/v2/transaction/checkout',
+                    'POST',
+                    {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    payload
+                );
 
-            if (res.status >= 200 && res.status < 300) {
-                // Try to find checkout link
-                const link = res.body.checkout_url || (res.body.data && res.body.data.checkout_url) || res.body.redirect_url;
-                if (link) {
+                if (response.ok && response.data.data && response.data.data.url) {
+                    const link = response.data.data.url;
                     const container = document.getElementById('payment-link-container');
                     const linkEl = document.getElementById('payment-link');
-                    linkEl.href = link;
-                    linkEl.innerText = link;
+                    
                     container.style.display = 'block';
+                    linkEl.href = link;
+                    linkEl.textContent = link;
+                    linkEl.click(); // Auto-open? Maybe better to let user click.
+                    
+                    // Regenerate txn id for next time
+                    document.getElementById('txn-id').value = uuidv4();
+                } else {
+                    alert('Failed to create transaction: ' + JSON.stringify(response.data));
                 }
-            }
-            setButtonLoading('btn-create-transaction', false);
-        });
-
-        document.getElementById('btn-check-status').addEventListener('click', async () => {
-            setButtonLoading('btn-check-status', true);
-            const token = document.getElementById('access-token').value;
-            const txId = document.getElementById('transaction-id').value;
-
-            await makeRequest('GET', `/v2/transaction/${txId}`, {
-                'Authorization': `Bearer ${token}`
-            });
-            setButtonLoading('btn-check-status', false);
-        });
-
-        document.getElementById('btn-clear-logs').addEventListener('click', async () => {
-            if (document.querySelector('.tab.active').dataset.target === 'api-logs') {
-                document.getElementById('api-logs').innerHTML = '<div style="text-align: center; color: var(--text-dim); padding-top: 2rem;">No logs yet.</div>';
-            } else {
-                await fetch('http://localhost:8000/api/webhooks', { method: 'DELETE' });
-                refreshWebhooks();
-            }
-        });
-
-        // --- Webhook Polling ---
-        async function refreshWebhooks() {
-            try {
-                const res = await fetch('http://localhost:8000/api/webhooks');
-                const webhooks = await res.json();
-
-                const container = document.getElementById('webhook-logs');
-                if (webhooks.length === 0) {
-                    container.innerHTML = '<div style="text-align: center; color: var(--text-dim); padding-top: 2rem;">No webhooks yet.</div>';
-                    return;
-                }
-
-                container.innerHTML = '';
-                webhooks.reverse().forEach(hook => {
-                    const entry = document.createElement('div');
-                    entry.className = 'webhook-entry';
-                    entry.innerHTML = `
-                        <div class="log-meta">
-                            <span>[${new Date(hook.timestamp).toLocaleTimeString()}] ${hook.method}</span>
-                        </div>
-                        <div><strong>Headers:</strong> <pre>${JSON.stringify(hook.headers, null, 2)}</pre></div>
-                        <div><strong>Body:</strong> <pre>${JSON.stringify(hook.body, null, 2)}</pre></div>
-                    `;
-                    container.appendChild(entry);
-                });
             } catch (e) {
-                console.error('Error fetching webhooks:', e);
+                alert('Error creating transaction: ' + e.message);
+            } finally {
+                setLoading(btn, false);
             }
         }
 
-        document.getElementById('btn-refresh-webhooks').addEventListener('click', refreshWebhooks);
-        setInterval(refreshWebhooks, 5000);
+        // --- UI Helpers ---
+
+        function setLoading(btn, isLoading) {
+            const span = btn.querySelector('span');
+            if (isLoading) {
+                btn.disabled = true;
+                const originalText = span.textContent;
+                btn.dataset.originalText = originalText;
+                span.innerHTML = '<div class="loading-spinner"></div>';
+            } else {
+                btn.disabled = false;
+                span.textContent = btn.dataset.originalText || span.textContent;
+            }
+        }
+
+        function switchTab(targetId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.log-container, .webhook-container').forEach(c => c.style.display = 'none');
+            
+            document.querySelector(`.tab[data-target="${targetId}"]`).classList.add('active');
+            document.getElementById(targetId).style.display = 'block';
+        }
+
+        // --- Logging System ---
+
+        function logRequest(url, method, headers, body) {
+            const container = document.getElementById('api-logs-content');
+            const id = 'req-' + Date.now();
+            
+            let bodyStr = '';
+            try {
+                 bodyStr = typeof body === 'string' ? body : JSON.stringify(body, null, 2);
+            } catch(e) { bodyStr = String(body); }
+
+            const html = `
+                <div class="log-entry" id="${id}">
+                    <div class="log-meta">
+                        <span>${new Date().toLocaleTimeString()} | <strong>${method}</strong> ${url}</span>
+                        <span class="status-badge status-pending">PENDING</span>
+                    </div>
+                    <div><strong>Request Headers:</strong> <pre>${JSON.stringify(headers, null, 2)}</pre></div>
+                    <div><strong>Request Body:</strong> <pre>${bodyStr}</pre></div>
+                </div>
+            `;
+            container.insertAdjacentHTML('afterbegin', html);
+        }
+
+        function logResponse(status, body) {
+            const container = document.getElementById('api-logs-content');
+            const entry = container.firstElementChild; // Assuming synchronous order for simplicity in single-threaded JS event loop, mostly true for immediate update
+            
+            if (entry) {
+                const badge = entry.querySelector('.status-badge');
+                badge.textContent = status;
+                badge.className = `status-badge ${status >= 200 && status < 300 ? 'status-success' : 'status-failed'}`;
+                
+                let bodyStr = '';
+                try {
+                    bodyStr = typeof body === 'object' ? JSON.stringify(body, null, 2) : body;
+                } catch(e) { bodyStr = String(body); }
+
+                entry.insertAdjacentHTML('beforeend', `
+                    <div><strong>Response Body:</strong> <pre>${bodyStr}</pre></div>
+                `);
+            }
+        }
+        
+        function copyAllLogs(type) {
+            const id = type === 'api' ? 'api-logs-content' : 'webhook-logs-content';
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => alert('Logs copied!'));
+        }
+        
+        function clearLogs(type) {
+             const id = type === 'api' ? 'api-logs-content' : 'webhook-logs-content';
+             document.getElementById(id).innerHTML = '';
+        }
+
+        // --- Webhook Viewer ---
+
+        let pollingInterval;
+
+        function startWebhookPolling() {
+            fetchWebhooks();
+            pollingInterval = setInterval(fetchWebhooks, 5000);
+        }
+
+        async function fetchWebhooks() {
+            try {
+                const res = await fetch(WEBHOOK_API_URL);
+                if (res.ok) {
+                    const data = await res.json();
+                    renderWebhooks(data);
+                }
+            } catch (e) {
+                console.error("Webhook polling failed", e);
+            }
+        }
+
+        function renderWebhooks(webhooks) {
+            const container = document.getElementById('webhook-logs-content');
+            container.innerHTML = '';
+            
+            if (webhooks.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-dim); text-align: center; margin-top: 2rem;">No webhooks received yet.</p>';
+                return;
+            }
+
+            webhooks.forEach(wh => {
+                const html = `
+                    <div class="webhook-entry">
+                        <div class="log-meta">
+                            <span>${new Date(wh.timestamp).toLocaleString()} | <strong>${wh.method}</strong></span>
+                        </div>
+                        <div><strong>Headers:</strong> <pre>${JSON.stringify(wh.headers, null, 2)}</pre></div>
+                        <div><strong>Body:</strong> <pre>${JSON.stringify(wh.body, null, 2)}</pre></div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+        
+        async function clearWebhooks() {
+            try {
+                await fetch(WEBHOOK_API_URL, { method: 'DELETE' });
+                fetchWebhooks();
+            } catch(e) {
+                alert('Failed to clear webhooks: ' + e.message);
+            }
+        }
     </script>
 </body>
-
 </html>

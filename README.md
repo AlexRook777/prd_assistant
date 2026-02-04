@@ -251,25 +251,29 @@ Auto-triggered during Step 3 or when user mentions "create test page".
 
 ## Jira/Confluence Access
 
-To enable direct Jira/Confluence access in Antigravity, follow these instructions:
+To enable direct Jira/Confluence access in Antigravity, run the workflow:
 
-### 1. Generate an Atlassian API Token
-The agent requires a secure token to act on your behalf.
+```
+/install-atlassian-mcp
+```
 
-1. Navigate to your Atlassian Security Settings.
-2. Select **Create API token** and name it "Antigravity-Integration".
-3. Copy the token immediately, as it will not be shown again.
+This workflow will guide you through:
+1. Generating an Atlassian API token
+2. Configuring the MCP server with your credentials
+3. Verifying the installation
 
-### 2. Configure the MCP Server in Antigravity
-You must register the server in Antigravity's raw configuration to unlock the Jira tools.
+**Quick Summary:**
+- The workflow uses API token authentication (more reliable than OAuth)
+- Works on Ubuntu, macOS, and Windows
+- Automatically validates the installation
+- Retries until successful
 
-1. In the Antigravity Agent panel, click the "..." dropdown and select **MCP Servers**.
-2. Find the **atlassian** server and click **Install**.
-3. Follow the install instructions that appear on browser.
-4. Verify that the agent can "see" the new tools. Type this into your Antigravity chat:
-"@mcp:atlassian: List all available Jira projects."
+### Manual Verification
+After installation, verify by typing:
+```
+@mcp:atlassian: List all available Jira projects.
+```
 
-**Expected Behavior**: The agent should trigger a browser window for OAuth 2.1 authorization if this is your first run. Once authorized, it will return a list of projects.
 
 ## Tips
 
