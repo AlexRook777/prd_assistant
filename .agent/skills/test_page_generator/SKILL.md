@@ -22,13 +22,21 @@ This skill is specifically designed for **Phase 1, Step 3** of the integration w
 
 ### Phase 1: Create Test Page
 
-**Step 1**: Create a test HTML page with **3-column layout**:
-- **Column 1**: API Credentials with Proxy Switcher toggle
-- **Column 2**: Transaction creation form
-- **Column 3**: API Logs (top) and Webhooks (bottom) - **NO TABS**
-- The "API Credentials" card header must have a toggle switch on the right side labeled "Use Proxy".
-- If enabled, all API requests (OAuth, Transaction, Status) must be routed through `http://localhost:8000/proxy`.
-- If disabled, requests go directly to the provider's API.
+**Step 1**: Create a test HTML page with **3-column layout** using **Compact Mode**:
+- **Design Goal**: Maximize information density. Eliminate scrolling. Use `height: 100vh` and tight spacing.
+- **Global Settings**: `line-height: 1.3`, base font size `0.8rem` or smaller.
+- **Column 1**: API Credentials ...
+- **Column 3**: Page Title (H1) at the top, followed by API Logs and Webhooks.
+- The "API Credentials" card header must have a toggle switch on the right side.
+- The "Webhook Configuration" section (below Get Token button) must have a toggle switch on the right side of its title.
+- **Toggle Naming Convention**: Labels show the **current active mode**, not the action:
+  - Proxy toggle: "Direct API" (OFF) or "Proxy" (ON)
+  - Webhook toggle: "Local Webhooks" (OFF) or "N8n Webhooks" (ON)
+- **Default States**: Both toggles should be **ON by default** (checked):
+  - Proxy: ON (routes through `http://localhost:8000/proxy`)
+  - Webhooks: ON (uses N8n webhooks)
+- If Proxy enabled, all API requests (OAuth, Transaction, Status) must be routed through `http://localhost:8000/proxy`.
+- If Proxy disabled, requests go directly to the provider's API.
 - The page must allow the user to:
     - Enter all required credentials
     - Receive a payment link
@@ -37,22 +45,38 @@ This skill is specifically designed for **Phase 1, Step 3** of the integration w
     - View updated payment status within the payment details on the page
 
 **Step 2**: Logs and Webhooks Display:
-- **API Logs** section at the top of the third column with "Clear" button
-- **Webhooks** section at the bottom of the third column with "Refresh" and "Clear" buttons
+- **API Logs** section at the top of the third column (Flex 1) with "Clear" button
+- **Webhooks** section at the bottom of the third column (Flex 1) with "Refresh" and "Clear" buttons
 - Both sections visible simultaneously (no tab switching)
+- Each section has independent scrolling
+- **Log Order**: Newest entries appear at the TOP of the list (reverse chronological)
 - Option to view and copy all requests and responses (including headers)
 - Request log with individual entry copy functionality
 
 **Step 3**: Design and Logic Requirements.
 - **MANDATORY**: You **MUST** use the standard CSS and HTML structure definitions from `resources/style_guide.md`. Read this file before generating the HTML.
 - **Layout Structure**:
-    - **3-column grid**: `grid-template-columns: 1fr 1fr 1fr`
+    - **3-column grid**: `gap: 0.5rem`, `grid-template-rows: 1fr` (No separate header row)
     - **No scrolling**: Page fits within viewport (`height: 100vh`, `overflow: hidden`)
-    - **Third column**: Flexbox vertical layout with API Logs on top, Webhooks on bottom
-    - **NO TABS**: Both logs and webhooks always visible
+    - **Third column**: Title (H1) -> API Logs (Flex) -> Webhooks (Flex)
+    - **Compact CSS**: Use reduced padding (`0.5rem` or less) and margins (`0.5rem` or less) throughout.
+    - **Access Token Layout**: Use grid layout to position Get Token button on left, Access Token field on right:
+      ```html
+      <div style="display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start;">
+          <button id="btn-get-token">Get Token</button>
+          <div class="form-group" style="margin: 0;">
+              <label for="access-token">Access Token</label>
+              <textarea id="access-token" rows="3" readonly></textarea>
+          </div>
+      </div>
+      ```
+    - **Webhook Configuration**: Must be placed in Column 1 (API Credentials), below the Get Token button, with toggle on the right of the section title
 - **Proxy Logic**:
+    - **Default State**: Proxy toggle should be **checked (ON)** by default
     - **Header Layout**: Use `<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;"><h2>API Credentials</h2><div class="switch-container">...</div></div>`.
-    - **Persistence**: Save the switch state in `sessionStorage` (key: `use-proxy`).
+    - **Toggle Label**: Must show current mode - "Direct API" when OFF, "Proxy" when ON
+    - **Toggle Function**: Create `toggleProxyMode()` function that updates the label based on checkbox state
+    - **Persistence**: Save the switch state in `sessionStorage` (key: `use-proxy-toggle`).
     - **Request Format (Proxy ON)**:
         - URL: `http://localhost:8000/proxy`
         - Method: `POST`
@@ -105,15 +129,17 @@ This skill is specifically designed for **Phase 1, Step 3** of the integration w
 - Use a clean, modern design with proper form validation
 
 **Step 4**: Webhook Verification
+- **Default State**: Webhook toggle should be **checked (ON)** by default (N8n mode)
 - **Webhook Mode Toggle**:
-  - Add a toggle switch in the "Webhook Configuration" section to choose between:
-    - **Local Webhooks**: `http://localhost:8000/webhook` (default)
-    - **N8n Webhooks**: `https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/{orderId}`
+  - Add a toggle switch in the "Webhook Configuration" section (in Column 1, below Get Token) to choose between modes
+  - Position toggle to the right of "Webhook Configuration" title (same pattern as Proxy toggle)
+  - **Toggle Label**: Must show current mode - "Local Webhooks" when OFF, "N8n Webhooks" when ON
+  - **Toggle Function**: Create `toggleWebhookMode()` function that updates the label based on checkbox state
   - Save the webhook mode preference in `sessionStorage`.
-- **Local Webhook Mode**:
+- **Local Webhook Mode** (toggle OFF):
   - **Hardcode** the webhook URL to `http://localhost:8000/webhook`.
   - **Hardcode** the polling endpoint to `http://localhost:8000/api/webhooks`.
-- **N8n Webhook Mode**:
+- **N8n Webhook Mode** (toggle ON - default):
   - Generate a unique order ID using `crypto.randomUUID()` when creating a transaction.
   - Construct webhook URL: `https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/{orderId}`
   - Use this URL as the callback/notification URL in the transaction request.
@@ -122,7 +148,7 @@ This skill is specifically designed for **Phase 1, Step 3** of the integration w
   - Use Basic Auth: `btoa('callbacks-test:callbacks-test123')`
   - Display the order ID prominently in the UI for reference.
 - **EMBED THE WEBHOOK VIEWER UI**:
-  - Create a dedicated section in the third column (bottom half) for webhooks.
+  - Create a dedicated section in the third column (bottom half, flex-grow) for webhooks.
   - **NO TABS**: Webhooks section is always visible below API Logs.
   - It MUST include:
     - Auto-polling every 5 seconds.
@@ -130,7 +156,7 @@ This skill is specifically designed for **Phase 1, Step 3** of the integration w
     - Expandable details for Body and Headers.
     - Copy buttons.
     - Display current webhook mode (Local/N8n) and order ID (if N8n mode).
-- Display webhooks in chronological order (newest first).
+- **Display Order**: Webhooks in reverse chronological order (newest first at the top).
 - Expected webhook response format from `http://localhost:8000/api/webhooks`:
   ```json
   [

@@ -29,8 +29,8 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg);
     color: var(--text);
-    line-height: 1.5;
-    padding: 1rem;
+    line-height: 1.3;
+    padding: 0.5rem;
     margin: 0;
     height: 100vh;
     overflow: hidden;
@@ -38,12 +38,12 @@ body {
 
 .container {
     max-width: 100%;
-    height: calc(100vh - 2rem);
+    height: calc(100vh - 1rem);
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto 1fr;
-    gap: 1rem;
+    grid-template-rows: 1fr;
+    gap: 0.5rem;
 }
 
 h1, h2, h3 {
@@ -212,6 +212,7 @@ pre {
     flex-direction: column;
     gap: 1rem;
     height: 100%;
+    overflow: hidden;
 }
 
 .logs-section, .webhooks-section {

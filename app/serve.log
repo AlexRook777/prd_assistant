@@ -1,238 +1,60 @@
-2026-02-04 21:53:16,563 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:16] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:18,179 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:18] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:20,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:20] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:21,563 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:21] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:23,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:23] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:25,998 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:25] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:26,562 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:26] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:28,175 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:28] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:31,000 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:31] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:31,562 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:31] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:33,183 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:33] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:36,002 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:36] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:36,563 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:36] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:38,179 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:38] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:39,215 - INFO - Proxying POST to https://sandbox.smartfastpay.com/oauth2/token
-2026-02-04 21:53:40,031 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:40] "POST /proxy HTTP/1.1" 200 -
-2026-02-04 21:53:41,024 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:41] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:43,181 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:43] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:45,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:45] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:48,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:48] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:50,998 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:50] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:53,175 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:53] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:56,001 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:56] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:53:58,178 - INFO - 127.0.0.1 - - [04/Feb/2026 21:53:58] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:01,003 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:01] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:03,179 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:03] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:05,998 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:05] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:08,175 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:08] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:10,998 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:10] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:13,175 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:13] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:15,998 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:15] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:18,175 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:18] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:20,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:20] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:23,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:23] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:25,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:25] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:28,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:28] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:31,002 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:31] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:33,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:33] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:36,000 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:36] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:38,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:38] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:41,001 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:41] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:43,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:43] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:46,001 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:46] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:48,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:48] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:51,013 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:51] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:53,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:53] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:56,001 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:56] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:54:58,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:54:58] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:01,000 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:01] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:03,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:03] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:06,000 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:06] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:08,182 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:08] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:10,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:10] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:13,187 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:13] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:13,977 - INFO - Proxying POST to https://sandbox.smartfastpay.com/v2/transaction/checkout
-2026-02-04 21:55:14,194 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:14] "POST /proxy HTTP/1.1" 200 -
-2026-02-04 21:55:16,002 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:16] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:18,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:18] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:21,001 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:21] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:22,954 - INFO - Proxying POST to https://sandbox.smartfastpay.com/oauth2/token
-2026-02-04 21:55:23,342 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:23] "POST /proxy HTTP/1.1" 200 -
-2026-02-04 21:55:23,348 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:23] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:24,882 - INFO - Proxying POST to https://sandbox.smartfastpay.com/v2/transaction/checkout
-2026-02-04 21:55:25,085 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:25] "POST /proxy HTTP/1.1" 200 -
-2026-02-04 21:55:26,000 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:26] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:28,178 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:28] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:31,001 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:31] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:33,178 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:33] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:36,003 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:36] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:38,189 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:38] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:38,600 - INFO - Proxying POST to https://sandbox.smartfastpay.com/oauth2/token
-2026-02-04 21:55:46,315 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:46] "POST /proxy HTTP/1.1" 200 -
-2026-02-04 21:55:46,320 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:46] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:46,321 - INFO - Proxying POST to https://sandbox.smartfastpay.com/v2/transaction/checkout
-2026-02-04 21:55:46,533 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:46] "POST /proxy HTTP/1.1" 200 -
-2026-02-04 21:55:46,539 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:46] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:46,540 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:46] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:48,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:48] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:50,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:50] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:53,175 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:53] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:56,003 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:56] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:55:58,183 - INFO - 127.0.0.1 - - [04/Feb/2026 21:55:58] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:01,001 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:01] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:03,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:03] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:06,000 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:06] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:08,115 - INFO - Proxying POST to https://sandbox.smartfastpay.com/oauth2/token
-2026-02-04 21:56:08,744 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:08] "POST /proxy HTTP/1.1" 200 -
-2026-02-04 21:56:08,747 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:08] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:11,001 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:11] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:12,898 - INFO - Proxying POST to https://sandbox.smartfastpay.com/v2/transaction/checkout
-2026-02-04 21:56:13,071 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:13] "POST /proxy HTTP/1.1" 200 -
-2026-02-04 21:56:13,212 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:13] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:16,000 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:16] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:18,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:18] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:21,000 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:21] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:23,180 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:23] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:26,001 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:26] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:28,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:28] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:31,001 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:31] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:33,175 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:33] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:36,004 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:36] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:38,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:38] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:41,001 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:41] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:43,187 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:43] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:46,001 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:46] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:46,375 - INFO - Proxying POST to https://sandbox.smartfastpay.com/oauth2/token
-2026-02-04 21:56:57,088 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:57] "POST /proxy HTTP/1.1" 200 -
-2026-02-04 21:56:57,093 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:57] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:57,093 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:57] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:57,094 - INFO - Proxying POST to https://sandbox.smartfastpay.com/v2/transaction/checkout
-2026-02-04 21:56:57,254 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:57] "POST /proxy HTTP/1.1" 200 -
-2026-02-04 21:56:57,259 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:57] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:57,259 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:57] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:56:58,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:56:58] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:01,000 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:01] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:03,180 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:03] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:05,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:05] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:08,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:08] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:11,001 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:11] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:13,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:13] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:16,001 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:16] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:18,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:18] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:19,187 - INFO - Proxying POST to https://sandbox.smartfastpay.com/oauth2/token
-2026-02-04 21:57:22,891 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:22] "POST /proxy HTTP/1.1" 200 -
-2026-02-04 21:57:22,895 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:22] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:23,205 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:23] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:26,000 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:26] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:28,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:28] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:30,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:30] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:33,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:33] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:36,002 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:36] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:37,933 - INFO - Proxying POST to https://sandbox.smartfastpay.com/v2/transaction/checkout
-2026-02-04 21:57:38,221 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:38] "POST /proxy HTTP/1.1" 200 -
-2026-02-04 21:57:38,224 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:38] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:41,000 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:41] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:43,190 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:43] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:45,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:45] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:48,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:48] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:50,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:50] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:53,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:53] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:56,000 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:56] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:57:58,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:57:58] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:01,011 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:01] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:03,178 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:03] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:05,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:05] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:08,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:08] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:10,998 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:10] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:13,175 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:13] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:16,000 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:16] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:18,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:18] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:21,000 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:21] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:23,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:23] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:25,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:25] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:28,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:28] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:30,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:30] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:33,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:33] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:35,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:35] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:38,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:38] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:40,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:40] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:43,200 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:43] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:45,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:45] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:48,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:48] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:50,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:50] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:53,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:53] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:55,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:55] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:58:58,178 - INFO - 127.0.0.1 - - [04/Feb/2026 21:58:58] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:01,000 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:01] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:03,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:03] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:05,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:05] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:08,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:08] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:10,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:10] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:13,178 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:13] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:15,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:15] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:18,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:18] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:20,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:20] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:23,183 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:23] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:25,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:25] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:28,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:28] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:30,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:30] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:33,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:33] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:35,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:35] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:38,179 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:38] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:40,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:40] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:43,209 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:43] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:45,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:45] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:48,177 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:48] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:50,999 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:50] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:53,188 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:53] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:55,998 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:55] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 21:59:58,176 - INFO - 127.0.0.1 - - [04/Feb/2026 21:59:58] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:00,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:00] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:03,176 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:03] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:05,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:05] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:08,176 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:08] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:10,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:10] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:13,177 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:13] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:15,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:15] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:18,176 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:18] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:20,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:20] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:23,186 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:23] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:26,011 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:26] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:28,175 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:28] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:30,999 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:30] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:33,175 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:33] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:36,014 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:36] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:38,175 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:38] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:40,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:40] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:45,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:45] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:51,008 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:51] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:00:55,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:00:55] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:01:00,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:01:00] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:01:05,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:01:05] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:01:10,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:01:10] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:01:15,999 - INFO - 127.0.0.1 - - [04/Feb/2026 22:01:15] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:01:20,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:01:20] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:01:25,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:01:25] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:01:30,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:01:30] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:01:35,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:01:35] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:01:40,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:01:40] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:01:45,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:01:45] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:01:50,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:01:50] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:01:55,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:01:55] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:02:00,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:02:00] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:02:05,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:02:05] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:02:10,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:02:10] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:02:15,999 - INFO - 127.0.0.1 - - [04/Feb/2026 22:02:15] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:02:20,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:02:20] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:02:26,010 - INFO - 127.0.0.1 - - [04/Feb/2026 22:02:26] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:02:30,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:02:30] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:02:35,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:02:35] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:02:40,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:02:40] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:02:45,999 - INFO - 127.0.0.1 - - [04/Feb/2026 22:02:45] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:02:50,999 - INFO - 127.0.0.1 - - [04/Feb/2026 22:02:50] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:02:55,999 - INFO - 127.0.0.1 - - [04/Feb/2026 22:02:55] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:03:00,999 - INFO - 127.0.0.1 - - [04/Feb/2026 22:03:00] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:03:05,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:03:05] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:03:10,999 - INFO - 127.0.0.1 - - [04/Feb/2026 22:03:10] "GET /api/webhooks HTTP/1.1" 200 -
-2026-02-04 22:03:15,998 - INFO - 127.0.0.1 - - [04/Feb/2026 22:03:15] "GET /api/webhooks HTTP/1.1" 200 -
+2026-02-05 11:51:38,168 - INFO - Proxying GET to https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/order_1770284373163
+2026-02-05 11:51:38,298 - INFO - 127.0.0.1 - - [05/Feb/2026 11:51:38] "POST /proxy HTTP/1.1" 200 -
+2026-02-05 11:51:43,165 - INFO - 127.0.0.1 - - [05/Feb/2026 11:51:43] "OPTIONS /proxy HTTP/1.1" 200 -
+2026-02-05 11:51:43,168 - INFO - Proxying GET to https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/order_1770284373163
+2026-02-05 11:51:43,297 - INFO - 127.0.0.1 - - [05/Feb/2026 11:51:43] "POST /proxy HTTP/1.1" 200 -
+2026-02-05 11:51:48,165 - INFO - 127.0.0.1 - - [05/Feb/2026 11:51:48] "OPTIONS /proxy HTTP/1.1" 200 -
+2026-02-05 11:51:48,168 - INFO - Proxying GET to https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/order_1770284373163
+2026-02-05 11:51:48,313 - INFO - 127.0.0.1 - - [05/Feb/2026 11:51:48] "POST /proxy HTTP/1.1" 200 -
+2026-02-05 11:51:53,165 - INFO - 127.0.0.1 - - [05/Feb/2026 11:51:53] "OPTIONS /proxy HTTP/1.1" 200 -
+2026-02-05 11:51:53,168 - INFO - Proxying GET to https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/order_1770284373163
+2026-02-05 11:51:53,302 - INFO - 127.0.0.1 - - [05/Feb/2026 11:51:53] "POST /proxy HTTP/1.1" 200 -
+2026-02-05 11:51:58,165 - INFO - 127.0.0.1 - - [05/Feb/2026 11:51:58] "OPTIONS /proxy HTTP/1.1" 200 -
+2026-02-05 11:51:58,169 - INFO - Proxying GET to https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/order_1770284373163
+2026-02-05 11:51:58,344 - INFO - 127.0.0.1 - - [05/Feb/2026 11:51:58] "POST /proxy HTTP/1.1" 200 -
+2026-02-05 11:52:03,165 - INFO - 127.0.0.1 - - [05/Feb/2026 11:52:03] "OPTIONS /proxy HTTP/1.1" 200 -
+2026-02-05 11:52:03,168 - INFO - Proxying GET to https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/order_1770284373163
+2026-02-05 11:52:03,299 - INFO - 127.0.0.1 - - [05/Feb/2026 11:52:03] "POST /proxy HTTP/1.1" 200 -
+2026-02-05 11:52:08,166 - INFO - 127.0.0.1 - - [05/Feb/2026 11:52:08] "OPTIONS /proxy HTTP/1.1" 200 -
+2026-02-05 11:52:08,170 - INFO - Proxying GET to https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/order_1770284373163
+2026-02-05 11:52:08,340 - INFO - 127.0.0.1 - - [05/Feb/2026 11:52:08] "POST /proxy HTTP/1.1" 200 -
+2026-02-05 11:52:13,165 - INFO - 127.0.0.1 - - [05/Feb/2026 11:52:13] "OPTIONS /proxy HTTP/1.1" 200 -
+2026-02-05 11:52:13,168 - INFO - Proxying GET to https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/order_1770284373163
+2026-02-05 11:52:13,419 - INFO - 127.0.0.1 - - [05/Feb/2026 11:52:13] "POST /proxy HTTP/1.1" 200 -
+2026-02-05 11:52:18,165 - INFO - 127.0.0.1 - - [05/Feb/2026 11:52:18] "OPTIONS /proxy HTTP/1.1" 200 -
+2026-02-05 11:52:18,168 - INFO - Proxying GET to https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b/order_1770284373163
+2026-02-05 11:52:18,567 - INFO - 127.0.0.1 - - [05/Feb/2026 11:52:18] "POST /proxy HTTP/1.1" 200 -
+2026-02-05 11:52:18,569 - ERROR - Error: [Errno 32] Broken pipe
+2026-02-05 11:52:18,569 - INFO - 127.0.0.1 - - [05/Feb/2026 11:52:18] "POST /proxy HTTP/1.1" 500 -
+2026-02-05 11:52:33,413 - INFO - 127.0.0.1 - - [05/Feb/2026 11:52:33] "GET /api/webhooks HTTP/1.1" 200 -
+2026-02-05 11:52:43,412 - INFO - 127.0.0.1 - - [05/Feb/2026 11:52:43] "GET /api/webhooks HTTP/1.1" 200 -
+2026-02-05 12:00:32,909 - INFO - Serving at http://localhost:8000
+2026-02-05 12:00:32,909 - INFO - Proxy endpoint at http://localhost:8000/proxy
+2026-02-05 12:00:34,382 - INFO - 127.0.0.1 - - [05/Feb/2026 12:00:34] code 404, message File not found
+2026-02-05 12:00:34,382 - INFO - 127.0.0.1 - - [05/Feb/2026 12:00:34] "GET /health HTTP/1.1" 404 -
+2026-02-05 12:00:49,813 - INFO - 127.0.0.1 - - [05/Feb/2026 12:00:49] "GET /integrations/Integration_SmartFastPay%20Ecuador%20USD%20Payin%20HPP/1_result/3.test_page.html HTTP/1.1" 200 -
+2026-02-05 12:00:49,935 - INFO - 127.0.0.1 - - [05/Feb/2026 12:00:49] code 404, message File not found
+2026-02-05 12:00:49,935 - INFO - 127.0.0.1 - - [05/Feb/2026 12:00:49] "GET /favicon.ico HTTP/1.1" 404 -
+2026-02-05 12:01:01,033 - INFO - Proxying POST to https://sandbox.smartfastpay.com/oauth2/token
+2026-02-05 12:01:08,484 - INFO - 127.0.0.1 - - [05/Feb/2026 12:01:08] "POST /proxy HTTP/1.1" 200 -
+2026-02-05 12:01:23,619 - INFO - Proxying POST to https://sandbox.smartfastpay.com/v2/transaction/checkout
+2026-02-05 12:01:31,524 - INFO - 127.0.0.1 - - [05/Feb/2026 12:01:31] "POST /proxy HTTP/1.1" 200 -
+2026-02-05 12:02:12,909 - INFO - Proxying POST to https://sandbox.smartfastpay.com/v2/transaction/checkout
+2026-02-05 12:02:13,559 - INFO - 127.0.0.1 - - [05/Feb/2026 12:02:13] "POST /proxy HTTP/1.1" 200 -
+2026-02-05 12:15:07,023 - INFO - Serving at http://localhost:8000
+2026-02-05 12:15:07,023 - INFO - Proxy endpoint at http://localhost:8000/proxy
+2026-02-05 12:15:11,056 - INFO - 127.0.0.1 - - [05/Feb/2026 12:15:11] "GET /api/webhooks HTTP/1.1" 200 -
+2026-02-05 12:15:18,064 - INFO - 127.0.0.1 - - [05/Feb/2026 12:15:18] "GET /integrations/Integration_SmartFastPay%20Ecuador%20USD%20Payin%20HPP/1_result/3.test_page.html HTTP/1.1" 200 -
+2026-02-05 12:15:25,891 - INFO - Proxying POST to https://sandbox.smartfastpay.com/oauth2/token
+2026-02-05 12:15:26,378 - INFO - 127.0.0.1 - - [05/Feb/2026 12:15:26] "POST /proxy HTTP/1.1" 200 -
+2026-02-05 12:26:12,544 - INFO - Serving at http://localhost:8000
+2026-02-05 12:26:12,545 - INFO - Proxy endpoint at http://localhost:8000/proxy
+2026-02-05 12:26:26,836 - INFO - 127.0.0.1 - - [05/Feb/2026 12:26:26] "GET /integrations/Integration_SmartFastPay%20Ecuador%20USD%20Payin%20HPP/1_result/3.test_page.html HTTP/1.1" 200 -
+2026-02-05 12:26:26,914 - INFO - 127.0.0.1 - - [05/Feb/2026 12:26:26] code 404, message File not found
+2026-02-05 12:26:26,914 - INFO - 127.0.0.1 - - [05/Feb/2026 12:26:26] "GET /favicon.ico HTTP/1.1" 404 -
+2026-02-05 12:26:33,836 - INFO - Proxying POST to https://sandbox.smartfastpay.com/oauth2/token
+2026-02-05 12:26:34,272 - INFO - 127.0.0.1 - - [05/Feb/2026 12:26:34] "POST /proxy HTTP/1.1" 200 -
+2026-02-05 12:26:45,988 - INFO - Proxying POST to https://sandbox.smartfastpay.com/v2/transaction/checkout
+2026-02-05 12:26:46,355 - INFO - 127.0.0.1 - - [05/Feb/2026 12:26:46] "POST /proxy HTTP/1.1" 200 -
+2026-02-05 12:27:06,307 - INFO - Proxying GET to https://sandbox.smartfastpay.com/v2/transaction/44ec3273-1a70-4642-a43e-79218cfaa448
+2026-02-05 12:27:06,668 - INFO - 127.0.0.1 - - [05/Feb/2026 12:27:06] "POST /proxy HTTP/1.1" 200 -

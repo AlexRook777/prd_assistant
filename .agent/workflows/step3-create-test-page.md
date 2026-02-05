@@ -40,7 +40,19 @@ Create a functional HTML test page to physically verify the payment provider's A
      - **No scrolling required**: Fits within viewport
    - Create documentation (`3.test_page.md`) with usage instructions.
 
-3. **Include Workflow Suggestions**: End `3.test_page.md` with `## Workflow Suggestions` section (see `.gemini.md` for format).
+3. **Verify and Polish (Self-Correction Loop)**:
+   - **Open the generated page** using the existing `serve.py` (e.g., `http://localhost:8000/...`).
+   - **Inspect** the visual layout:
+     - Is it a 3-column layout?
+     - Does it fit in the viewport without global scrolling (individual sections should scroll)?
+     - Does header have the provider name? and it is located in column 3
+     - Are "API Logs" and "Local/N8n Webhooks" sections visible?
+   - **Critique & Fix**:
+     - If the layout is broken or scrolling is required, modify the HTML/CSS using `replace_file_content`.
+     - **Retry** the inspection.
+     - Repeat up to **3 times** until the page meets the "Compact Mode" requirements.
+
+4. **Include Workflow Suggestions**: End `3.test_page.md` with `## Workflow Suggestions` section (see `.gemini.md` for format).
 
 ## Success Criteria
 - `3.test_page.html` created and functional

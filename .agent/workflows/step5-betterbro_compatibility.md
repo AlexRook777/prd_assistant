@@ -44,22 +44,22 @@ description: Phase 1 Step 5 - Check compatibility with system architecture and B
     -   **Service Identification**: Include the specific "Service Instance" name, the "Service URL" from the provider docs, and the "BetterBro Service URL" from the internal docs.
     -   **Step D: Download BetterBro Specification (NEW - Deep Analysis)**:
         -   **Action**: Once the correct BetterBro Service URL is identified, use the browser to navigate to that page.
-        -   **Export Markdown**: Click the menu (⋮) → "Export page as Markdown" to download the complete specification.
-        -   **Save Location**: Save the markdown file as `betterbro_service_spec.md` in the `<current_integration>/0_initial_docs_and_config/` directory.
-        -   **CRITICAL**: The downloaded markdown file is the SOURCE OF TRUTH. Do NOT re-read the URL with `read_url_content` as it may return generic/root page content instead of the specific service documentation.
+        -   **View Page as Markdown**: Click the menu (⋮) → "View page as Markdown" to open the content in a new tab.
+        -   **Save Location**: Copy the displayed markdown content and save it as `betterbro_service_spec.md` in the `<current_integration>/0_initial_docs_and_config/` directory.
+        -   **CRITICAL**: The saved markdown file is the SOURCE OF TRUTH. Do NOT re-read the URL with `read_url_content` as it may return generic/root page content instead of the specific service documentation.
         -   **Purpose**: This provides the complete, structured specification for comprehensive field mapping and status code analysis.
-    -   **Step E: Verify Download (Validation)**:
+    -   **Step E: Verify File (Validation)**:
         -   **Action**: Check that `betterbro_service_spec.md` exists in the `0_initial_docs_and_config/` directory.
         -   **Validation**: Open the file and verify it contains service-specific content (field mappings, status codes, regional requirements) and NOT generic introduction text.
-        -   **Fallback**: If the download failed, the file is missing, or it contains only generic content:
+        -   **Fallback**: If the capture failed, the file is missing, or it contains only generic content:
             -   Manually create `betterbro_service_spec.md` based on web search results and BetterBro documentation.
             -   Document the standard Acquiring Form (HPP) field mappings and status codes.
             -   Include regional requirements if applicable (e.g., Ecuador document fields).
 
 3.  **Field Mapping Analysis**:
     -   Review `2.docs_analysis.md` and `4.auto_test_page.md` for provider field requirements.
-    -   Review the **downloaded** `<current_integration>/0_initial_docs_and_config/betterbro_service_spec.md` for the complete BetterBro field specification.
-    -   **IMPORTANT**: Use ONLY the downloaded markdown file, not the live URL.
+    -   Review the **saved** `<current_integration>/0_initial_docs_and_config/betterbro_service_spec.md` for the complete BetterBro field specification.
+    -   **IMPORTANT**: Use ONLY the saved markdown file, not the live URL.
     -   **Cross-Reference**: Compare provider fields against BetterBro standard fields from the downloaded specification.
     -   Verify that every mandatory request field from the Provider has a corresponding standard field in the BetterBro internal schema for the selected **Rule**.
     -   Verify that every response field (synchronous or webhook) can be mapped to a standard internal field.
@@ -67,8 +67,8 @@ description: Phase 1 Step 5 - Check compatibility with system architecture and B
 
 4.  **Status Mapping Analysis**:
     -   Identify all possible transaction statuses from the Provider (from `2.docs_analysis.md`).
-    -   Review status code definitions in the **downloaded** `<current_integration>/0_initial_docs_and_config/betterbro_service_spec.md`.
-    -   **IMPORTANT**: Use ONLY the downloaded markdown file for status mapping reference.
+    -   Review status code definitions in the **saved** `<current_integration>/0_initial_docs_and_config/betterbro_service_spec.md`.
+    -   **IMPORTANT**: Use ONLY the saved markdown file for status mapping reference.
     -   Map each provider status to a 4bill internal status (e.g., `1 SUCCESS`, `2 FAILED`, `3 PENDING`, `4 REFUNDED`, `5 CHARGEBACK`).
     -   **CRITICAL**: If a status is ambiguous or doesn't have a clear BetterBro equivalent, mark it as a RISK.
 

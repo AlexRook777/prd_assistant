@@ -14,7 +14,24 @@ Analyze the Epic or Jira requirements to understand the integration scope and id
 
 ## Task
 
-1. **Pre-computation Check (CRITICAL)**:
+1. **Jira Content Verification (MANDATORY)**:
+   - **Goal**: Ensure the `bizdev_request` file contains 100% of the information from the Jira issue before analysis begins.
+   - **Locate File**: Find `0_initial_docs_and_config/bizdev_request_<IssueKey>.md`.
+   - **Extract Key**: Get the Jira Issue Key from the filename.
+   - **Fetch Live Data**: Run `python3 app/jira_fetcher.py <IssueKey>` to get the full, non-truncated JSON.
+   - **Verification**:
+     - Read the current `bizdev_request` file.
+     - Compare it against the fetched JSON.
+     - **Check for missing**:
+       - Full description text (especially tables).
+       - Transaction limits (min/max amounts, daily/monthly limits).
+       - Tables in description.
+       - All comments (especially recent ones).
+   - **Action**:
+     - **IF MISSING INFO FOUND**: Update `bizdev_request_<IssueKey>.md` immediately to include the missing data. You can use the `Jira Requirement Extraction` skill logic or manually update it.
+     - **IF COMPLETE**: Proceed to next step.
+
+2. **Pre-computation Check (CRITICAL)**:
    - Check if `1.epic_analysis.md` already exists.
    - **IF IT EXISTS**:
      - Read the **ENTIRE** file content.
@@ -26,11 +43,11 @@ Analyze the Epic or Jira requirements to understand the integration scope and id
      - **Augment**: Add the `## Clarified Points (User Feedback)` section if it doesn't exist, populating it with any answered questions.
    - **IF IT DOES NOT EXIST**: Proceed normally to read source documents.
 
-2. **Read Source Documents**: 
+3. **Read Source Documents**: 
    - Check `0_initial_docs_and_config/` for Epic description, Jira ticket, or business requirements
    - Read any PDFs, Word docs, or text files containing requirements
 
-2. **Extract Key Information**:
+4. **Extract Key Information**:
    - Payment method (wallet, card, bank transfer, etc.)
    - Target countries/regions
    - Flow type (H2H, Redirect, HPP)
@@ -38,12 +55,12 @@ Analyze the Epic or Jira requirements to understand the integration scope and id
    - **BetterBro Alignment**: Search for "BetterBro Service URL" or specific "Service Rule" mentioned in the ticket.
    - Special requirements or constraints
 
-3. **Identify Gaps**:
+5. **Identify Gaps**:
    - List any unclear or missing information
    - Formulate questions for the Product Owner
    - Flag any requirements that conflict with BetterBro standards
 
-4. **Create Documentation**:
+6. **Create Documentation**:
    Generate `1.epic_analysis.md` using this template:
 
 ```markdown
@@ -84,7 +101,7 @@ Analyze the Epic or Jira requirements to understand the integration scope and id
 - [ ] Proceed to Documentation Analysis (Step 2)
 ```
 
-5. **Include Workflow Suggestions**: End the file with `## Workflow Suggestions` section (see `.gemini.md` for format).
+7. **Include Workflow Suggestions**: End the file with `## Workflow Suggestions` section (see `.gemini.md` for format).
 
 ## Success Criteria
 - File `1.epic_analysis.md` created in `1_result/` folder

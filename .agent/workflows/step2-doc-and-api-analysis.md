@@ -37,10 +37,13 @@ This step performs a deep dive into the payment provider's API documentation and
             -   Transaction ID format and location in response
             -   Any redirect URLs or next steps
         -   **Data Structure**: What fields are used in transaction requests?
-            -   **Mandatory fields**: Required parameters that must be present
-            -   **Optional fields**: Parameters that can be omitted or have defaults
-            -   Field types, formats, and validation rules
-            -   Nested object structures (customer, billing, etc.)
+            -   **Create a Table**: You **MUST** document these in a table format with columns: `Field`, `Type`, `Required?`, `Description`.
+            -   **Ordering Rule**: You **MUST** list all **Mandatory (Yes)** fields first, followed by **Optional** fields.
+            -   **Content**:
+                -   **Mandatory fields**: Required parameters that must be present.
+                -   **Optional fields**: Parameters that can be omitted or have defaults.
+                -   Field types, formats, and validation rules.
+                -   Nested object structures (customer, billing, etc.).
         -   **Payment URL Response**: How is the payment URL provided?
             -   Where in the response is the payment/checkout URL?
             -   URL format and structure
