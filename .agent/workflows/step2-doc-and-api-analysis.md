@@ -44,6 +44,7 @@ This step performs a deep dive into the payment provider's API documentation and
                 -   **Optional fields**: Parameters that can be omitted or have defaults.
                 -   Field types, formats, and validation rules.
                 -   Nested object structures (customer, billing, etc.).
+                -   **Step 7 Requirement**: This table will be the source for the `properties` map in the OpenAPI spec. Ensure types (string, integer, boolean) are accurate.
         -   **Payment URL Response**: How is the payment URL provided?
             -   Where in the response is the payment/checkout URL?
             -   URL format and structure

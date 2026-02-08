@@ -1,0 +1,26 @@
+webhooks:
+  # The name of the webhook event, e.g., 'transactionUpdate'
+  paymentNotification:
+    post:
+      summary: Receive payment status updates
+      description: The provider sends a POST request to this endpoint when a transaction status changes.
+      parameters:
+        - name: X-Signature
+          in: header
+          description: Signature header for payload verification (HMAC/Other).
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              # The schema below should be replaced with the ACTUAL schema from verified logs
+              properties:
+                event_type:
+                  type: string
+                payload:
+                  type: object
+      responses:
+        '200':
+          description: Webhook received and processed successfully.

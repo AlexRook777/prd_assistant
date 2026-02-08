@@ -61,6 +61,7 @@ description: Phase 1 Step 5 - Check compatibility with system architecture and B
     -   Review the **saved** `<current_integration>/0_initial_docs_and_config/betterbro_service_spec.md` for the complete BetterBro field specification.
     -   **IMPORTANT**: Use ONLY the saved markdown file, not the live URL.
     -   **Cross-Reference**: Compare provider fields against BetterBro standard fields from the downloaded specification.
+    -   **Capture Rules**: For each mapped field, explicitly note the BetterBro validation rule (e.g., "Required", "Max 50 chars", "Regex ^[A-Z]{2}$") in the mapping table. This is CRITICAL for Step 7 spec generation.
     -   Verify that every mandatory request field from the Provider has a corresponding standard field in the BetterBro internal schema for the selected **Rule**.
     -   Verify that every response field (synchronous or webhook) can be mapped to a standard internal field.
     -   **Parse Tables**: Extract field mapping tables, data type requirements, and validation rules from the BetterBro spec.
@@ -92,11 +93,11 @@ description: Phase 1 Step 5 - Check compatibility with system architecture and B
 - **Rationale**: [Why this rule fits the best]
 
 ## 2. Field Mapping Feasibility
-| Provider Field | BetterBro Standard Field | Notes |
-| :--- | :--- | :--- |
-| `example_field` | `transaction.description` | Direct match |
-| `custom_data` | `metadata` | Mapped to generic metadata |
-| `unique_id` | `transaction.id` | |
+| Provider Field | BetterBro Standard Field | BetterBro Rule / Validation | Notes |
+| :--- | :--- | :--- | :--- |
+| `example_field` | `transaction.description` | Optional, string | Direct match |
+| `custom_data` | `metadata` | JSON object | Mapped to generic metadata |
+| `unique_id` | `transaction.id` | Required, unique, string | |
 
 **Missing Fields**:
 - [List any provider fields that do NOT have a clear internal mapping]

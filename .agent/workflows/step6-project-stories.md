@@ -13,7 +13,7 @@ Create comprehensive technical specifications for all integration stories using 
 `6.project_stories.md`
 
 ## Required Skill
-*   [.agent/skills/epic_story_creation/SKILL.md](file:///home/worker/repos/prd_assistant/.agent/skills/epic_story_creation/SKILL.md)
+*   [.agent/skills/epic_story_creation/SKILL.md](.agent/skills/epic_story_creation/SKILL.md)
 
 ## Task
 
@@ -74,7 +74,7 @@ As a System, I want to authenticate with the provider API.
 *   Existing progress (if re-running) is preserved.
 
 ## User Confirmation
-*   "Project Stories filled. Review `6.project_stories.md`. Should I proceed to Step 7 (Field Testing), or do you want to refine this step?"
+*   "Project Stories filled. Review `6.project_stories.md`. Should I proceed to Step 7 (Contract Spec Generation), or do you want to refine this step?"
 
 
 

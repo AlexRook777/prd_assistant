@@ -1,0 +1,44 @@
+# Definitions for Custom Extensions
+# These are reference schemas for the agent to use when generating the spec.
+
+x-betterbro-mapping:
+  type: object
+  properties:
+    field:
+      type: string
+      description: The internal BetterBro standard field (e.g., transaction.amount).
+    rule:
+      type: string
+      description: The mapping rule applied (e.g., "Direct", "Start Amount").
+    required:
+      type: boolean
+      description: Is this field mandatory for the integration logic?
+    transformation:
+      type: string
+      description: Optional transformation logic (e.g., "cents_to_float").
+
+x-betterbro-status-codes:
+  type: object
+  description: Map of Provider Status Strings to Internal Integer Codes.
+  additionalProperties:
+    type: integer
+    enum: [1, 2, 3, 4, 5]
+    description: |
+      1: SUCCESS
+      2: FAILED
+      3: PENDING
+      4: REFUNDED
+      5: CHARGEBACK
+
+x-betterbro-lifecycle:
+  type: object
+  properties:
+    sync_response:
+      type: boolean
+      description: If true, final status can be determined from the immediate API response.
+    webhook_required:
+      type: boolean
+      description: If true, a webhook is STRICTLY required to finalize status.
+    polling_required:
+      type: boolean
+      description: If true, the system must poll distinct endpoints to finalize status.

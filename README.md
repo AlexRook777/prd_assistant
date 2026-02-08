@@ -4,6 +4,58 @@ A systematic approach to payment provider integrations using **Antigravity** wit
 
 ## Overview
 This project handles 3-4 payment provider integrations daily using a standardized, phase-based workflow. Built for **Jupyter Notebook-style execution** where you can run individual steps, iterate until satisfied, or execute entire phases at once.
+ 
+ ## Development Methodology: Spec-Integrated PRD (SIP)
+ 
+ The PRD Assistant follows a **Spec-Integrated PRD (SIP)** methodology. This approach combines the "Human Truth" of Product Requirements Documents (PRD) with the "Machine Truth" of executable specifications.
+ 
+ ### The Two-Layer Documentation System
+ 
+ To handle high-frequency integrations (3-4 per day) without quality loss, we separate concerns into two distinct layers:
+ 
+ #### Layer 1: Human-Readable PRD (Steps 1-6)
+ *   **Purpose**: Discovery, Analysis, and Decision Making.
+ *   **Audience**: Product Managers, Stakeholders, Developers.
+ *   **Format**: Human-readable Markdown files.
+ *   **Goal**: To answer "Why we are building this," "How the provider works," and "Is it compatible?"
+ *   **Key Artifacts**:
+     *   `1.epic_analysis.md` (Scope)
+     *   `2.docs_analysis.md` (Discovery)
+     *   `4.auto_test_page.md` (Validated JSON Schemas)
+     *   `5.betterbro_compatibility.md` (Feasibility)
+     *   `6.project_stories.md` (Requirements)
+ 
+ #### Layer 2: Machine-Executable Contract (Step 7)
+ *   **Purpose**: Code Generation, Validation, and Testing.
+ *   **Audience**: Code Agents, Linters, Test Runners.
+ *   **Format**: OpenAPI 3.1 YAML with strictly typed schemas.
+ *   **Goal**: To answer "How exactly do we build this?" with mathematical certainty.
+ *   **Key Artifacts**:
+     *   `7.contract_spec.yaml` (The Source of Truth for Code)
+ 
+ ---
+ 
+ ### Core Principles
+ 
+ #### 1. PRD as the Context, Spec as the Contract
+ The PRD provides the *context* (nuance, edge cases, business logic) that allows the Spec to be generated correctly. The Spec provides the *contract* (types, fields, endpoints) that allows code to be generated correctly.
+ 
+ #### 2. Architecture Before Implementation
+ All technical components (endpoints, field mappings, state flows) must be architected in the PRD phase (Layer 1) and formalized in the Spec phase (Layer 2) *before* any backend code is written.
+ 
+ #### 3. Validation-Driven
+ *   **Human Validation**: Step 5 (`betterbro_compatibility.md`) ensures the business logic aligns with internal standards.
+ *   **Machine Validation**: Step 7 uses `spectral` linting to ensure the contract is complete and valid.
+ 
+ ---
+ 
+ ### Workflow Overview
+ 
+ 1.  **Discovery (Steps 1-2)**: Analyze provider docs and capture raw API behavior.
+ 2.  **Validation (Steps 3-5)**: Create test pages, verify compatibility, and "Green Light" the architecture.
+ 3.  **Definition (Step 6)**: Write Gherkin user stories.
+ 4.  **Specification (Step 7)**: Synthesize all previous findings into an executable OpenAPI 3.1 contract.
+ 5.  **Handoff**: Package PRD and Spec into a ZIP file for the implementation agent.
 
 ## Quick Start
 
@@ -205,7 +257,6 @@ prd_assistant/
 All integrations follow the **Hierarchy of Truth**:
 1. Integration-specific `project_rules.md` (highest priority)
 2. BetterBro standards
-3. Master PRD schema
 4. Provider documentation (validated via testing)
 
 ### 🔄 Template-Based Workflow
@@ -303,4 +354,4 @@ For questions about:
 - **BetterBro Standards**: See `.gemini.md` → BetterBro Standards section
 - **Workflow Steps**: Read individual workflow files in `.agent/workflows/`
 - **Skills**: Check `.agent/skills/<skill-name>/SKILL.md`
-- **Master PRD Schema**: See `global_rules/master_prd.yaml`
+

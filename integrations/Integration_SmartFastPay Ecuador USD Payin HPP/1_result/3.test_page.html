@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartFastPay Ecuador Testing Console</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <style>
+        :root {
+            --primary: #00ff88;
+            --primary-dark: #00cc6e;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: #334155;
+            --error: #ef4444;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.3;
+            padding: 0.5rem;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            height: calc(100vh - 1rem);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1.2fr;
+            grid-template-rows: 1fr;
+            gap: 0.5rem;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+            text-align: left;
+        }
+
+        h2,
+        h3 {
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            height: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-dim);
+            margin-bottom: 0.15rem;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            background-color: #0f172a;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.4rem 0.6rem;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.8rem;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .required::after {
+            content: " *";
+            color: var(--error);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: #0f172a;
+            border: none;
+            border-radius: 6px;
+            padding: 0.4rem 0.8rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            flex: 1;
+        }
+
+        button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        button.secondary {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        button.danger {
+            background-color: transparent;
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+
+        /* Toggle Switch */
+        .header-with-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .switch-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 32px;
+            height: 18px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #334155;
+            transition: .4s;
+            border-radius: 18px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--primary);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(14px);
+        }
+
+        /* Logs & Webhooks */
+        .logs-webhooks-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .logs-section,
+        .webhooks-section {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 0;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.5rem;
+        }
+
+        .log-container,
+        .webhook-container {
+            flex: 1;
+            overflow-y: auto;
+            background-color: #0c111d;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.5rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.65rem;
+        }
+
+        .log-entry,
+        .webhook-entry {
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .log-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-dim);
+            margin-bottom: 0.25rem;
+        }
+
+        .status-badge {
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 700;
+        }
+
+        .status-200,
+        .status-201 {
+            background-color: var(--success);
+            color: #fff;
+        }
+
+        .status-400,
+        .status-401,
+        .status-500 {
+            background-color: var(--error);
+            color: #fff;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: #e2e8f0;
+            margin-top: 0.25rem;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 0.6rem;
+            padding: 0;
+            text-decoration: underline;
+            margin-top: 0.25rem;
+        }
+
+        #payment-link-container {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            background-color: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 6px;
+            display: none;
+            font-size: 0.8rem;
+        }
+
+        .loading-spinner {
+            width: 0.8rem;
+            height: 0.8rem;
+            border: 2px solid rgba(15, 23, 42, 0.3);
+            border-top-color: #0f172a;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Column 1: Config -->
+        <div class="card">
+            <div class="header-with-toggle">
+                <h2>API Credentials</h2>
+                <div class="switch-container">
+                    <span id="proxy-label">Proxy</span>
+                    <label class="switch">
+                        <input type="checkbox" id="proxy-toggle" checked onchange="toggleProxyMode()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="client-id" class="required">Client ID</label>
+                <input type="text" id="client-id" value="fd8111f7-6ace-4789-b05a-40a6a36cb0be">
+            </div>
+            <div class="form-group">
+                <label for="client-secret" class="required">Client Secret</label>
+                <input type="password" id="client-secret" value="nST8TYE78oANwe6dvhMiCQQZfthIoWlG">
+            </div>
+
+            <div style="display: grid; grid-template-columns: auto 1fr; gap: 0.5rem; align-items: start;">
+                <button id="btn-get-token" onclick="getToken()">Get Token</button>
+                <div class="form-group">
+                    <label for="access-token">Access Token</label>
+                    <textarea id="access-token" rows="2" readonly></textarea>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--border); margin: 0.75rem 0;">
+
+            <div class="header-with-toggle">
+                <h2>Webhook Config</h2>
+                <div class="switch-container">
+                    <span id="webhook-label">N8n Webhooks</span>
+                    <label class="switch">
+                        <input type="checkbox" id="webhook-toggle" checked onchange="toggleWebhookMode()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="order-id">Order ID (UUID)</label>
+                <input type="text" id="order-id" readonly>
+            </div>
+            <div class="form-group">
+                <label for="notification-url">Notification URL</label>
+                <input type="text" id="notification-url" readonly>
+            </div>
+        </div>
+
+        <!-- Column 2: Transaction -->
+        <div class="card">
+            <h2>Create Transaction (Payin HPP)</h2>
+
+            <h3 style="font-size: 0.8rem; color: var(--primary); border-bottom: 1px solid var(--border);">Customer Info
+            </h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="customer-id" class="required">Customer ID</label>
+                    <input type="text" id="customer-id" value="cust_98765">
+                </div>
+                <div class="form-group">
+                    <label for="customer-name" class="required">Full Name</label>
+                    <input type="text" id="customer-name" value="Juan Perez">
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="customer-email" class="required">Email</label>
+                    <input type="email" id="customer-email" value="juan.perez@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="customer-doc-type" class="required">Doc Type</label>
+                    <select id="customer-doc-type">
+                        <option value="CC" selected>CC (Cedula)</option>
+                        <option value="PA">PA (Pasaporte)</option>
+                        <option value="RUC">RUC</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="customer-doc-number" class="required">Doc Number (ECU CI/CC)</label>
+                <input type="text" id="customer-doc-number" value="1701234567">
+            </div>
+
+            <h3
+                style="font-size: 0.8rem; color: var(--primary); border-bottom: 1px solid var(--border); margin-top: 0.5rem;">
+                Transaction Info</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="tx-amount" class="required">Amount</label>
+                    <input type="number" id="tx-amount" value="10.00" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="tx-currency" class="required">Currency</label>
+                    <input type="text" id="tx-currency" value="USD">
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="tx-country" class="required">Country</label>
+                    <input type="text" id="tx-country" value="ECU">
+                </div>
+                <div class="form-group">
+                    <label for="tx-method" class="required">Method</label>
+                    <input type="text" id="tx-method" value="bank_transfer">
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button id="btn-create-tx" onclick="createTransaction()">Create Transaction</button>
+            </div>
+
+            <div id="payment-link-container">
+                <p><strong>Payment URL:</strong></p>
+                <a id="payment-url" href="#" target="_blank"></a>
+                <div class="button-group" style="margin-top: 0.5rem;">
+                    <button class="secondary" onclick="checkStatus()">Check Status</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column 3: Logs -->
+        <div class="logs-webhooks-column">
+            <h1>SmartFastPay ECU Console</h1>
+            <div class="logs-section">
+                <div class="header-with-toggle">
+                    <h3 class="section-title">API Logs</h3>
+                    <button class="danger" style="flex: 0; padding: 0.2rem 0.5rem;" onclick="clearLogs()">Clear</button>
+                </div>
+                <div id="api-logs" class="log-container"></div>
+            </div>
+
+            <div class="webhooks-section">
+                <div class="header-with-toggle">
+                    <h3 class="section-title">Webhooks</h3>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="secondary" style="flex: 0; padding: 0.2rem 0.5rem;"
+                            onclick="fetchWebhooks()">Refresh</button>
+                        <button class="danger" style="flex: 0; padding: 0.2rem 0.5rem;"
+                            onclick="clearWebhooks()">Clear</button>
+                    </div>
+                </div>
+                <div id="webhook-logs" class="webhook-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const PROXY_URL = 'http://localhost:8000/proxy';
+        const LOCAL_WEBHOOK_BASE = 'http://localhost:8000/webhook';
+        const N8N_SEND_BASE = 'https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b';
+        const N8N_RETRIEVE_BASE = 'https://n8n.4bill.io/webhook/0154f998-9882-4b6b-b08b-a3a9e6e3d38b';
+
+        // Initialize state
+        window.onload = () => {
+            const savedProxy = sessionStorage.getItem('use-proxy-toggle');
+            if (savedProxy !== null) document.getElementById('proxy-toggle').checked = savedProxy === 'true';
+
+            const savedWebhook = sessionStorage.getItem('use-webhook-toggle');
+            if (savedWebhook !== null) document.getElementById('webhook-toggle').checked = savedWebhook === 'true';
+
+            toggleProxyMode();
+            toggleWebhookMode();
+            generateOrderId();
+        };
+
+        function generateOrderId() {
+            const orderId = 'order_' + Date.now();
+            document.getElementById('order-id').value = orderId;
+            updateNotificationUrl(orderId);
+        }
+
+        function toggleProxyMode() {
+            const isProxy = document.getElementById('proxy-toggle').checked;
+            document.getElementById('proxy-label').innerText = isProxy ? 'Proxy' : 'Direct API';
+            sessionStorage.setItem('use-proxy-toggle', isProxy);
+        }
+
+        function toggleWebhookMode() {
+            const isN8n = document.getElementById('webhook-toggle').checked;
+            document.getElementById('webhook-label').innerText = isN8n ? 'N8n Webhooks' : 'Local Webhooks';
+            sessionStorage.setItem('use-webhook-toggle', isN8n);
+            updateNotificationUrl(document.getElementById('order-id').value);
+        }
+
+        function updateNotificationUrl(orderId) {
+            const isN8n = document.getElementById('webhook-toggle').checked;
+            const url = isN8n ? `${N8N_SEND_BASE}/${orderId}` : LOCAL_WEBHOOK_BASE;
+            document.getElementById('notification-url').value = url;
+        }
+
+        function addLog(method, url, status, headers, body) {
+            const container = document.getElementById('api-logs');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+
+            const timestamp = new Date().toLocaleTimeString();
+            const statusClass = `status-${status}`;
+
+            entry.innerHTML = `
+                <div class="log-meta">
+                    <span>${timestamp} | ${method} ${url}</span>
+                    <span class="status-badge ${statusClass}">${status}</span>
+                </div>
+                <div><strong>Headers:</strong><pre>${JSON.stringify(headers, null, 2)}</pre></div>
+                <div><strong>Body:</strong><pre>${typeof body === 'object' ? JSON.stringify(body, null, 2) : body}</pre></div>
+                <button class="copy-btn" onclick="copyText(this)">Copy Entry</button>
+            `;
+            container.prepend(entry);
+        }
+
+        function copyText(btn) {
+            const pre = btn.previousElementSibling.innerText;
+            navigator.clipboard.writeText(pre);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => btn.innerText = originalText, 2000);
+        }
+
+        function clearLogs() {
+            document.getElementById('api-logs').innerHTML = '';
+        }
+
+        async function makeRequest(url, method, headers, body = null) {
+            const useProxy = document.getElementById('proxy-toggle').checked;
+            let finalUrl = url;
+            let finalOptions = {
+                method: method,
+                headers: headers
+            };
+
+            if (body) {
+                finalOptions.body = typeof body === 'object' ? JSON.stringify(body) : body;
+            }
+
+            if (useProxy) {
+                finalOptions = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        url: url,
+                        method: method,
+                        headers: headers,
+                        body: body
+                    })
+                };
+                finalUrl = PROXY_URL;
+            }
+
+            try {
+                const response = await fetch(finalUrl, finalOptions);
+                let data = await response.json();
+
+                let resultStatus = response.status;
+                let resultBody = data;
+                let resultHeaders = Object.fromEntries(response.headers.entries());
+
+                if (useProxy) {
+                    resultStatus = data.status;
+                    resultHeaders = data.headers;
+                    resultBody = typeof data.body === 'string' ? JSON.parse(data.body) : data.body;
+                }
+
+                addLog(method, url, resultStatus, resultHeaders, resultBody);
+                return { status: resultStatus, data: resultBody };
+            } catch (error) {
+                addLog(method, url, 'ERR', {}, error.message);
+                throw error;
+            }
+        }
+
+        async function getToken() {
+            const btn = document.getElementById('btn-get-token');
+            const clientId = document.getElementById('client-id').value;
+            const clientSecret = document.getElementById('client-secret').value;
+
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loading-spinner"></div>';
+
+            try {
+                const auth = btoa(`${clientId}:${clientSecret}`);
+                const response = await makeRequest(
+                    'https://sandbox.smartfastpay.com/oauth2/token',
+                    'POST',
+                    {
+                        'Authorization': `Basic ${auth}`,
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    'grant_type=client_credentials'
+                );
+
+                if (response.status === 200 || response.status === 201) {
+                    const token = response.data.data?.access_token || response.data.access_token;
+                    document.getElementById('access-token').value = token;
+                    sessionStorage.setItem('smartfastpay_token', token);
+                }
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Get Token';
+            }
+        }
+
+        async function createTransaction() {
+            const btn = document.getElementById('btn-create-tx');
+            const token = document.getElementById('access-token').value;
+
+            if (!token) {
+                alert('Please get an access token first.');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loading-spinner"></div>';
+
+            const payload = {
+                customer: {
+                    id: document.getElementById('customer-id').value,
+                    name: document.getElementById('customer-name').value,
+                    email: document.getElementById('customer-email').value,
+                    document: {
+                        number: document.getElementById('customer-doc-number').value,
+                        type: document.getElementById('customer-doc-type').value
+                    }
+                },
+                transaction: {
+                    id: document.getElementById('order-id').value,
+                    currency: document.getElementById('tx-currency').value,
+                    amount: parseFloat(document.getElementById('tx-amount').value)
+                },
+                country: document.getElementById('tx-country').value,
+                payment_method: [document.getElementById('tx-method').value],
+                notification_url: document.getElementById('notification-url').value,
+                redirect_url: 'https://4bill.io/success'
+            };
+
+            try {
+                const response = await makeRequest(
+                    'https://sandbox.smartfastpay.com/v2/transaction/checkout',
+                    'POST',
+                    {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    payload
+                );
+
+                if (response.status === 200 || response.status === 201) {
+                    const url = response.data.data?.url || response.data.url;
+                    const internalTxId = response.data.data?.transaction_id || response.data.transaction_id;
+
+                    sessionStorage.setItem('last_tx_id', internalTxId);
+
+                    const linkContainer = document.getElementById('payment-link-container');
+                    const linkA = document.getElementById('payment-url');
+                    linkA.href = url;
+                    linkA.innerText = url;
+                    linkContainer.style.display = 'block';
+                }
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Create Transaction';
+            }
+        }
+
+        async function checkStatus() {
+            const token = document.getElementById('access-token').value;
+            const txId = sessionStorage.getItem('last_tx_id');
+
+            if (!txId) {
+                alert('No transaction found to check.');
+                return;
+            }
+
+            // Using GET /v2/transaction/{id} - based on common patterns
+            await makeRequest(
+                `https://sandbox.smartfastpay.com/v2/transaction/${txId}`,
+                'GET',
+                { 'Authorization': `Bearer ${token}` }
+            );
+        }
+
+        function renderWebhooks(webhooks) {
+            if (!Array.isArray(webhooks)) return;
+            const container = document.getElementById('webhook-logs');
+            container.innerHTML = '';
+
+            [...webhooks].reverse().forEach(hook => {
+                const entry = document.createElement('div');
+                entry.className = 'webhook-entry';
+                const ts = hook.timestamp || new Date().toISOString();
+
+                entry.innerHTML = `
+                    <div class="log-meta">
+                        <span>${ts} | ${hook.method || 'POST'}</span>
+                    </div>
+                    <pre>${JSON.stringify(hook.body || hook, null, 2)}</pre>
+                `;
+                container.appendChild(entry);
+            });
+        }
+
+        async function fetchWebhooks() {
+            const isN8n = document.getElementById('webhook-toggle').checked;
+            const orderId = document.getElementById('order-id').value;
+
+            try {
+                if (isN8n) {
+                    const response = await makeRequest(
+                        `${N8N_RETRIEVE_BASE}/${orderId}`,
+                        'GET',
+                        { 'Authorization': `Basic ${btoa('callbacks-test:callbacks-test123')}` }
+                    );
+                    renderWebhooks(response.data);
+                } else {
+                    const response = await fetch('http://localhost:8000/api/webhooks');
+                    const data = await response.json();
+                    renderWebhooks(data);
+                }
+            } catch (error) {
+                console.error('Webhook fetch failed', error);
+            }
+        }
+
+        async function clearWebhooks() {
+            const isN8n = document.getElementById('webhook-toggle').checked;
+            if (!isN8n) {
+                await fetch('http://localhost:8000/api/webhooks', { method: 'DELETE' });
+            }
+            document.getElementById('webhook-logs').innerHTML = '';
+        }
+
+        // Auto-poll webhooks
+        setInterval(fetchWebhooks, 5000);
+    </script>
+</body>
+
+</html>

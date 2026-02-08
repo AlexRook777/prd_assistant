@@ -1,0 +1,44 @@
+openapi: 3.1.0
+info:
+  title: [Integration Name]
+  version: 1.0.0
+  description: Machine-executable contract for [Provider] integration.
+  contact:
+    name: 4bill PRD Assistant
+  x-4bill-metadata:
+    provider: "[Provider Name]"
+    region: "[Region Code]"
+    integration_type: "[HPP/H2H]"
+    generated_at: "[Timestamp]"
+
+servers:
+  - url: https://api.provider.com/v1
+    description: Production Server
+  - url: https://sandbox.provider.com/v1
+    description: Sandbox Server
+
+paths: {}
+
+components:
+  securitySchemes:
+    # Default placeholder, update based on Step 2
+    BearerAuth:
+      type: http
+      scheme: bearer
+    BasicAuth:
+      type: http
+      scheme: basic
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+  schemas:
+    # Common schemas will be injected here
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string

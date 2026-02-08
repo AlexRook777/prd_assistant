@@ -57,6 +57,7 @@ Automatically test the generated `3.test_page.html` using a browser agent. If is
                - **General Status**: Success/Fail.
                - **Step-by-Step Log**: Detailed actions and results for Token, Transaction, and Webhook.
                - **Webhook Results**: Include n8n webhook verification if performed.
+               - **Step 7 Requirement**: You MUST include the **Full JSON Request Payload** and **Full JSON Response** in code blocks. These are used to generate the JSON Schema in Step 7.
                - **Issues & Fixes**: List any issues encountered, what caused them, and how they were fixed.
                - **Workflow Suggestions**: Suggest improvements for future phases based on findings.
                - **Screenshots**: Embed successful transaction screenshots.
