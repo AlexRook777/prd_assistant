@@ -156,6 +156,7 @@ class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
 
 if __name__ == "__main__":
+    socketserver.TCPServer.allow_reuse_address = True
     with socketserver.TCPServer(("", PORT), ProxyHTTPRequestHandler) as httpd:
         logging.info(f"Serving at http://localhost:{PORT}")
         logging.info(f"Proxy endpoint at http://localhost:{PORT}/proxy")

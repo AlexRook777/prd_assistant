@@ -1,0 +1,266 @@
+openapi: 3.1.0
+info:
+  title: SmartFastPay Ecuador USD Payin HPP
+  version: 1.0.0
+  description: Machine-executable contract for SmartFastPay integration in Ecuador.
+  contact:
+    name: 4bill PRD Assistant
+  x-4bill-metadata:
+    provider: "SmartFastPay"
+    region: "ECU"
+    integration_type: "HPP"
+    generated_at: "2026-02-08T12:21:45+02:00"
+  x-betterbro-lifecycle:
+    sync_response: false
+    webhook_required: true
+    polling_required: true
+
+servers:
+  - url: https://api.smartfastpay.com
+    description: Production Server
+  - url: https://sandbox.smartfastpay.com
+    description: Sandbox Server
+
+paths:
+  /oauth2/token:
+    post:
+      summary: Obtain Access Token
+      description: OAuth 2.0 Client Credentials flow using Basic Auth.
+      security:
+        - BasicAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  type: string
+                  enum: [client_credentials]
+              required: [grant_type]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                      token_type:
+                        type: string
+                      expires_in:
+                        type: integer
+
+  /v2/transaction/checkout:
+    post:
+      summary: Create Payin Transaction (HPP)
+      description: Creates a transaction and returns a redirection URL.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckoutRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckoutResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v2/transaction/{transaction_id}:
+    get:
+      summary: Get Transaction Status
+      description: Manually query the status of a transaction.
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: transaction_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+    BasicAuth:
+      type: http
+      scheme: basic
+
+  schemas:
+    CheckoutRequest:
+      type: object
+      required:
+        - customer
+        - transaction
+        - country
+        - payment_method
+        - notification_url
+      properties:
+        customer:
+          type: object
+          required: [id, name, email, document]
+          properties:
+            id:
+              type: string
+              x-betterbro-mapping:
+                field: "external_customer_id"
+                required: true
+            name:
+              type: string
+              x-betterbro-mapping:
+                field: "fields.first_name"
+                rule: "Mapped to full name; adapter splits if necessary"
+            email:
+              type: string
+              format: email
+              x-betterbro-mapping:
+                field: "fields.email"
+            document:
+              type: object
+              required: [number, type]
+              properties:
+                number:
+                  type: string
+                  x-betterbro-mapping:
+                    field: "fields.tax_id"
+                type:
+                  type: string
+                  enum: [CC, PA, RUC]
+                  x-betterbro-mapping:
+                    field: "fields.tax_id_type"
+                    transformation: "CI_to_CC"
+        transaction:
+          type: object
+          required: [id, currency, amount]
+          properties:
+            id:
+              type: string
+              x-betterbro-mapping:
+                field: "external_transaction_id"
+                required: true
+            currency:
+              type: string
+              example: USD
+              x-betterbro-mapping:
+                field: "amount_currency"
+            amount:
+              type: number
+              format: decimal
+              example: 10.00
+              x-betterbro-mapping:
+                field: "amount"
+                transformation: "cents_to_float"
+        country:
+          type: string
+          enum: [ECU]
+          x-betterbro-mapping:
+            field: "fields.country"
+            transformation: "EC_to_ECU"
+        payment_method:
+          type: array
+          items:
+            type: string
+          example: ["bank_transfer"]
+        notification_url:
+          type: string
+          format: uri
+          x-betterbro-mapping:
+            field: "point.callback_url"
+        redirect_url:
+          type: string
+          format: uri
+          x-betterbro-mapping:
+            field: "point.return_url"
+
+    CheckoutResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            url:
+              type: string
+              format: uri
+            transaction_id:
+              type: string
+            expires_in:
+              type: integer
+
+    StatusResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            status:
+              $ref: '#/components/schemas/TransactionStatus'
+            transaction_id:
+              type: string
+            amount:
+              type: number
+            currency:
+              type: string
+
+    TransactionStatus:
+      type: string
+      enum: [pending, paid, denied, expired]
+      x-betterbro-status-codes:
+        paid: 1
+        denied: 2
+        pending: 10
+        expired: 5
+
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+        timestamp:
+          type: string
+        moreInformation:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              detail:
+                type: string
+
+    WebhookPayload:
+      type: object
+      required: [transaction_id, status, amount]
+      properties:
+        transaction_id:
+          type: string
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        amount:
+          type: number
+        currency:
+          type: string

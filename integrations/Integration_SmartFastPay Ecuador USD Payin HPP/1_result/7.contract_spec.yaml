@@ -1,34 +1,29 @@
 openapi: 3.1.0
 info:
-  title: SmartFastPay Ecuador USD Payin HPP
+  title: SmartFastPay Ecuador - USD - Bank Transfer Payin HPP
   version: 1.0.0
-  description: Machine-executable contract for SmartFastPay integration in Ecuador.
-  contact:
-    name: 4bill PRD Assistant
+  description: Machine-executable contract for the SmartFastPay Ecuador USD Bank Transfer Payin HPP integration.
   x-4bill-metadata:
-    provider: "SmartFastPay"
-    region: "ECU"
-    integration_type: "HPP"
-    generated_at: "2026-02-08T12:21:45+02:00"
-  x-betterbro-lifecycle:
-    sync_response: false
-    webhook_required: true
-    polling_required: true
+    provider: SmartFastPay
+    region: ECU
+    type: HPP
+    rulebook: Acquiring Form
 
 servers:
-  - url: https://api.smartfastpay.com
-    description: Production Server
   - url: https://sandbox.smartfastpay.com
-    description: Sandbox Server
+    description: Sandbox Environment
+  - url: https://api.smartfastpay.com
+    description: Production Environment
 
 paths:
   /oauth2/token:
     post:
-      summary: Obtain Access Token
-      description: OAuth 2.0 Client Credentials flow using Basic Auth.
-      security:
-        - BasicAuth: []
+      summary: Generate OAuth 2.0 Access Token
+      operationId: generateToken
+      tags:
+        - Authorization
       requestBody:
+        required: true
         content:
           application/x-www-form-urlencoded:
             schema:
@@ -36,32 +31,27 @@ paths:
               properties:
                 grant_type:
                   type: string
-                  enum: [client_credentials]
-              required: [grant_type]
+                  default: client_credentials
+              required:
+                - grant_type
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      access_token:
-                        type: string
-                      token_type:
-                        type: string
-                      expires_in:
-                        type: integer
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          description: Unauthorized
 
   /v2/transaction/checkout:
     post:
-      summary: Create Payin Transaction (HPP)
-      description: Creates a transaction and returns a redirection URL.
+      summary: Create PayIn Transaction (HPP)
+      operationId: createCheckout
+      tags:
+        - Transaction
       security:
-        - BearerAuth: []
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -75,25 +65,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CheckoutResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
 
-  /v2/transaction/{transaction_id}:
+  /v2/transaction/{id}:
     get:
-      summary: Get Transaction Status
-      description: Manually query the status of a transaction.
+      summary: Check Transaction Status
+      operationId: getStatus
+      tags:
+        - Transaction
       security:
-        - BearerAuth: []
+        - bearerAuth: []
       parameters:
-        - name: transaction_id
+        - name: id
           in: path
           required: true
           schema:
             type: string
+          description: The provider transaction ID (UUID)
       responses:
         '200':
           description: OK
@@ -104,14 +91,27 @@ paths:
 
 components:
   securitySchemes:
-    BearerAuth:
+    bearerAuth:
       type: http
       scheme: bearer
-    BasicAuth:
+      bearerFormat: JWT
+    basicAuth:
       type: http
       scheme: basic
 
   schemas:
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+          default: Bearer
+        expires_in:
+          type: integer
+          default: 3600
+
     CheckoutRequest:
       type: object
       required:
@@ -119,11 +119,12 @@ components:
         - transaction
         - country
         - payment_method
-        - notification_url
       properties:
         customer:
           type: object
-          required: [id, name, email, document]
+          required:
+            - id
+            - document
           properties:
             id:
               type: string
@@ -134,29 +135,42 @@ components:
               type: string
               x-betterbro-mapping:
                 field: "fields.first_name"
-                rule: "Mapped to full name; adapter splits if necessary"
+                required: false
+                note: "Provider uses single name. Split may be required for BetterBro."
             email:
               type: string
               format: email
               x-betterbro-mapping:
                 field: "fields.email"
+                required: false
             document:
               type: object
-              required: [number, type]
+              required:
+                - number
+                - type
               properties:
                 number:
                   type: string
+                  pattern: "^[0-9]{10}$"
                   x-betterbro-mapping:
                     field: "fields.tax_id"
+                    required: true
                 type:
                   type: string
-                  enum: [CC, PA, RUC]
+                  enum: [CC, RUC, PA]
                   x-betterbro-mapping:
                     field: "fields.tax_id_type"
-                    transformation: "CI_to_CC"
+                    required: true
+                    enum_map:
+                      CC: CI
+                      RUC: RUC
+                      PA: PASS
         transaction:
           type: object
-          required: [id, currency, amount]
+          required:
+            - id
+            - currency
+            - amount
           properties:
             id:
               type: string
@@ -165,41 +179,47 @@ components:
                 required: true
             currency:
               type: string
-              example: USD
+              enum: [USD]
               x-betterbro-mapping:
                 field: "amount_currency"
+                required: true
             amount:
               type: number
               format: decimal
-              example: 10.00
               x-betterbro-mapping:
                 field: "amount"
-                transformation: "cents_to_float"
+                required: true
+                transformation: "*100"
+                type: integer
         country:
           type: string
           enum: [ECU]
-          x-betterbro-mapping:
-            field: "fields.country"
-            transformation: "EC_to_ECU"
         payment_method:
           type: array
           items:
             type: string
-          example: ["bank_transfer"]
+            enum: [bank_transfer]
         notification_url:
           type: string
           format: uri
           x-betterbro-mapping:
             field: "point.callback_url"
+            required: false
         redirect_url:
           type: string
           format: uri
           x-betterbro-mapping:
             field: "point.return_url"
+            required: false
 
     CheckoutResponse:
       type: object
       properties:
+        requestId:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
         data:
           type: object
           properties:
@@ -208,8 +228,9 @@ components:
               format: uri
             transaction_id:
               type: string
-            expires_in:
-              type: integer
+              format: uuid
+            expires_at:
+              type: string
 
     StatusResponse:
       type: object
@@ -217,50 +238,50 @@ components:
         data:
           type: object
           properties:
-            status:
-              $ref: '#/components/schemas/TransactionStatus'
+            id:
+              type: string
+              format: uuid
             transaction_id:
               type: string
+            status:
+              type: string
+              enum: [open, paid, cancelled, expired, failed]
+              x-betterbro-status-codes:
+                open: 10
+                paid: 1
+                cancelled: 3
+                expired: 5
+                failed: 2
             amount:
               type: number
             currency:
               type: string
 
-    TransactionStatus:
-      type: string
-      enum: [pending, paid, denied, expired]
-      x-betterbro-status-codes:
-        paid: 1
-        denied: 2
-        pending: 10
-        expired: 5
-
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-        timestamp:
-          type: string
-        moreInformation:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              detail:
-                type: string
-
-    WebhookPayload:
-      type: object
-      required: [transaction_id, status, amount]
-      properties:
-        transaction_id:
-          type: string
-        status:
-          $ref: '#/components/schemas/TransactionStatus'
-        amount:
-          type: number
-        currency:
-          type: string
+webhooks:
+  notification:
+    post:
+      summary: Payment Notification Webhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: Merchant order ID (transaction.id)
+                transaction_id:
+                  type: string
+                  description: Provider transaction ID
+                status:
+                  type: string
+                  enum: [paid, failed, cancelled]
+                  x-betterbro-status-codes:
+                    paid: 1
+                    failed: 2
+                    cancelled: 3
+                amount:
+                  type: number
+      responses:
+        '200':
+          description: Webhook received and processed successfully
